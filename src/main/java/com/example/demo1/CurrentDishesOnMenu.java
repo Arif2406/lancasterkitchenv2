@@ -49,6 +49,16 @@ public class CurrentDishesOnMenu {
 
     @FXML
     private TextArea stepsTextArea;
+
+    @FXML
+    private Label rnameLabel;
+
+    @FXML
+    private TextArea rdescriptionArea;
+
+
+    @FXML
+    private TextArea rstepsTextArea;
     @FXML
     private TableView<Recipe> recipeTable; // Change the type to TableView<Recipe>
 
@@ -141,11 +151,10 @@ public class CurrentDishesOnMenu {
                         String reviewDate = rs.getString("Review_Date");
                         String description = rs.getString("Description");
 
-                        // Set details in appropriate labels
-                        nameLabel.setText("Name: " + name);
-                        statusLabel.setText("Status: " + status);
+                        // Set detzails in appropriate labels
+                        rnameLabel.setText("Name: " + name);
                         //reviewDateLabel.setText("Review Date: " + reviewDate);
-                        descriptionArea.setText("Description: " + description);
+                        rdescriptionArea.setText("Description: " + description);
 
                         // Fetch and display recipe steps
                         fetchAndDisplayRecipeSteps(recipeID);
@@ -171,7 +180,7 @@ public class CurrentDishesOnMenu {
                         steps.append(rs.getString("Step_Description")).append("\n");
                     }
                     // Display recipe steps in the text area
-                    stepsTextArea.setText("Steps: \n" + steps.toString());
+                    rstepsTextArea.setText("Steps: \n" + steps.toString());
                 }
             }
         } catch (SQLException | ClassNotFoundException ex) {

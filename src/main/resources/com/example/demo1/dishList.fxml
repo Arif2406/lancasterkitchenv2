@@ -37,6 +37,9 @@
             <Label fx:id="statusLabel" />
             <Label fx:id="chefLabel" />
             <TextArea fx:id="stepsTextArea" wrapText="true" prefWidth="300" prefHeight="200"/>
+            <Label fx:id="description" />
+
+            <TextArea fx:id="descriptionArea" wrapText="true" prefWidth="300" prefHeight="200"/>
             <TableView fx:id="recipeTable">
                 <columns>
                     <TableColumn fx:id="nameColumn" text="Recipe Name">
@@ -47,15 +50,14 @@
         </VBox>
     </center>
     <right>
-            <VBox spacing="10">
-                <Label text="Recipe Details"/>
-                <Label fx:id="nameLabel" />
-                <Label fx:id="statusLabel" />
-                <Label fx:id="reviewDateLabel" />
-                <TextArea fx:id="descriptionArea" wrapText="true" prefWidth="300" prefHeight="200"/>
-                <Label text="Recipe Steps"/>
-                <TextArea fx:id="stepsTextArea" wrapText="true" prefWidth="300" prefHeight="200"/>
+        <VBox spacing="10">
+            <Label text="Recipe Details"/>
+            <Label fx:id="rnameLabel" />
+            <Label fx:id="reviewDateLabel" />
+            <TextArea fx:id="rdescriptionArea" wrapText="true" prefWidth="300" prefHeight="200"/>
+            <Label text="Recipe Steps"/>
+            <TextArea fx:id="rstepsTextArea" wrapText="true" prefWidth="300" prefHeight="200"/>
 
-            </VBox>
+        </VBox>
     </right>
 </BorderPane>
