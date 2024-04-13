@@ -19,6 +19,7 @@ public class DatabaseUtil {
         try {
             Class.forName(driverClassName);
             Connection connection = DriverManager.getConnection(url, username, password);
+            System.out.println("Connecting to database...");
             return connection;
         } catch (ClassNotFoundException e) {
             System.err.println("Error: Driver class not found: " + e.getMessage());
