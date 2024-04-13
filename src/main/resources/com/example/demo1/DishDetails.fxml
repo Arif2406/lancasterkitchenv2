@@ -7,8 +7,10 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.FlowPane?>
 
-<BorderPane minHeight="1080.0" minWidth="1920.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.DishInformationController">
-    <top>
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            prefHeight="300.0" prefWidth="400.0"
+            fx:controller="com.example.demo1.DishInformationController">    <top>
         <Label fx:id="dishNameLabel" />
     </top>
     <center>

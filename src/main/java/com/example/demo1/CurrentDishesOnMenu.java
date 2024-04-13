@@ -51,7 +51,7 @@ public class CurrentDishesOnMenu {
 
 
 
-public void initialize() {
+    public void initialize() {
         try {
 
             populateDishesList();
@@ -105,9 +105,9 @@ public void initialize() {
 
                 if (rs.next()) {
 
-                    // int dishID = rs.getInt("Dish_ID");
-                    //       DishInformation dishInformation = new DishInformation(dishID, selectedDish);
-                    //     dishInformation.setVisible(true);
+                    int dishID = rs.getInt("Dish_ID");
+                    DishInformationController dishInformation = new DishInformationController(dishID, selectedDish);
+                    dishInformation.setVisible(true);
                 }
             }
         }
@@ -135,4 +135,3 @@ public void initialize() {
     }
 
 }
-

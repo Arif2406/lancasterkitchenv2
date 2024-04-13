@@ -16,8 +16,13 @@ import java.sql.*;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
-
 public class DishInformationController {
+    private String selectedDish;
+
+    // Setter method for selected dish
+    public void setSelectedDish(String selectedDish) {
+        this.selectedDish = selectedDish;
+    }
 
     @FXML
     private Label dishNameLabel;
@@ -41,28 +46,24 @@ public class DishInformationController {
     @FXML
     private TextArea dishStatusTextArea;
 
-
-    public void initData(String dishName) {
-        dishNameLabel.setText(dishName);
-        // You can populate other fields with information about the selected dish
-    }
-    private DefaultListModel<String> recipeModel;
-
     private int dishID;
 
-    public void initialize(int dishID, String dishName) {
-        System.out.println("Initializing DishInformationController"); // Print statement for debugging
-        this.dishID = dishID;
+    public DishInformationController(int dishID, String selectedDish) {
+    }
+
+    public void initialize() {
+        // Initialize the controller here
+        System.out.println("Initializing DishInformationController");
         try {
-            displayDishInformation(dishName);
+            System.out.println("4");
+            displayDishInformation(selectedDish); // Use selectedDish here
             populateRecipeList(dishID);
             populateDishSteps(dishID);
         } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace(); // Print stack trace for debugging
-            // Display an error message to the user
             showAlert(Alert.AlertType.ERROR, "Error", "Error loading dish information.", e.getMessage());
         }
     }
+
 
     private void displayDishInformation(String dishName) throws SQLException, ClassNotFoundException {
         Connection connection = DatabaseUtil.connectToDatabase();
@@ -71,6 +72,7 @@ public class DishInformationController {
                 "LEFT JOIN in2033t02Dish_Recipes dr ON d.Dish_ID = dr.Dish_ID " +
                 "LEFT JOIN in2033t02Recipe r ON dr.Recipe_ID = r.Recipe_ID " +
                 "WHERE d.Name = ?";
+        System.out.println("3");
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -83,13 +85,7 @@ public class DishInformationController {
                 String status = resultSet.getString("Status");
                 String course = resultSet.getString("Course");
                 String recipes = resultSet.getString("Recipes");
-
-                // Update all relevant UI elements
-                System.out.println("Description: " + description);
-                System.out.println("Picture URL: " + pictureURL);
-                System.out.println("Status: " + status);
-                System.out.println("Course: " + course);
-                System.out.println("Recipes: " + recipes);
+                System.out.println("4");
 
                 dishNameLabel.setText("Dish Name: " + dishName);
                 dishDescriptionTextArea.setText("Description: " + description);
@@ -97,24 +93,18 @@ public class DishInformationController {
                 dishStatusLabel.setText("Status: " + status);
 
                 try {
-                    // Load image from URL and set it to the ImageView
                     Image image = new Image(new URL(pictureURL).toExternalForm(), true);
                     dishPictureLabel.setImage(image);
                 } catch (MalformedURLException e) {
-                    // If the URL is invalid, handle the exception or show an error message
-                    // dishPictureLabel.setText("Image not available");
-                    e.printStackTrace();
+             //       dishPictureLabel.setText("Image not available");
                 }
 
-                // Display recipes
                 if (recipes != null && !recipes.isEmpty()) {
                     String[] recipeNames = recipes.split(",");
                     recipeList.getItems().addAll(recipeNames);
                 }
             } else {
-                // If no data is found for the given dish name, you might want to handle this case
-                // For example, display an error message or clear the UI elements
-                System.out.println("No data found for dish: " + dishName);
+                dishNameLabel.setText("No data found for this dish");
             }
 
             preparedStatement.close();
@@ -122,11 +112,14 @@ public class DishInformationController {
             connection.close();
         }
     }
+    public void initData(String dishName) {
+        dishNameLabel.setText(dishName);
 
-
+    }
     private void populateRecipeList(int dishID) throws SQLException, ClassNotFoundException {
         Connection connection = DatabaseUtil.connectToDatabase();
         String query = "SELECT Recipe.Name FROM in2033t02Recipe Recipe JOIN in2033t02Dish_Recipes DR ON Recipe.Recipe_ID = DR.Recipe_ID WHERE DR.Dish_ID = ?";
+        System.out.println("2");
 
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -138,6 +131,8 @@ public class DishInformationController {
                 String recipeName = resultSet.getString("Name");
                 recipeList.getItems().add(recipeName);
             }
+
+            System.out.println("5");
 
             preparedStatement.close();
         } finally {
@@ -156,23 +151,37 @@ public class DishInformationController {
             ResultSet resultSet = preparedStatement.executeQuery();
             StringBuilder stepsBuilder = new StringBuilder();
 
-            while (resultSet.next()) {
+            while (resultSet.next())  {
                 int stepNumber = resultSet.getInt("Step_Number");
-                String stepDescription = resultSet.getString("Step_Description");
-                stepsBuilder.append("Step ").append(stepNumber).append(": ").append(stepDescription).append("\n");
-            }
+            String stepDescription = resultSet.getString("Step_Description");
+            stepsBuilder.append("Step ").append(stepNumber).append(": ").append(stepDescription).append("\n");
+        }
+            System.out.println("8");
+
 
             dishStepsTextArea.setText(stepsBuilder.toString());
 
-            preparedStatement.close();
-        } finally {
-            connection.close();
-        }
+        preparedStatement.close();
+    } finally {
+        connection.close();
+    }
+}
+    public void setVisible(boolean isVisible) {
+        dishNameLabel.setVisible(isVisible);
+        dishDescriptionTextArea.setVisible(isVisible);
+        dishPictureLabel.setVisible(isVisible);
+        dishCourseLabel.setVisible(isVisible);
+        recipeList.setVisible(isVisible);
+        dishStepsTextArea.setVisible(isVisible);
+        dishStatusLabel.setVisible(isVisible);
+        dishStatusTextArea.setVisible(isVisible);
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String message, String details) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
+        System.out.println("5");
+
         alert.setHeaderText(null);
         alert.setContentText(message);
         if (details != null && !details.isEmpty()) {
