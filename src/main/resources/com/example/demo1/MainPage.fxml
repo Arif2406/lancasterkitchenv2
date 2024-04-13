@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.MainPageController">
+   <left>
+      <VBox prefHeight="149.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="chefsButton" mnemonicParsing="false" onAction="#handleChefsButtonClick" prefHeight="48.0" prefWidth="100.0" text="Chefs" />
+            <Button fx:id="wasteButton" mnemonicParsing="false" onAction="#handleWasteButtonClick" prefHeight="48.0" prefWidth="100.0" text="Waste" />
+            <Button fx:id="menusButton" mnemonicParsing="false" onAction="#handleMenusButtonClick" prefHeight="51.0" prefWidth="100.0" text="Menus" />
+            <Button fx:id="ordersButton" mnemonicParsing="false" onAction="#handleOrdersButtonClick" prefHeight="51.0" prefWidth="100.0" text="Orders" />
+            <Button fx:id="dishesButton" mnemonicParsing="false" onAction="#handleDishesButtonClick" prefHeight="51.0" prefWidth="100.0" text="Dishes" />
+            <Button fx:id="stockButton" mnemonicParsing="false" onAction="#handleStockButtonClick" prefHeight="51.0" prefWidth="100.0" text="Stock" />
+         </children>
+      </VBox>
+   </left>
+   <top>
+      <SplitPane dividerPositions="0.1697324414715719" prefHeight="99.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+        <items>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <Label layoutX="156.0" layoutY="34.0" text="Lancaster Kitchen" textAlignment="CENTER" AnchorPane.topAnchor="34.0">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+        </items>
+      </SplitPane>
+   </top>
+</BorderPane>
