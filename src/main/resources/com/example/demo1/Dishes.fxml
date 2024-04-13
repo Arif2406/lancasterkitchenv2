@@ -1,16 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.Dishes">
-    <children>
-        <BorderPane layoutX="91.0" layoutY="46.0" prefHeight="288.0" prefWidth="389.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <top>
-                <Label text="Dishes" translateY="25.0" BorderPane.alignment="CENTER" />
-            </top>
-        </BorderPane>
-    </children>
-</AnchorPane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.yourapp.ManageDishesController">
+    <top>
+        <AnchorPane prefHeight="70.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label layoutX="324.0" layoutY="39.0" text="Manage Dishes" textFill="#fff" textAlignment="CENTER">
+                    <font>
+                        <Font size="50.0" />
+                    </font>
+                </Label>
+            </children>
+            <style>
+                .anchor-pane {
+                -fx-background-color: #ddd;
+                }
+            </style>
+        </AnchorPane>
+    </top>
+    <center>
+        <FlowPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" hgap="10" vgap="10">
+            <children>
+                <Button fx:id="viewCurrentDishesButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="250.0" text="Current dishes on the menu" />
+                <Button fx:id="addNewDishButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="250.0" text="Add a new Dish" />
+                <Button fx:id="viewPendingDishesButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="250.0" text="Pending for approval dishes" />
+                <Button fx:id="viewAllDishesButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="250.0" text="All the dishes" />
+                <Button fx:id="homeButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="250.0" text="Home Page" />
+            </children>
+        </FlowPane>
+    </center>
+</BorderPane>
