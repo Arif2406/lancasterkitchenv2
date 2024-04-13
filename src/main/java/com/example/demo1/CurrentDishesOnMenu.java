@@ -1,5 +1,4 @@
-
-        package com.example.demo1;
+package com.example.demo1;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,16 +8,24 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.Image;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 
 public class CurrentDishesOnMenu {
+
+
+    // Define columns
+    @FXML
+    private TableColumn<Recipe, String> nameColumn;
 
     @FXML
     private ListView<String> dishList;
@@ -33,23 +40,23 @@ public class CurrentDishesOnMenu {
     private Label statusLabel;
 
     @FXML
-    private Label recipeNamesLabel;
-
-    @FXML
-    private TextArea recipesTextArea;
-
-    @FXML
     private Label chefLabel;
 
     @FXML
     private TextArea descriptionArea;
+
     @FXML
     private TextArea stepsTextArea;
-
     @FXML
-    private ImageView imageView;
+    private TableView<Recipe> recipeTable; // Change the type to TableView<Recipe>
 
     public void initialize() {
+        // Initialize columns
+        nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
+
+        nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
+
+        // Populate dishes list
         try {
             populateDishesList();
         } catch (SQLException | ClassNotFoundException ex) {
@@ -57,10 +64,13 @@ public class CurrentDishesOnMenu {
             showAlert(AlertType.ERROR, "Error", "Error loading dishes from database.", ex.getMessage());
         }
 
+        // Handle dish selection
         dishList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 try {
                     openDishInformation(newValue);
+                    // Clear table on selection (optional, comment out if needed)
+                    // recipeTable.getItems().clear();
                 } catch (ClassNotFoundException | SQLException e) {
                     e.printStackTrace();
                     showAlert(AlertType.ERROR, "Error", "Error opening dish information.", e.getMessage());
@@ -68,7 +78,6 @@ public class CurrentDishesOnMenu {
             }
         });
     }
-
     private void populateDishesList() throws SQLException, ClassNotFoundException {
         Connection connection = DatabaseUtil.connectToDatabase();
         String query = "SELECT Name FROM in2033t02Dish";
@@ -109,27 +118,47 @@ public class CurrentDishesOnMenu {
         }
     }
 
-
-
-    private void fetchAndDisplayRecipeNames(String selectedDish) throws SQLException, ClassNotFoundException {
+    private void fetchAndDisplayRecipeDescription(int recipeID) throws SQLException, ClassNotFoundException {
+        // Fetch recipe description from database
         Connection connection = DatabaseUtil.connectToDatabase();
-        String query = "SELECT r.Name " +
+        String query = "SELECT Description FROM in2033t02Recipe WHERE Recipe_ID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, recipeID);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    // Display recipe description
+                    String description = rs.getString("Description");
+                    // Set description in appropriate TextArea
+                    descriptionArea.setText("Recipe Description: " + description);
+                }
+            }
+        }
+    }   private void fetchAndDisplayRecipeNames(String selectedDish) throws SQLException, ClassNotFoundException {
+        Connection connection = DatabaseUtil.connectToDatabase();
+        String query = "SELECT dr.Recipe_ID, r.Name, r.Description " +
                 "FROM in2033t02Dish_Recipes dr " +
                 "JOIN in2033t02Recipe r ON dr.Recipe_ID = r.Recipe_ID " +
                 "WHERE dr.Dish_ID = (SELECT Dish_ID FROM in2033t02Dish WHERE Name = ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, selectedDish);
             try (ResultSet rs = stmt.executeQuery()) {
-                StringBuilder recipeNames = new StringBuilder();
+                ObservableList<Recipe> recipes = FXCollections.observableArrayList();
                 while (rs.next()) {
-                    recipeNames.append(rs.getString("Name")).append("\n");
+                    int recipeID = rs.getInt("Recipe_ID");
+                    String name = rs.getString("Name");
+                    String description = rs.getString("Description");
+                    Recipe recipe = new Recipe(recipeID, name, description);
+                    recipes.add(recipe);
                 }
-                recipeNamesLabel.setText("Recipes:");
-                recipesTextArea.setText(recipeNames.toString());
+
+                // Debug print to check fetched recipe count
+                System.out.println("Fetched " + recipes.size() + " recipe(s).");
+
+                // Set the items directly to the tableview
+                recipeTable.setItems(recipes);
             }
         }
     }
-
 
 
     private void showAlert(AlertType alertType, String title, String message, String details) {

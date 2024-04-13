@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-        <?import javafx.scene.control.Button?>
-        <?import javafx.scene.control.Label?>
-        <?import javafx.scene.control.ListView?>
-        <?import javafx.scene.control.TextArea?>
-        <?import javafx.scene.layout.BorderPane?>
-        <?import javafx.scene.layout.HBox?>
-        <?import javafx.scene.layout.VBox?>
-        <?import javafx.scene.text.Font?>
-        <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 
-        <?import java.net.URL?>
-        <?import javafx.scene.layout.AnchorPane?>
+<?import java.net.URL?>
 <BorderPane minHeight="1080.0" minWidth="1920.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.CurrentDishesOnMenu">
     <top>
-        <AnchorPane prefHeight="70.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+        <HBox prefHeight="70.0" prefWidth="800.0" BorderPane.alignment="CENTER">
             <children>
-                <Label layoutX="324.0" layoutY="39.0" text="Manage Dishes" textFill="#fff" textAlignment="CENTER">
+                <Label text="Manage Dishes" textFill="#fff">
                     <font>
                         <Font size="50.0" />
                     </font>
@@ -24,7 +24,7 @@
             <stylesheets>
                 <URL value="@style.css"/>
             </stylesheets>
-        </AnchorPane>
+        </HBox>
     </top>
     <center>
         <HBox spacing="20">
@@ -36,11 +36,14 @@
                 <Label fx:id="statusLabel" />
                 <Label fx:id="chefLabel" />
                 <TextArea fx:id="descriptionArea" wrapText="true" prefWidth="300" prefHeight="50"/>
-                <ImageView fx:id="imageView" fitWidth="200" fitHeight="200" />
                 <TextArea fx:id="stepsTextArea" wrapText="true" prefWidth="300" prefHeight="200"/>
-                <Label fx:id="recipeNamesLabel" />
-                <TextArea fx:id="recipesTextArea" wrapText="true" prefWidth="300" prefHeight="200"/>
-
+                <TableView fx:id="recipeTable">
+                    <columns>
+                        <TableColumn fx:id="nameColumn" text="Recipe Name">
+                            <cellValueFactory><PropertyValueFactory property="name"/></cellValueFactory>
+                        </TableColumn>
+                    </columns>
+                </TableView>
             </VBox>
         </HBox>
     </center>
