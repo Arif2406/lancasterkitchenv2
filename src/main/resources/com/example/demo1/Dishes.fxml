@@ -23,7 +23,7 @@
         </AnchorPane>
     </top>
     <center>
-        <FlowPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" hgap="10" vgap="10">
+        <FlowPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" hgap="10" vgap="10" alignment="CENTER">
             <children>
                 <Button fx:id="viewCurrentDishesButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="250.0" text="Current dishes on the menu" onAction="#handleViewCurrentDishes" />
                 <Button fx:id="addNewDishButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="250.0" text="Add a new Dish" />

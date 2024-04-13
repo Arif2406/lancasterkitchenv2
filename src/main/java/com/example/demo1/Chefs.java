@@ -1,8 +1,6 @@
 package com.example.demo1;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
@@ -75,7 +73,36 @@ public class Chefs {
         }
     }
 
-    // Remaining methods unchanged
+    // Event handler methods for menu buttons
+    @FXML
+    private void handleChefsButtonClick() {
+        // Handle Chefs button click
+    }
+
+    @FXML
+    private void handleWasteButtonClick() {
+        // Handle Waste button click
+    }
+
+    @FXML
+    private void handleMenusButtonClick() {
+        // Handle Menus button click
+    }
+
+    @FXML
+    private void handleOrdersButtonClick() {
+        // Handle Orders button click
+    }
+
+    @FXML
+    private void handleDishesButtonClick() {
+        // Handle Dishes button click
+    }
+
+    @FXML
+    private void handleStockButtonClick() {
+        // Handle Stock button click
+    }
 
     private void showAlert(AlertType alertType, String title, String message, String details) {
         Alert alert = new Alert(alertType);

@@ -1,4 +1,86 @@
 package com.example.demo1;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 public class Waste {
+
+    @FXML
+    private TableView<ObservableList<String>> wasteTable;
+
+    @FXML
+    private TableColumn<ObservableList<String>, String> ingredientNameColumn;
+    @FXML
+    private TableColumn<ObservableList<String>, String> quantityWastedColumn;
+    @FXML
+    private TableColumn<ObservableList<String>, String> unitColumn;
+    @FXML
+    private TableColumn<ObservableList<String>, String> dateOfWasteColumn;
+    @FXML
+    private TableColumn<ObservableList<String>, String> reasonColumn;
+
+    @FXML
+    public void initialize() {
+        setupColumns();
+        loadWasteData();
+    }
+
+    private void loadWasteData() {
+        ObservableList<ObservableList<String>> data = FXCollections.observableArrayList();
+        String query = "SELECT w.Waste_ID, i.Name, w.Quantity_Wasted, w.Unit, w.Date_of_Waste, w.Reason " +
+                "FROM in2033t02Waste_Log w JOIN in2033t02Ingredient i ON w.Ingredient_ID = i.Ingredient_ID";
+        try (Connection connection = DatabaseUtil.connectToDatabase();
+             PreparedStatement stmt = connection.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+
+            wasteTable.getItems().clear();
+
+            while (rs.next()) {
+                ObservableList<String> row = FXCollections.observableArrayList();
+                for (int i = 2; i <= rs.getMetaData().getColumnCount(); i++) {  // Skip Waste_ID and Ingredient_ID
+                    row.add(rs.getString(i));
+                }
+                data.add(row);
+            }
+            wasteTable.setItems(data);
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "Error loading waste data from database.", ex.getMessage());
+        }
+    }
+
+    private void setupColumns() {
+        ingredientNameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(0)));
+        quantityWastedColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(1)));
+        unitColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(2)));
+        dateOfWasteColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(3)));
+        reasonColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(4)));
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String message, String details) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        if (details != null && !details.isEmpty()) {
+            Label label = new Label("Details:");
+            TextArea textArea = new TextArea(details);
+            textArea.setEditable(false);
+            textArea.setWrapText(true);
+            textArea.setMaxWidth(Double.MAX_VALUE);
+            textArea.setMaxHeight(Double.MAX_VALUE);
+            VBox vBox = new VBox(label, textArea);
+            alert.getDialogPane().setExpandableContent(vBox);
+        }
+        alert.showAndWait();
+    }
 }
+

@@ -7,11 +7,16 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.stage.Screen;
 
 import java.awt.*;
 import java.io.IOException;
 
 public class Dishes {
+
+    @FXML
+    private BorderPane rootPane;
+
 
     @FXML
     private Button viewCurrentDishesButton;
@@ -41,6 +46,16 @@ public class Dishes {
         }
     }
 
+    public void initialize() {
+        // Get the screen dimensions
+        double screenWidth = Screen.getPrimary().getVisualBounds().getWidth();
+        double screenHeight = Screen.getPrimary().getVisualBounds().getHeight();
+
+        // Set the BorderPane properties to match the screen dimensions
+        rootPane.setMinWidth(screenWidth);
+        rootPane.setMinHeight(screenHeight);
+        rootPane.setMaxWidth(screenWidth);
+        rootPane.setMaxHeight(screenHeight);}
 
     // Add action methods for other buttons as needed
 
