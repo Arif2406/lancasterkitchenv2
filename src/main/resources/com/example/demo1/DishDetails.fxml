@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+
+<BorderPane minHeight="1080.0" minWidth="1920.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.DishInformationController">
+    <top>
+        <Label fx:id="dishNameLabel" />
+    </top>
+    <center>
+        <FlowPane>
+            <children>
+                <ScrollPane>
+                    <content>
+                        <TextArea fx:id="dishDescriptionTextArea" editable="false" />
+                    </content>
+                </ScrollPane>
+                <ImageView fx:id="dishPictureLabel" />
+                <ListView fx:id="recipeList" />
+                <ScrollPane>
+                    <content>
+                        <TextArea fx:id="dishStepsTextArea" editable="false" />
+                    </content>
+                </ScrollPane>
+            </children>
+        </FlowPane>
+    </center>
+    <bottom>
+        <Label fx:id="dishCourseLabel" />
+        <Label fx:id="dishStatusLabel" />
+    </bottom>
+</BorderPane>

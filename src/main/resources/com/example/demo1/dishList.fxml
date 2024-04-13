@@ -3,7 +3,6 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.control.ScrollPane?>
-
 <BorderPane xmlns="http://javafx.com/javafx"
             xmlns:fx="http://javafx.com/fxml"
             prefHeight="300.0" prefWidth="400.0"
@@ -12,7 +11,7 @@
     <center>
         <ScrollPane>
             <content>
-                <ListView fx:id="dishList"/>
+                <ListView fx:id="dishList" onMouseClicked="#handleDishSelected"/>
             </content>
         </ScrollPane>
     </center>
