@@ -7,9 +7,7 @@
 <?import javafx.scene.text.Font?>
 
 <?import java.net.URL?>
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="800.0" fx:controller="com.example.demo1.Dishes"
-            xmlns="http://javafx.com/javafx/11"
-            xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane minHeight="1080.0" minWidth="1920.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.Dishes">
     <top>
         <AnchorPane prefHeight="70.0" prefWidth="800.0" BorderPane.alignment="CENTER">
             <children>
@@ -27,7 +25,7 @@
     <center>
         <FlowPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" hgap="10" vgap="10">
             <children>
-                <Button fx:id="viewCurrentDishesButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="250.0" text="Current dishes on the menu" />
+                <Button fx:id="viewCurrentDishesButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="250.0" text="Current dishes on the menu" onAction="#handleViewCurrentDishes" />
                 <Button fx:id="addNewDishButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="250.0" text="Add a new Dish" />
                 <Button fx:id="viewPendingDishesButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="250.0" text="Pending for approval dishes" />
                 <Button fx:id="viewAllDishesButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="250.0" text="All the dishes" />

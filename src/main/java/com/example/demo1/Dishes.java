@@ -1,10 +1,15 @@
 package com.example.demo1;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.*;
+import java.io.IOException;
 
 public class Dishes {
 
@@ -23,32 +28,27 @@ public class Dishes {
     @FXML
     private Button homeButton;
 
-    private static List<Dish> currentDishes = new ArrayList<>(); // List to hold current dishes
-
     @FXML
-    public void initialize() {
-        // Optional: perform any initialization tasks here (e.g., add some sample dishes)
-        currentDishes.add(new Dish("Pizza", "Tomato sauce, cheese, dough"));
-        currentDishes.add(new Dish("Pasta", "Pasta, tomato sauce, vegetables"));
+    private void handleViewCurrentDishes(ActionEvent event) {
+        // Implement the action for viewing current dishes
+        try {
+            BorderPane root = (BorderPane) viewCurrentDishesButton.getScene().getRoot();
+            BorderPane pane = FXMLLoader.load(getClass().getResource("dishList.fxml"));
+            root.setCenter(pane);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "Error loading Current Dishes on Menu.", e.getMessage());
+        }
     }
 
-    // Other methods...
 
-    public static class Dish {
-        private String name;
-        private String ingredients;
+    // Add action methods for other buttons as needed
 
-        public Dish(String name, String ingredients) {
-            this.name = name;
-            this.ingredients = ingredients;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public String getIngredients() {
-            return ingredients;
-        }
+    private void showAlert(Alert.AlertType alertType, String title, String message, String details) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
