@@ -20,6 +20,8 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
+import javax.swing.*;
+
 public class CurrentDishesOnMenu {
 
 
@@ -77,6 +79,12 @@ public class CurrentDishesOnMenu {
                 }
             }
         });
+        recipeTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                // Fetch and display recipe description
+                fetchAndDisplayRecipeDescription(newValue.getRecipeID());
+            }
+        });
     }
     private void populateDishesList() throws SQLException, ClassNotFoundException {
         Connection connection = DatabaseUtil.connectToDatabase();
@@ -118,22 +126,62 @@ public class CurrentDishesOnMenu {
         }
     }
 
-    private void fetchAndDisplayRecipeDescription(int recipeID) throws SQLException, ClassNotFoundException {
-        // Fetch recipe description from database
-        Connection connection = DatabaseUtil.connectToDatabase();
-        String query = "SELECT Description FROM in2033t02Recipe WHERE Recipe_ID = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, recipeID);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    // Display recipe description
-                    String description = rs.getString("Description");
-                    // Set description in appropriate TextArea
-                    descriptionArea.setText("Recipe Description: " + description);
+    private void fetchAndDisplayRecipeDescription(int recipeID) {
+        try {
+            // Fetch recipe details from the database
+            Connection connection = DatabaseUtil.connectToDatabase();
+            String query = "SELECT Name, Status, Review_Date, Description FROM in2033t02Recipe WHERE Recipe_ID = ?";
+            try (PreparedStatement stmt = connection.prepareStatement(query)) {
+                stmt.setInt(1, recipeID);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        // Display recipe details
+                        String name = rs.getString("Name");
+                        String status = rs.getString("Status");
+                        String reviewDate = rs.getString("Review_Date");
+                        String description = rs.getString("Description");
+
+                        // Set details in appropriate labels
+                        nameLabel.setText("Name: " + name);
+                        statusLabel.setText("Status: " + status);
+                        //reviewDateLabel.setText("Review Date: " + reviewDate);
+                        descriptionArea.setText("Description: " + description);
+
+                        // Fetch and display recipe steps
+                        fetchAndDisplayRecipeSteps(recipeID);
+                    }
                 }
             }
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+            showAlert(AlertType.ERROR, "Error", "Error fetching recipe details.", ex.getMessage());
         }
-    }   private void fetchAndDisplayRecipeNames(String selectedDish) throws SQLException, ClassNotFoundException {
+    }
+
+    private void fetchAndDisplayRecipeSteps(int recipeID) {
+        try {
+            // Fetch recipe steps from the database
+            Connection connection = DatabaseUtil.connectToDatabase();
+            String query = "SELECT Step_Description FROM in2033t02Recipe_Steps WHERE Recipe_ID = ?";
+            try (PreparedStatement stmt = connection.prepareStatement(query)) {
+                stmt.setInt(1, recipeID);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    StringBuilder steps = new StringBuilder();
+                    while (rs.next()) {
+                        steps.append(rs.getString("Step_Description")).append("\n");
+                    }
+                    // Display recipe steps in the text area
+                    stepsTextArea.setText("Steps: \n" + steps.toString());
+                }
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+            ex.printStackTrace();
+            showAlert(AlertType.ERROR, "Error", "Error fetching recipe steps.", ex.getMessage());
+        }
+    }
+
+
+    private void fetchAndDisplayRecipeNames(String selectedDish) throws SQLException, ClassNotFoundException {
         Connection connection = DatabaseUtil.connectToDatabase();
         String query = "SELECT dr.Recipe_ID, r.Name, r.Description " +
                 "FROM in2033t02Dish_Recipes dr " +

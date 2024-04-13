@@ -26,25 +26,36 @@
             </stylesheets>
         </HBox>
     </top>
+    <left>
+        <ListView fx:id="dishList" prefWidth="200" />
+    </left>
     <center>
-        <HBox spacing="20">
-            <ListView fx:id="dishList" prefWidth="200" />
-            <VBox spacing="10">
-                <Label text="Dish Information"/>
-                <Label fx:id="nameLabel" />
-                <Label fx:id="courseLabel" />
-                <Label fx:id="statusLabel" />
-                <Label fx:id="chefLabel" />
-                <TextArea fx:id="descriptionArea" wrapText="true" prefWidth="300" prefHeight="50"/>
-                <TextArea fx:id="stepsTextArea" wrapText="true" prefWidth="300" prefHeight="200"/>
-                <TableView fx:id="recipeTable">
-                    <columns>
-                        <TableColumn fx:id="nameColumn" text="Recipe Name">
-                            <cellValueFactory><PropertyValueFactory property="name"/></cellValueFactory>
-                        </TableColumn>
-                    </columns>
-                </TableView>
-            </VBox>
-        </HBox>
+        <VBox spacing="10">
+            <Label text="Dish Information"/>
+            <Label fx:id="nameLabel" />
+            <Label fx:id="courseLabel" />
+            <Label fx:id="statusLabel" />
+            <Label fx:id="chefLabel" />
+            <TextArea fx:id="stepsTextArea" wrapText="true" prefWidth="300" prefHeight="200"/>
+            <TableView fx:id="recipeTable">
+                <columns>
+                    <TableColumn fx:id="nameColumn" text="Recipe Name">
+                        <cellValueFactory><PropertyValueFactory property="name"/></cellValueFactory>
+                    </TableColumn>
+                </columns>
+            </TableView>
+        </VBox>
     </center>
+    <right>
+            <VBox spacing="10">
+                <Label text="Recipe Details"/>
+                <Label fx:id="nameLabel" />
+                <Label fx:id="statusLabel" />
+                <Label fx:id="reviewDateLabel" />
+                <TextArea fx:id="descriptionArea" wrapText="true" prefWidth="300" prefHeight="200"/>
+                <Label text="Recipe Steps"/>
+                <TextArea fx:id="stepsTextArea" wrapText="true" prefWidth="300" prefHeight="200"/>
+
+            </VBox>
+    </right>
 </BorderPane>

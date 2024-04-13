@@ -1,3 +1,4 @@
+
 package com.example.demo1;
 
 import javafx.beans.property.SimpleStringProperty;
@@ -55,5 +56,4 @@ public class Recipe {
         this.recipeID = recipeID;
         this.name = new SimpleStringProperty(name);
         this.description = description;
-    }
-}
+    }}
