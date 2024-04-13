@@ -1,16 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.Chefs">
+<AnchorPane minHeight="1080.0" minWidth="1920.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <BorderPane layoutX="91.0" layoutY="46.0" prefHeight="288.0" prefWidth="389.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <top>
-            <Label text="Chefs" translateY="25.0" BorderPane.alignment="CENTER" />
-         </top>
-      </BorderPane>
+      <VBox prefHeight="70.0" prefWidth="1920.0" style="-fx-background-color: gray;">
+         <children>
+            <Label fx:id="bannerLabel" text="Chefs" textFill="WHITE" textAlignment="CENTER">
+               <font>
+                  <Font size="50.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+      <TableView fx:id="table" layoutY="90.0" prefHeight="300.0" prefWidth="800.0">
+         <columns>
+            <TableColumn fx:id="nameColumn" prefWidth="200.0" text="Name" />
+            <TableColumn fx:id="roleColumn" prefWidth="150.0" text="Role" />
+            <TableColumn fx:id="idColumn" prefWidth="50.0" text="ID" />
+         </columns>
+      </TableView>
+      <HBox layoutX="850.0" layoutY="80.0" spacing="10.0">
+         <children>
+            <Button fx:id="addButton" text="Add Chef" />
+            <Button fx:id="removeButton" text="Remove Chef" />
+            <Button fx:id="homeButton" text="Home" />
+         </children>
+      </HBox>
    </children>
 </AnchorPane>
