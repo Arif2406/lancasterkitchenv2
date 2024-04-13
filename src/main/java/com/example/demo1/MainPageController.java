@@ -36,7 +36,7 @@ public class MainPageController {
 
     @FXML
     private void handleStockButtonClick(ActionEvent event) {
-        navigateToPage("Stock.fxml", "Stock", event);
+        navigateToPage("SupplierStock.fxml", "Stock", event);
     }
 
     private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
