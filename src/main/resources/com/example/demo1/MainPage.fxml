@@ -12,22 +12,40 @@
    <left>
       <VBox prefHeight="149.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="chefsButton" mnemonicParsing="false" onAction="#handleChefsButtonClick" prefHeight="48.0" prefWidth="100.0" text="Chefs" />
-            <Button fx:id="wasteButton" mnemonicParsing="false" onAction="#handleWasteButtonClick" prefHeight="48.0" prefWidth="100.0" text="Waste" />
-            <Button fx:id="menusButton" mnemonicParsing="false" onAction="#handleMenusButtonClick" prefHeight="51.0" prefWidth="100.0" text="Menus" />
-            <Button fx:id="ordersButton" mnemonicParsing="false" onAction="#handleOrdersButtonClick" prefHeight="51.0" prefWidth="100.0" text="Orders" />
-            <Button fx:id="dishesButton" mnemonicParsing="false" onAction="#handleDishesButtonClick" prefHeight="51.0" prefWidth="100.0" text="Dishes" />
-            <Button fx:id="stockButton" mnemonicParsing="false" onAction="#handleStockButtonClick" prefHeight="51.0" prefWidth="100.0" text="Stock" />
+            <Button fx:id="chefsButton" mnemonicParsing="false" onAction="#handleChefsButtonClick" prefHeight="48.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #FFFFFF;" text="Chefs" textFill="#d9d9d9">
+               <font>
+                  <Font name="Monotype Corsiva" size="16.0" />
+               </font></Button>
+            <Button fx:id="wasteButton" mnemonicParsing="false" onAction="#handleWasteButtonClick" prefHeight="48.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #FFFFFF;" text="Waste" textFill="#d9d9d9">
+               <font>
+                  <Font name="Monotype Corsiva" size="16.0" />
+               </font></Button>
+            <Button fx:id="menusButton" mnemonicParsing="false" onAction="#handleMenusButtonClick" prefHeight="51.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #FFFFFF;" text="Menus" textFill="#d9d9d9">
+               <font>
+                  <Font name="Monotype Corsiva" size="16.0" />
+               </font></Button>
+            <Button fx:id="ordersButton" mnemonicParsing="false" onAction="#handleOrdersButtonClick" prefHeight="51.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #FFFFFF;" text="Orders" textFill="#d9d9d9">
+               <font>
+                  <Font name="Monotype Corsiva" size="16.0" />
+               </font></Button>
+            <Button fx:id="dishesButton" mnemonicParsing="false" onAction="#handleDishesButtonClick" prefHeight="51.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #FFFFFF;" text="Dishes" textFill="#d9d9d9">
+               <font>
+                  <Font name="Monotype Corsiva" size="16.0" />
+               </font></Button>
+            <Button fx:id="stockButton" mnemonicParsing="false" onAction="#handleStockButtonClick" prefHeight="51.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #FFFFFF;" text="Stock" textFill="#d9d9d9">
+               <font>
+                  <Font name="Monotype Corsiva" size="16.0" />
+               </font></Button>
          </children>
       </VBox>
    </left>
    <top>
       <SplitPane dividerPositions="0.1697324414715719" prefHeight="99.0" prefWidth="600.0" BorderPane.alignment="CENTER">
         <items>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #2B3336;" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #2B3336;">
                <children>
-                  <Label layoutX="156.0" layoutY="34.0" text="Lancaster Kitchen" textAlignment="CENTER" AnchorPane.topAnchor="34.0">
+                  <Label layoutX="156.0" layoutY="34.0" text="Lancaster Kitchen" textAlignment="CENTER" textFill="#d9d9d9" AnchorPane.topAnchor="34.0">
                      <font>
                         <Font size="24.0" />
                      </font>
