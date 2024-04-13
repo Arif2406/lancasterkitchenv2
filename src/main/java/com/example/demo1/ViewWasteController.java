@@ -1,11 +1,16 @@
 package com.example.demo1;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,8 +19,10 @@ import java.util.ArrayList;
 
 public class ViewWasteController {
 
+
     @FXML
     private TableView<Object[]> table;
+
 
     @FXML
     private TableColumn<Object[], String> dateColumn;
@@ -31,6 +38,37 @@ public class ViewWasteController {
 
     @FXML
     private TableColumn<Object[], String> reasonColumn;
+
+    @FXML
+    private void handleChefsButtonClick(ActionEvent event) {
+        navigateToPage("Chefs.fxml", "Chefs", event);
+    }
+
+    @FXML
+    private void handleWasteButtonClick(ActionEvent event) {
+        navigateToPage("Waste.fxml", "Waste", event);
+    }
+
+    @FXML
+    private void handleMenusButtonClick(ActionEvent event) {
+        navigateToPage("Menus.fxml", "Menus", event);
+    }
+
+    @FXML
+    private void handleOrdersButtonClick(ActionEvent event) {
+        navigateToPage("Orders.fxml", "Orders", event);
+    }
+
+    @FXML
+    private void handleDishesButtonClick(ActionEvent event) {
+        navigateToPage("Dishes.fxml", "Dishes", event);
+    }
+
+    @FXML
+    private void handleStockButtonClick(ActionEvent event) {
+        navigateToPage("Stock.fxml", "Stock", event);
+    }
+
 
     public void initialize() {
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
@@ -92,5 +130,21 @@ public class ViewWasteController {
     @FXML
     private void returnToMainMenu() {
         // Implement returnToMainMenu method logic here
+    }
+
+
+    private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Scene scene = new Scene(loader.load());
+            Stage stage = new Stage();
+            stage.setTitle(title);
+            stage.setScene(scene);
+            stage.show();
+            Stage mainStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            mainStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
