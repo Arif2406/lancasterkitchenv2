@@ -10,6 +10,12 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.scene.control.Label;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -28,6 +34,24 @@ public class LoginController {
         validUsers.put("souschef", "pass");
         validUsers.put("user", "pass");
     }
+
+    @FXML
+    private Label timeLabel;
+
+    public void initialize() {
+        // Update time label every second
+        Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String timeText = timeFormatter.format(now);
+            String dateText = dateFormatter.format(now);
+            timeLabel.setText("Time: " + timeText + "   Date: " + dateText);
+        }), new KeyFrame(Duration.seconds(1)));
+        clock.setCycleCount(Timeline.INDEFINITE);
+        clock.play();
+    }
+
 
     @FXML
     protected void handleLoginButton(ActionEvent event) {
