@@ -18,6 +18,7 @@
          <columns>
             <TableColumn fx:id="ingredientNameColumn" prefWidth="228.66669464111328" text="Ingredient" />
             <TableColumn fx:id="stockLevelColumn" prefWidth="113.3333740234375" text="Stock Level" />
+            <TableColumn fx:id="unitColumn" prefWidth="113.3333740234375" text="Unit" />
          </columns>
       </TableView>
    </center>
