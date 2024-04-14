@@ -34,7 +34,7 @@ public class Chefs {
     public void initialize() {
         nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[0].toString()));
         roleColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[1].toString()));
-        idColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[2].toString()));
+
 
         loadChefData();
     }
@@ -44,25 +44,25 @@ public class Chefs {
             Connection connection = DatabaseUtil.connectToDatabase();
             System.out.println("Connecting to database...");
 
-            String query = "SELECT * FROM in2033t02Chef";
+            // Adjusted query to select only the non-sensitive data
+            String query = "SELECT Name, Role FROM in2033t02Chef";
             System.out.println("SQL Query: " + query);
 
             PreparedStatement stmt = connection.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
 
-            table.getColumns().clear();
-            table.getItems().clear();
+            // Assuming that the first column is Chef_Name and the second column is Chef_Role
+            // These indexes start at 0 because when you store the results in the Object array, you start with index 0
+            nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[0].toString()));
+            roleColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[1].toString()));
 
-            for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
-                final int index = i - 1;
-                TableColumn<Object[], String> column = new TableColumn<>(rs.getMetaData().getColumnName(i));
-                column.setCellValueFactory(data -> new SimpleStringProperty(data.getValue()[index].toString()));
-                table.getColumns().add(column);
-            }
+            // Remove the ID column from the display, as it is now not being queried
+            idColumn.setVisible(false);
 
             while (rs.next()) {
-                Object[] row = new Object[rs.getMetaData().getColumnCount()];
-                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
+                // Adjusted to fit the new query, now only two columns
+                Object[] row = new Object[2];
+                for (int i = 1; i <= 2; i++) {
                     row[i - 1] = rs.getString(i);
                 }
                 table.getItems().add(row);
@@ -72,6 +72,7 @@ public class Chefs {
             showAlert(AlertType.ERROR, "Error", "Error loading chefs from database.", ex.getMessage());
         }
     }
+
 
     // Event handler methods for menu buttons
     @FXML
