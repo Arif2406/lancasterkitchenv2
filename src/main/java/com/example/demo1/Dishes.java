@@ -309,4 +309,12 @@ public class Dishes {
     @FXML
     private void handleNewMenuButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
 
+    public void addStepField(ActionEvent actionEvent) {
+    }
+
+    public void addIngredientField(ActionEvent actionEvent) {
+    }
+
+    public void submit(ActionEvent actionEvent) {
+    }
 }
