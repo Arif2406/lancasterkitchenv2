@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
+<VBox spacing="10" alignment="TOP_CENTER" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.Orders">
+    <Text text="Orders Management" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+    <TableView fx:id="ordersTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="dishNameColumn" prefWidth="140.0" text="Dish Name"/>
+            <TableColumn fx:id="quantityColumn" prefWidth="80.0" text="Quantity"/>
+            <TableColumn fx:id="commentsColumn" prefWidth="150.0" text="Comments"/>
+            <TableColumn fx:id="orderNumberColumn" prefWidth="200.0" text="Order Number"/>
+        </columns>
+    </TableView>
+    <Button text="Finalize Order" onAction="#processOrder"/>
+    <Button text="Update Stock Only" onAction="#updateStock"/>
+</VBox>
 
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.Orders">
-    <children>
-        <BorderPane layoutX="91.0" layoutY="46.0" prefHeight="288.0" prefWidth="389.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <top>
-                <Label text="Orders" translateY="25.0" BorderPane.alignment="CENTER" />
-            </top>
-        </BorderPane>
-    </children>
-</AnchorPane>
