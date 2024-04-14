@@ -11,7 +11,10 @@ import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URL;
 
 public class MainPageController {
 
@@ -73,8 +76,10 @@ public class MainPageController {
 
     @FXML
     private void handleStockButtonClick(ActionEvent event) {
+        System.out.println("Stock button clicked.");
         navigateToPage("CurrentStock.fxml", "Stock", event);
     }
+
 
     @FXML
     private void handleNewDishButtonClick(ActionEvent event) {navigateToPage("AddNewDish.fxml", "Home", event);}
@@ -87,9 +92,15 @@ public class MainPageController {
 
 
     private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
+        System.out.println("Attempting to navigate to page: " + fxmlFile);
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            URL url = getClass().getResource(fxmlFile);
+            if (url == null) {
+                System.out.println("Resource not found: " + fxmlFile);
+                return; // Early return if resource is not found
+            }
+            FXMLLoader loader = new FXMLLoader(url);
             Scene scene = new Scene(loader.load());
             Stage stage = new Stage();
             stage.setTitle(title);
@@ -104,8 +115,12 @@ public class MainPageController {
             // Close the current (main) stage after opening the new one
             Stage mainStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             mainStage.close();
-        } catch (IOException e) {
+            System.out.println("Navigation successful.");
+        } catch (Exception e) {
+            System.out.println("Failed to load the FXML file: " + fxmlFile);
             e.printStackTrace();
         }
     }
+
+
 }
