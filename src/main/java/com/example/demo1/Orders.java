@@ -1,104 +1,99 @@
 package com.example.demo1;
 
+import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Orders {
 
     @FXML
     private GridPane ordersGrid;
-
     private List<Order> orders = new ArrayList<>();
     @FXML
-    private VBox pendingColumn;
-    @FXML
-    private VBox inProgressColumn;
-    @FXML
-    private VBox finishedColumn;
-
-    public void viewTodayOrders() {
-        System.out.println("Showing all orders for today...");
-    }
-
-    public void viewAllOrders() {
-        System.out.println("Showing all orders total...");
-    }
+    private VBox pendingColumn, inProgressColumn, finishedColumn;
 
     public void initialize() {
-        createSampleOrders();
+        try {
+            populateOrdersFromDatabase();
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();  // Log error, you might want to show this in a user alert
+        }
         initializeStatusColumns();
         refreshOrdersGrid();
     }
 
     private void initializeStatusColumns() {
-        pendingColumn = new VBox();
-        pendingColumn.setSpacing(10);
+        pendingColumn = new VBox(10);
+        inProgressColumn = new VBox(10);
+        finishedColumn = new VBox(10);
         ordersGrid.add(pendingColumn, 0, 0);
-        pendingColumn.getChildren().add(new Label("Pending"));
-
-        inProgressColumn = new VBox();
-        inProgressColumn.setSpacing(10);
         ordersGrid.add(inProgressColumn, 1, 0);
-        inProgressColumn.getChildren().add(new Label("In Progress"));
-
-        finishedColumn = new VBox();
-        finishedColumn.setSpacing(10);
         ordersGrid.add(finishedColumn, 2, 0);
+        pendingColumn.getChildren().add(new Label("Pending"));
+        inProgressColumn.getChildren().add(new Label("In Progress"));
         finishedColumn.getChildren().add(new Label("Finished"));
     }
 
-    public void createSampleOrders() {
-        addOrder(new String[]{"Pizza"}, new int[]{2});
-        addOrder(new String[]{"Burger", "Fries"}, new int[]{1, 3});
-        addOrder(new String[]{"Salad", "Pasta"}, new int[]{1, 2});
+
+    private void populateOrdersFromDatabase() throws SQLException, ClassNotFoundException {
+        Connection connection = DatabaseUtil.connectToDatabase();
+        String query = "SELECT o.Order_ID, d.Name AS DishName, d.Course AS Course, od.Dish_Quantity AS Quantity, o.Comment AS Comment FROM in2033t02Orders o JOIN in2033t02Order_Dishes od ON o.Order_ID = od.Order_ID JOIN in2033t02Dish d ON od.Dish_ID = d.Dish_ID WHERE o.Status = 0;" ;
+        try (PreparedStatement stmt = connection.prepareStatement(query);
+             ResultSet rs = stmt.executeQuery()) {
+            Map<Integer, Order> orderMap = new HashMap<>();
+            while (rs.next()) {
+                try {
+                    int orderId = rs.getInt("Order_ID");
+                    String dishName = rs.getString("DishName");
+                    int quantity = rs.getInt("Quantity");
+                    Order order = orderMap.computeIfAbsent(orderId, Order::new);
+                    order.addDish(dishName, quantity);
+                } catch (SQLException e) {
+                    System.err.println("Error processing result set: " + e.getMessage());
+                }
+            }
+            orders.addAll(orderMap.values());
+        } finally {
+            if (connection != null) connection.close();
+        }
     }
 
-    private void addOrder(String[] dishes, int[] quantities) {
-        Order order = new Order(dishes, quantities);
-        orders.add(order);
-    }
 
     private void refreshOrdersGrid() {
-        // Clear all columns
-        pendingColumn.getChildren().clear();
-        inProgressColumn.getChildren().clear();
-        finishedColumn.getChildren().clear();
-
-        // Populate columns with orders
-        for (Order order : orders) {
-            VBox column;
-            switch (order.getStatus()) {
-                case "Pending":
-                    column = pendingColumn;
-                    break;
-                case "In Progress":
-                    column = inProgressColumn;
-                    break;
-                case "Finished":
-                    column = finishedColumn;
-                    break;
-                default:
-                    column = null;
-            }
-            if (column != null) {
+        Platform.runLater(() -> {
+            pendingColumn.getChildren().clear();
+            inProgressColumn.getChildren().clear();
+            finishedColumn.getChildren().clear();
+            orders.forEach(order -> {
+                VBox column = switch (order.getStatus()) {
+                    case "Pending" -> pendingColumn;
+                    case "In Progress" -> inProgressColumn;
+                    case "Finished" -> finishedColumn;
+                    default -> throw new IllegalStateException("Unexpected status: " + order.getStatus());
+                };
                 column.getChildren().add(createOrderBox(order));
-            }
-        }
+            });
+        });
     }
 
     private VBox createOrderBox(Order order) {
         VBox orderBox = new VBox();
         orderBox.setStyle("-fx-border-color: black; -fx-border-width: 1px; -fx-padding: 5;");
         orderBox.getChildren().add(new Label("Order ID: " + order.getId()));
-        for (int i = 0; i < order.getDishes().length; i++) {
-            orderBox.getChildren().add(new Label(order.getQuantities()[i] + " x " + order.getDishes()[i]));
-        }
+        order.getDishes().forEach((dish, quantity) ->
+                orderBox.getChildren().add(new Label(quantity + " x " + dish)));
         Button statusButton = new Button(order.getStatus());
         statusButton.setOnAction(e -> {
             order.advanceStatus();
@@ -108,33 +103,30 @@ public class Orders {
         return orderBox;
     }
 
-    private static class Order {
-        private static int orderIdCounter = 1;
-        private int id;
-        private String[] dishes;
-        private int[] quantities;
-        private String status = "Pending"; // Default to Pending
+    public void viewTodayOrders(ActionEvent actionEvent) {
+    }
 
-        public Order(String[] dishes, int[] quantities) {
-            this.id = orderIdCounter++;
-            this.dishes = dishes;
-            this.quantities = quantities;
+    public void viewAllOrders(ActionEvent actionEvent) {
+    }
+
+    private static class Order {
+        private int id;
+        private Map<String, Integer> dishes = new HashMap<>();
+        private String status = "Pending";
+
+        public Order(int id) {
+            this.id = id;
+        }
+
+        public void addDish(String dishName, int quantity) {
+            dishes.put(dishName, quantity);
         }
 
         public void advanceStatus() {
             switch (status) {
-                case "Pending":
-                    status = "In Progress";
-                    break;
-                case "In Progress":
-                    status = "Finished";
-                    break;
-                case "Finished":
-                    // Do nothing, as it can't advance beyond "Finished"
-                    break;
-                default:
-                    // Invalid status
-                    break;
+                case "Pending" -> status = "In Progress";
+                case "In Progress" -> status = "Finished";
+                case "Finished" -> System.out.println("Order is already finished");
             }
         }
 
@@ -146,17 +138,8 @@ public class Orders {
             return id;
         }
 
-        public String[] getDishes() {
+        public Map<String, Integer> getDishes() {
             return dishes;
-        }
-
-        public int[] getQuantities() {
-            return quantities;
         }
     }
 }
-
-
-
-
-   
