@@ -90,10 +90,11 @@ public class AddNewRecipe {
 
         try {
             Connection connection = DatabaseUtil.connectToDatabase() ;
-            PreparedStatement stmt = connection.prepareStatement("INSERT INTO in2033t02Recipes (name, description) VALUES (?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO in2033t02Recipe (Name, Description, Chef_Creator_ID) VALUES (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
 
             stmt.setString(1, name);
             stmt.setString(2, description);
+            stmt.setString(3, "1");
             int affectedRows = stmt.executeUpdate();
 
             if (affectedRows == 0) {
@@ -124,7 +125,7 @@ public class AddNewRecipe {
             int ingredientId = getIngredientIdByName(ingredientName, connection);
 
             if (ingredientId != -1 && !quantity.isEmpty() && !unit.isEmpty()) {
-                PreparedStatement stmt = connection.prepareStatement("INSERT INTO in2033t02Recipe_Ingredients (recipe_id, ingredient_id, quantity, unit) VALUES (?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
+                PreparedStatement stmt = connection.prepareStatement("INSERT INTO in2033t02Recipe_Ingredients (Recipe_ID, Ingredient_ID, Quantity, Unit) VALUES (?, ?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS);
 
                 stmt.setLong(1, recipeId);
                 stmt.setInt(2, ingredientId);
@@ -138,7 +139,7 @@ public class AddNewRecipe {
         for (int i = 0; i < stepTextFields.size(); i++) {
             String step = stepTextFields.get(i).getText();
             if (!step.isEmpty()) {
-                PreparedStatement stmt = connection.prepareStatement("INSERT INTO in2033t02Recipe_Steps (recipe_id, step_number, step_description) VALUES (?, ?, ?)");
+                PreparedStatement stmt = connection.prepareStatement("INSERT INTO in2033t02Recipe_Steps (Recipe_ID, Step_Number, Step_Description) VALUES (?, ?, ?)");
 
                 stmt.setLong(1, recipeId);
                 stmt.setInt(2, i + 1);

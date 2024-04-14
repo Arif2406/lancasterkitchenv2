@@ -38,7 +38,9 @@ public class AddNewDish {
     @FXML
     private VBox stepFieldsVBox;
 
-    private List<ComboBox<String>> recipeComboBoxes = new ArrayList<>();
+@FXML
+private List<ComboBox<String>> recipeComboBoxes = new ArrayList<>();
+@FXML
     private List<TextField> stepTextFields = new ArrayList<>();
 
     @FXML
