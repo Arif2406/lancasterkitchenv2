@@ -37,8 +37,6 @@ public class Menus {
 
 
 
-
-
     // Add action methods for other buttons as needed
 
     private void showAlert(Alert.AlertType alertType, String title, String message, String details) {

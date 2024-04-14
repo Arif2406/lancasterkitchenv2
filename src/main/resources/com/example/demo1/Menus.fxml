@@ -53,18 +53,7 @@
                   <Font name="Times New Roman Bold" size="16.0" />
                </font>
             </Button>
-         </children>
-      </VBox>
-   </left>
-   <top>
-      <HBox BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../java/images/Lancasters-logos.jpeg" />
-               </image>
-            </ImageView>
-            <VBox prefHeight="100.0" prefWidth="100.0">
+            <VBox prefHeight="142.0" prefWidth="101.0">
                <children>
                   <Button mnemonicParsing="false" prefHeight="99.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #FFFFFF;" text="New Recipe" textFill="#d9d9d9">
                      <font>
@@ -83,7 +72,19 @@
                   </Button>
                </children>
             </VBox>
-            <Label alignment="CENTER" prefHeight="100.0" prefWidth="673.0" style="-fx-background-color: #2B3336;" text="Lancaster Kitchen" textFill="#d9d9d9">
+         </children>
+      </VBox>
+   </left>
+   <top>
+      <HBox BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../java/images/Lancasters-logos.jpeg" />
+               </image>
+            </ImageView>
+            <VBox prefHeight="100.0" prefWidth="100.0" />
+            <Label alignment="CENTER" prefHeight="100.0" prefWidth="943.0" style="-fx-background-color: #2B3336;" text="Lancaster Kitchen" textFill="#d9d9d9">
                <font>
                   <Font name="Times New Roman Bold" size="24.0" />
                </font>

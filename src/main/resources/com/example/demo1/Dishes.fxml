@@ -49,16 +49,35 @@
                   <Font name="Times New Roman Bold" size="16.0" />
                </font>
             </Button>
-            <Button fx:id="wasteButton" mnemonicParsing="false" onAction="#handleWasteButtonClick" prefHeight="51.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #FFFFFF;" text="Waste" textFill="#d9d9d9">
+            <Button fx:id="wasteButton" mnemonicParsing="false" onAction="#handleWasteButtonClick" prefHeight="55.0" prefWidth="102.0" style="-fx-background-color: #2B3336; -fx-border-color: #FFFFFF;" text="Waste" textFill="#d9d9d9">
                <font>
                   <Font name="Times New Roman Bold" size="16.0" />
                </font>
             </Button>
+            <VBox prefHeight="127.0" prefWidth="102.0">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="99.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #FFFFFF;" text="New Recipe" textFill="#d9d9d9">
+                     <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="99.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #FFFFFF;" text="New Dish" textFill="#d9d9d9">
+                     <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                     </font>
+                  </Button>
+                  <Button mnemonicParsing="false" prefHeight="99.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #FFFFFF;" text="New Menu" textFill="#d9d9d9">
+                     <font>
+                        <Font name="Times New Roman Bold" size="12.0" />
+                     </font>
+                  </Button>
+               </children>
+            </VBox>
          </children>
       </VBox>
    </left>
    <center>
-        <FlowPane alignment="CENTER" hgap="10" prefHeight="200.0" prefWidth="200.0" vgap="10" BorderPane.alignment="CENTER">
+        <FlowPane alignment="CENTER" hgap="10" prefHeight="450.0" prefWidth="581.0" vgap="10" BorderPane.alignment="CENTER">
             <children>
                 <Button fx:id="viewCurrentDishesButton" mnemonicParsing="false" onAction="#handleViewCurrentDishes" prefHeight="30.0" prefWidth="250.0" text="Current dishes on the menu" />
                 <Button fx:id="addNewDishButton" mnemonicParsing="false" onAction="#handleAddNewDish" prefHeight="30.0" prefWidth="250.0" text="Add a new Dish" />

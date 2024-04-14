@@ -5,14 +5,37 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Orders {
+
+private Button OrdersButton;
+
+    @FXML
+    private void Order(ActionEvent event) {
+        // Implement the action for viewing current dishes
+        try {
+            BorderPane root = (BorderPane) OrdersButton.getScene().getRoot();
+            BorderPane pane = FXMLLoader.load(getClass().getResource("Orders.fxml"));
+            root.setCenter(pane);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "Error loading.", e.getMessage());
+        }
+    }
+
+    private void showAlert(Alert.AlertType error, String error1, String s, String message) {
+    }
+
 
     @FXML
     private TableView<ObservableList<String>> ordersTable;
@@ -145,5 +168,55 @@ public class Orders {
         alert.getDialogPane().setContent(textArea);
         alert.showAndWait();
     }
+
+
+    @FXML
+    private void handleChefsButtonClick(ActionEvent event) {
+        navigateToPage("Chefs.fxml", "Chefs", event);
+    }
+
+    private void navigateToPage(String s, String chefs, ActionEvent event) {
+    }
+
+    @FXML
+    private void handleWasteButtonClick(ActionEvent event) {
+        navigateToPage("Waste.fxml", "Waste", event);
+    }
+
+    @FXML
+    private void handleMenusButtonClick(ActionEvent event) {
+        navigateToPage("Menus.fxml", "Menus", event);
+    }
+
+    @FXML
+    private void handleOrdersButtonClick(ActionEvent event) {
+        navigateToPage("Orders.fxml", "Orders", event);
+    }
+
+    @FXML
+    private void handleDishesButtonClick(ActionEvent event) {
+        navigateToPage("Dishes.fxml", "Dishes", event);
+    }
+
+    @FXML
+    private void handleSupplierButtonClick(ActionEvent event) {
+        navigateToPage("SupplierStock.fxml", "Stock", event);
+    }
+
+    @FXML
+    private void handleStockButtonClick(ActionEvent event) {
+        navigateToPage("Supplier.fxml", "Supplier", event);
+    }
+
+
+    @FXML
+    private void handleHomeButtonClick(ActionEvent event) {
+        navigateToPage("MainPage.fxml", "Home", event);
+    }
+
 }
 
+
+
+
+   

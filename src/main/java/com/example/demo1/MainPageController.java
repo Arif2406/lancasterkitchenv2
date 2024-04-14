@@ -57,7 +57,7 @@ public class MainPageController {
     @FXML
     private void handleOrdersButtonClick(ActionEvent event) {
         navigateToPage("Orders.fxml", "Orders", event);
-    }
+   }
 
     @FXML
     private void handleDishesButtonClick(ActionEvent event) {
