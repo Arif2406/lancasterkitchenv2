@@ -116,14 +116,14 @@ public class Dishes {
             try (ResultSet rs = stmt.executeQuery()) {
                 StringBuilder stepDescriptions = new StringBuilder();
                 while (rs.next()) {
-                    nameLabel.setText(selectedDish);
+                    nameLabel.setText("Name: " + selectedDish);
                     courseLabel.setText("Course: " + rs.getString("Course"));
                     statusLabel.setText("Status: " + rs.getString("Status"));
-                    descriptionArea.setText("Description: " + rs.getString("Description"));
+                    descriptionArea.setText(rs.getString("Description"));
                     chefLabel.setText("Chef ID: " + rs.getString("Chef_Creator_ID"));
                     stepDescriptions.append(rs.getString("Step_Description")).append("\n");
                 }
-                stepsTextArea.setText("Steps: \n" + stepDescriptions.toString());
+                stepsTextArea.setText(stepDescriptions.toString());
 
                 // Fetch and display recipe names
                 fetchAndDisplayRecipeNames(selectedDish);
@@ -146,10 +146,10 @@ public class Dishes {
                         String reviewDate = rs.getString("Review_Date");
                         String description = rs.getString("Description");
 
-                        // Set detzails in appropriate labels
+                        // Set details in appropriate labels
                         rnameLabel.setText("Name: " + name);
                         //reviewDateLabel.setText("Review Date: " + reviewDate);
-                        rdescriptionArea.setText("Description: " + description);
+                        rdescriptionArea.setText(description);
 
                         // Fetch and display recipe steps
                         fetchAndDisplayRecipeSteps(recipeID);
@@ -175,7 +175,7 @@ public class Dishes {
                         steps.append(rs.getString("Step_Description")).append("\n");
                     }
                     // Display recipe steps in the text area
-                    rstepsTextArea.setText("Steps: \n" + steps.toString());
+                    rstepsTextArea.setText(steps.toString());
                 }
             }
         } catch (SQLException | ClassNotFoundException ex) {

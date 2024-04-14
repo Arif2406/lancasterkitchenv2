@@ -163,11 +163,16 @@
          <right>
             <VBox spacing="10">
                <children>
-                  <Label text="Recipe Details" />
+                  <Label text="Recipe Details">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
                   <Label fx:id="rnameLabel" />
-                  <Label fx:id="reviewDateLabel" />
                   <TextArea fx:id="rdescriptionArea" prefHeight="200" prefWidth="300" wrapText="true" />
-                  <Label text="Recipe Steps" />
+                  <Label text="Recipe Steps">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
                   <TextArea fx:id="rstepsTextArea" prefHeight="200" prefWidth="300" wrapText="true" />
                </children>
             </VBox>
