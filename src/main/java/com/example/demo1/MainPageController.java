@@ -62,12 +62,12 @@ public class MainPageController {
     }
 
     @FXML
-    private void handleStockButtonClick(ActionEvent event) {
+    private void handleSupplierButtonClick(ActionEvent event) {
         navigateToPage("SupplierStock.fxml", "Stock", event);
     }
 
     @FXML
-    private void handleSupplierButtonClick(ActionEvent event) {
+    private void handleStockButtonClick(ActionEvent event) {
         navigateToPage("Supplier.fxml", "Supplier", event);
     }
 

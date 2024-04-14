@@ -11,8 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.SupplierStock">
+<BorderPane prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.SupplierStock">
    <top>
       <HBox alignment="CENTER" BorderPane.alignment="CENTER">
          <children>
@@ -37,17 +36,12 @@
                   <Font name="Times New Roman Bold" size="16.0" />
                </font>
             </Button>
-            <Button fx:id="wasteButton" mnemonicParsing="false" onAction="#handleWasteButtonClick" prefHeight="51.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #FFFFFF;" text="Waste" textFill="#d9d9d9">
+            <Button fx:id="dishesButton" mnemonicParsing="false" onAction="#handleDishesButtonClick" prefHeight="51.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #d9d9d9;" text="Dishes" textFill="#d9d9d9">
                <font>
                   <Font name="Times New Roman Bold" size="16.0" />
                </font>
             </Button>
             <Button fx:id="menusButton" mnemonicParsing="false" onAction="#handleMenusButtonClick" prefHeight="51.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #FFFFFF;" text="Menus" textFill="#d9d9d9">
-               <font>
-                  <Font name="Times New Roman Bold" size="16.0" />
-               </font>
-            </Button>
-            <Button fx:id="dishesButton" mnemonicParsing="false" onAction="#handleDishesButtonClick" prefHeight="51.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #d9d9d9;" text="Dishes" textFill="#d9d9d9">
                <font>
                   <Font name="Times New Roman Bold" size="16.0" />
                </font>
@@ -62,18 +56,39 @@
                   <Font name="Times New Roman Bold" size="16.0" />
                </font>
             </Button>
+            <Button fx:id="supplierButton" mnemonicParsing="false" onAction="#handleSupplierButtonClick" prefHeight="55.0" prefWidth="100.0" style="-fx-background-color: #445055; -fx-border-color: #FFFFFF;" text="Supplier" textFill="#d9d9d9">
+               <font>
+                  <Font name="Times New Roman Bold" size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="wasteButton" mnemonicParsing="false" onAction="#handleWasteButtonClick" prefHeight="51.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #FFFFFF;" text="Waste" textFill="#d9d9d9">
+               <font>
+                  <Font name="Times New Roman Bold" size="16.0" />
+               </font>
+            </Button>
          </children>
       </VBox>
    </left>
-   <right>
+   <center>
         <TableView fx:id="stockTable" prefHeight="404.0" prefWidth="604.0" BorderPane.alignment="CENTER">
             <columns>
                 <!-- Removed the TableColumn for Stock ID -->
-                <TableColumn fx:id="ingredientNameColumn" minWidth="160.0" prefWidth="204.66669464111328" text="Ingredient Name" />
-                <TableColumn fx:id="quantityColumn" minWidth="55.33331298828125" prefWidth="123.33334350585938" text="Quantity" />
-                <TableColumn fx:id="unitColumn" minWidth="20.6666259765625" prefWidth="89.99996948242188" text="Unit" />
-                <TableColumn fx:id="deliveryDateColumn" minWidth="67.99996948242188" prefWidth="183.11111450195312" text="Delivery Date" />
+                <TableColumn fx:id="ingredientNameColumn" minWidth="130.00003051757812" prefWidth="166.00003051757812" text="Ingredient Name" />
+                <TableColumn fx:id="quantityColumn" minWidth="55.33331298828125" prefWidth="112.6666259765625" text="Quantity" />
+                <TableColumn fx:id="unitColumn" minWidth="20.6666259765625" prefWidth="107.33331298828125" text="Unit" />
+                <TableColumn fx:id="deliveryDateColumn" minWidth="67.99996948242188" prefWidth="162.66668701171875" text="Delivery Date" />
             </columns>
         </TableView>
-   </right>
+   </center>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="29.0" prefWidth="670.0" spacing="10.0" style="-fx-background-color: #2B3336;" BorderPane.alignment="CENTER">
+         <children>
+            <Button alignment="CENTER" contentDisplay="CENTER" onAction="#handleHomeButtonClick" prefWidth="47.0" style="-fx-background-color: #d9d9d9;" text="Home" textAlignment="CENTER">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+   </bottom>
 </BorderPane>

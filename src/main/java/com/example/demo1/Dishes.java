@@ -49,54 +49,6 @@ public class Dishes {
     @FXML
     private Button homeButton;
 
-    @FXML
-    private void handleChefsButtonClick(ActionEvent event) {
-        // Implement the action for handling chefs button click
-        // For now, let's just print a message to the console
-        System.out.println("Chefs button clicked!");
-    }
-
-    @FXML
-    private void handleWasteButtonClick(ActionEvent event) {
-        // Implement the action for handling waste button click
-        // For now, let's just print a message to the console
-        System.out.println("Waste button clicked!");
-    }
-
-    @FXML
-    private void handleMenusButtonClick(ActionEvent event) {
-        // Implement the action for handling menus button click
-        // For now, let's just print a message to the console
-        System.out.println("Menus button clicked!");
-    }
-
-    @FXML
-    private void handleOrdersButtonClick(ActionEvent event) {
-        // Implement the action for handling orders button click
-        // For now, let's just print a message to the console
-        System.out.println("Orders button clicked!");
-    }
-
-    @FXML
-    private void handleDishesButtonClick(ActionEvent event) {
-        // Implement the action for handling dishes button click
-        // For now, let's just print a message to the console
-        System.out.println("Dishes button clicked!");
-    }
-
-    @FXML
-    private void handleStockButtonClick(ActionEvent event) {
-        // Implement the action for handling stock button click
-        // For now, let's just print a message to the console
-        System.out.println("Stock button clicked!");
-    }
-
-    @FXML
-    private void handleSupplierButtonClick(ActionEvent event) {
-        // Implement the action for handling supplier button click
-        // For now, let's just print a message to the console
-        System.out.println("Supplier button clicked!");
-    }
 
     @FXML
     private void handleViewCurrentDishes(ActionEvent event) {
@@ -157,4 +109,46 @@ public class Dishes {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    @FXML
+    private void handleChefsButtonClick(ActionEvent event) {
+        navigateToPage("Chefs.fxml", "Chefs", event);
+    }
+
+    @FXML
+    private void handleWasteButtonClick(ActionEvent event) {
+        navigateToPage("Waste.fxml", "Waste", event);
+    }
+
+    @FXML
+    private void handleMenusButtonClick(ActionEvent event) {
+        navigateToPage("Menus.fxml", "Menus", event);
+    }
+
+    @FXML
+    private void handleOrdersButtonClick(ActionEvent event) {
+        navigateToPage("Orders.fxml", "Orders", event);
+    }
+
+    @FXML
+    private void handleDishesButtonClick(ActionEvent event) {
+        navigateToPage("Dishes.fxml", "Dishes", event);
+    }
+
+    @FXML
+    private void handleSupplierButtonClick(ActionEvent event) {
+        navigateToPage("SupplierStock.fxml", "Stock", event);
+    }
+
+    @FXML
+    private void handleStockButtonClick(ActionEvent event) {
+        navigateToPage("Supplier.fxml", "Supplier", event);
+    }
+
+
+    @FXML
+    private void handleHomeButtonClick(ActionEvent event) {
+        navigateToPage("MainPage.fxml", "Home", event);
+    }
+
 }

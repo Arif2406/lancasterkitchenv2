@@ -1,11 +1,16 @@
 package com.example.demo1;
 
 import javafx.beans.property.SimpleStringProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -73,38 +78,6 @@ public class Chefs {
         }
     }
 
-
-    // Event handler methods for menu buttons
-    @FXML
-    private void handleChefsButtonClick() {
-        // Handle Chefs button click
-    }
-
-    @FXML
-    private void handleWasteButtonClick() {
-        // Handle Waste button click
-    }
-
-    @FXML
-    private void handleMenusButtonClick() {
-        // Handle Menus button click
-    }
-
-    @FXML
-    private void handleOrdersButtonClick() {
-        // Handle Orders button click
-    }
-
-    @FXML
-    private void handleDishesButtonClick() {
-        // Handle Dishes button click
-    }
-
-    @FXML
-    private void handleStockButtonClick() {
-        // Handle Stock button click
-    }
-
     private void showAlert(AlertType alertType, String title, String message, String details) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -121,5 +94,58 @@ public class Chefs {
             alert.getDialogPane().setExpandableContent(vBox);
         }
         alert.showAndWait();
+    }
+
+    @FXML
+    private void handleChefsButtonClick(ActionEvent event) {
+        navigateToPage("Chefs.fxml", "Chefs", event);
+    }
+
+    @FXML
+    private void handleWasteButtonClick(ActionEvent event) {
+        navigateToPage("Waste.fxml", "Waste", event);
+    }
+
+    @FXML
+    private void handleMenusButtonClick(ActionEvent event) {
+        navigateToPage("Menus.fxml", "Menus", event);
+    }
+
+    @FXML
+    private void handleOrdersButtonClick(ActionEvent event) {
+        navigateToPage("Orders.fxml", "Orders", event);
+    }
+
+    @FXML
+    private void handleDishesButtonClick(ActionEvent event) {
+        navigateToPage("Dishes.fxml", "Dishes", event);
+    }
+
+    @FXML
+    private void handleSupplierButtonClick(ActionEvent event) {
+        navigateToPage("SupplierStock.fxml", "Stock", event);
+    }
+
+    @FXML
+    private void handleStockButtonClick(ActionEvent event) {
+        navigateToPage("Supplier.fxml", "Supplier", event);
+    }
+
+    @FXML
+    private void handleHomeButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
+
+    private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Scene scene = new Scene(loader.load());
+            Stage stage = new Stage();
+            stage.setTitle(title);
+            stage.setScene(scene);
+            stage.show();
+            Stage mainStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            mainStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

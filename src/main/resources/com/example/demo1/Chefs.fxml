@@ -6,84 +6,97 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="500.0" minWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.Chefs">
-   <children>
-      <AnchorPane layoutX="10.0" layoutY="10.0" />
-      <BorderPane layoutX="10.0" layoutY="10.0" prefHeight="540.0" prefWidth="960.0">
-         <left>
-            <VBox style="-fx-background-color: #2B3336; -fx-border-color: #d9d9d9;" BorderPane.alignment="CENTER">
-               <children>
-                  <Button fx:id="chefsButton" mnemonicParsing="false" onAction="#handleChefsButtonClick" prefHeight="51.0" prefWidth="100.0" style="-fx-background-color: WHITE; -fx-border-color: #FFFFFF;" text="Chefs" textFill="#2b3336">
-                     <font>
-                        <Font name="Times New Roman Bold" size="16.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="wasteButton" mnemonicParsing="false" onAction="#handleWasteButtonClick" prefHeight="51.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #FFFFFF;" text="Waste" textFill="#d9d9d9">
-                     <font>
-                        <Font name="Times New Roman Bold" size="16.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="menusButton" mnemonicParsing="false" onAction="#handleMenusButtonClick" prefHeight="51.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #FFFFFF;" text="Menus" textFill="#d9d9d9">
-                     <font>
-                        <Font name="Times New Roman Bold" size="16.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="ordersButton" mnemonicParsing="false" onAction="#handleOrdersButtonClick" prefHeight="51.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #FFFFFF;" text="Orders" textFill="#d9d9d9">
-                     <font>
-                        <Font name="Times New Roman Bold" size="16.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="dishesButton" mnemonicParsing="false" onAction="#handleDishesButtonClick" prefHeight="51.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #d9d9d9;" text="Dishes" textFill="#d9d9d9">
-                     <font>
-                        <Font name="Times New Roman Bold" size="16.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="stockButton" mnemonicParsing="false" onAction="#handleStockButtonClick" prefHeight="51.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #FFFFFF;" text="Stock" textFill="#d9d9d9">
-                     <font>
-                        <Font name="Times New Roman Bold" size="16.0" />
-                     </font>
-                  </Button>
-               </children>
-            </VBox>
-         </left>
-         <top>
-            <HBox BorderPane.alignment="CENTER">
-               <children>
-                  <Label alignment="CENTER" prefHeight="100.0" prefWidth="1920.0" style="-fx-background-color: #2B3336;" text="Lancaster Kitchen" textFill="#d9d9d9">
-                     <font>
-                        <Font name="Times New Roman Bold" size="24.0" />
-                     </font>
-                  </Label>
-                  <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../java/images/Lancasters-logos.jpeg" />
-                     </image>
-                  </ImageView>
-               </children>
-            </HBox>
-         </top>
-         <center>
-            <TableView fx:id="table" prefHeight="300.0" prefWidth="800.0" BorderPane.alignment="CENTER">
-               <columns>
-                  <TableColumn fx:id="nameColumn" prefWidth="200.0" text="Name" />
-                  <TableColumn fx:id="roleColumn" prefWidth="150.0" text="Role" />
-                  <TableColumn fx:id="idColumn" prefWidth="50.0" text="ID" />
-               </columns>
-            </TableView>
-         </center>
-      </BorderPane>
-      <!-- Main Layout -->
-      <BorderPane>
-         <!-- Chefs Content -->
-         <center>
-            <VBox layoutX="60.0" layoutY="90.0" spacing="10" />
-         </center>
-      </BorderPane>
-   </children>
-</AnchorPane>
+<BorderPane prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.Chefs">
+   <top>
+      <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../java/images/Lancasters-logos.jpeg" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" prefHeight="100.0" prefWidth="1920.0" style="-fx-background-color: #2B3336;" text="Lancaster Kitchen" textFill="#d9d9d9">
+               <font>
+                  <Font name="Times New Roman Bold" size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+   </top>
+   <left>
+      <VBox style="-fx-background-color: #2B3336;" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="chefsButton" mnemonicParsing="false" onAction="#handleChefsButtonClick" prefHeight="51.0" prefWidth="100.0" style="-fx-background-color: #445055; -fx-border-color: #FFFFFF;" text="Chefs" textFill="#d9d9d9">
+               <font>
+                  <Font name="Times New Roman Bold" size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="dishesButton" mnemonicParsing="false" onAction="#handleDishesButtonClick" prefHeight="51.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #d9d9d9;" text="Dishes" textFill="#d9d9d9">
+               <font>
+                  <Font name="Times New Roman Bold" size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="ordersButton" mnemonicParsing="false" onAction="#handleOrdersButtonClick" prefHeight="51.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #FFFFFF;" text="Orders" textFill="#d9d9d9">
+               <font>
+                  <Font name="Times New Roman Bold" size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="menusButton" mnemonicParsing="false" onAction="#handleMenusButtonClick" prefHeight="51.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #FFFFFF;" text="Menus" textFill="#d9d9d9">
+               <font>
+                  <Font name="Times New Roman Bold" size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="stockButton" mnemonicParsing="false" onAction="#handleStockButtonClick" prefHeight="51.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #FFFFFF;" text="Stock" textFill="#d9d9d9">
+               <font>
+                  <Font name="Times New Roman Bold" size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="supplierButton" mnemonicParsing="false" onAction="#handleSupplierButtonClick" prefHeight="55.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #FFFFFF;" text="Supplier" textFill="#d9d9d9">
+               <font>
+                  <Font name="Times New Roman Bold" size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="wasteButton" mnemonicParsing="false" onAction="#handleWasteButtonClick" prefHeight="51.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #FFFFFF;" text="Waste" textFill="#d9d9d9">
+               <font>
+                  <Font name="Times New Roman Bold" size="16.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <TableView fx:id="table" prefHeight="300.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+         <columns>
+            <TableColumn fx:id="nameColumn" prefWidth="200.0" text="Name" />
+            <TableColumn fx:id="roleColumn" prefWidth="150.0" text="Role" />
+            <TableColumn fx:id="idColumn" prefWidth="50.0" text="ID" />
+         </columns>
+      </TableView>
+   </center>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="29.0" prefWidth="670.0" spacing="10.0" style="-fx-background-color: #2B3336;" BorderPane.alignment="CENTER">
+         <children>
+            <Button alignment="CENTER" contentDisplay="CENTER" onAction="#handleHomeButtonClick" prefWidth="47.0" style="-fx-background-color: #d9d9d9;" text="Home" textAlignment="CENTER">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button alignment="CENTER" contentDisplay="CENTER" onAction="#handleHomeButtonClick" text="Add Chef" textAlignment="CENTER">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font>
+            </Button>
+            <Button alignment="CENTER" contentDisplay="CENTER" onAction="#handleHomeButtonClick" text="Remove Chef" textAlignment="CENTER">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>
