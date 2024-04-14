@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.CurrentStock" spacing="10" padding="10">
+   <Label text="Current Stock Levels" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+   <TableView fx:id="stockTable" VBox.vgrow="ALWAYS">
+      <columns>
+         <TableColumn fx:id="ingredientNameColumn" text="Ingredient Name" prefWidth="150"/>
+         <TableColumn fx:id="stockLevelColumn" text="Stock Level" prefWidth="100"/>
+      </columns>
+   </TableView>
+</VBox>
