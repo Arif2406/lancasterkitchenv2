@@ -94,22 +94,16 @@
                </children>
             </VBox>
             <VBox prefHeight="45.0" prefWidth="101.0" />
-            <VBox prefHeight="65.0" prefWidth="101.0">
+            <VBox alignment="BOTTOM_LEFT" style="-fx-background-color: #2B3336;" BorderPane.alignment="BOTTOM_LEFT">
                <children>
-                  <Text fill="#d9d9d9" strokeType="OUTSIDE" strokeWidth="0.0" text="Logged in as:" textAlignment="CENTER" wrappingWidth="100.0">
+
+                  <Label fx:id="usernameLabel" text="username" textAlignment="LEFT" textFill="#d9d9d9">
                      <font>
                         <Font name="Times New Roman Bold" size="14.0" />
                      </font>
-                  </Text>
-                  <Text fill="#d9d9d9" strokeType="OUTSIDE" strokeWidth="0.0" text="username" textAlignment="CENTER" wrappingWidth="100.0">
-                     <font>
-                        <Font name="Times New Roman Bold" size="14.0" />
-                     </font>
-                  </Text>
+                  </Label>
+
                </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
             </VBox>
          </children>
       </VBox>
