@@ -89,7 +89,7 @@
             </Label>
             <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../TeamProject2/lancasterkitchenv2/src/main/java/images/Lancasters-logos.jpeg" />
+                  <Image url="@../../../../java/images/Lancasters-logos.jpeg" />
                </image>
             </ImageView>
          </children>
