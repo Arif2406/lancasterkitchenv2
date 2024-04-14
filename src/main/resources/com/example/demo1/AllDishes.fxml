@@ -102,7 +102,7 @@
       </VBox>
    </left>
    <top>
-      <HBox BorderPane.alignment="CENTER">
+      <HBox style="-fx-background-color: #2B3336;" BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                <image>
