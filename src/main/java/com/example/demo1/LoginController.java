@@ -20,6 +20,10 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,17 +35,39 @@ public class LoginController {
     private Map<String, String> validUsers = new HashMap<>();
 
     public LoginController() {
-        // Define valid usernames and passwords
-        validUsers.put("headchef", "pass");
-        validUsers.put("souschef", "pass");
-        validUsers.put("user", "pass");
+        loadValidUsers();
     }
+
+    private void loadValidUsers() {
+        try {
+            Connection connection = DatabaseUtil.connectToDatabase();
+            System.out.println("Connecting to database...");
+
+            String query = "SELECT Username, Password FROM in2033t02Chef";
+            System.out.println("SQL Query: " + query);
+
+            PreparedStatement stmt = connection.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                String username = rs.getString("Username");
+                String password = rs.getString("Password");
+                validUsers.put(username, password);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            showAlert(AlertType.ERROR, "Database Error", "Error loading user credentials from database.", ex.getMessage());
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+            showAlert(AlertType.ERROR, "Driver Not Found", "The database driver was not found.", ex.getMessage());
+        }
+    }
+
 
     @FXML
     private Label timeLabel;
 
     public void initialize() {
-        // Update time label every second
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
             LocalDateTime now = LocalDateTime.now();
             DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -54,52 +80,56 @@ public class LoginController {
         clock.play();
     }
 
-
     @FXML
     protected void handleLoginButton(ActionEvent event) {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        // Check if the username and password are correct
         if (validUsers.containsKey(username) && validUsers.get(username).equals(password)) {
             try {
-                // Load main page scene with FXMLLoader to access its controller
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("MainPage.fxml"));
                 Parent root = loader.load();
-
-                // Get the MainPageController from the loader
                 MainPageController controller = loader.getController();
-
-                // Set the username on the MainPageController
                 controller.setUsername(username);
-
-                // Setting up the scene and stage
-                Rectangle2D screenBounds = Screen.getPrimary().getBounds();
-                Stage stage = (Stage) usernameField.getScene().getWindow();
-                Scene scene = new Scene(root);
-                stage.setScene(scene);
-                stage.setFullScreen(true);
-                stage.setFullScreenExitHint("");
-                stage.setX(screenBounds.getMinX());
-                stage.setY(screenBounds.getMinY());
-                stage.setWidth(screenBounds.getWidth());
-                stage.setHeight(screenBounds.getHeight());
-                stage.setTitle("Lancaster Kitchen");
-                stage.show();
+                setUpStage(root);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         } else {
-            // Show an error message if credentials are not recognized
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Login Error");
-            alert.setHeaderText(null);
-            alert.setContentText("Credentials not recognised.");
-            alert.showAndWait();
-
-            // Optionally, clear the fields after showing the alert
+            showErrorAlert();
             usernameField.clear();
             passwordField.clear();
         }
+    }
+
+    private void setUpStage(Parent root) {
+        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+        Stage stage = (Stage) usernameField.getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setFullScreen(true);
+        stage.setFullScreenExitHint("");
+        stage.setX(screenBounds.getMinX());
+        stage.setY(screenBounds.getMinY());
+        stage.setWidth(screenBounds.getWidth());
+        stage.setHeight(screenBounds.getHeight());
+        stage.setTitle("Lancaster Kitchen");
+        stage.show();
+    }
+
+    private void showErrorAlert() {
+        Alert alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Login Error");
+        alert.setHeaderText(null);
+        alert.setContentText("Credentials not recognised.");
+        alert.showAndWait();
+    }
+
+    private void showAlert(Alert.AlertType alertType, String title, String header, String content) {
+        Alert alert = new Alert(alertType);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }
