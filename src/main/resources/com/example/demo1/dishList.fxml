@@ -1,30 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.net.URL?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.CurrentDishesOnMenu">
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.CurrentDishesOnMenu">
     <top>
-        <HBox prefHeight="70.0" prefWidth="800.0" BorderPane.alignment="CENTER">
-            <children>
-                <Label text="Manage Dishes" textFill="#fff">
-                    <font>
-                        <Font size="50.0" />
-                    </font>
-                </Label>
-            </children>
+        <HBox prefHeight="70.0" prefWidth="800.0" style="-fx-background-color: #2B3336;" BorderPane.alignment="CENTER">
             <stylesheets>
                 <URL value="@style.css" />
             </stylesheets>
+         <children>
+            <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../java/images/Lancasters-logos.jpeg" />
+               </image>
+            </ImageView>
+            <Label alignment="CENTER" prefHeight="100.0" prefWidth="1920.0" style="-fx-background-color: #2B3336;" text="Lancaster Kitchen" textFill="#d9d9d9">
+               <font>
+                  <Font name="Times New Roman Bold" size="24.0" />
+               </font>
+            </Label>
+         </children>
         </HBox>
     </top>
     <left>
@@ -43,7 +51,7 @@
             <TextArea fx:id="descriptionArea" prefHeight="200" prefWidth="300" wrapText="true" />
             <TableView fx:id="recipeTable" prefWidth="1420.0">
                 <columns>
-                    <TableColumn fx:id="nameColumn" text="Recipe Name">
+                    <TableColumn fx:id="nameColumn" minWidth="-1.0" prefWidth="463.33335876464844" text="Recipe Name">
                         <cellValueFactory><PropertyValueFactory property="name" /></cellValueFactory>
                     </TableColumn>
                 </columns>
@@ -61,4 +69,15 @@
 
         </VBox>
     </right>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="29.0" prefWidth="670.0" spacing="10.0" style="-fx-background-color: #2B3336;" BorderPane.alignment="CENTER">
+         <children>
+            <Button alignment="CENTER" contentDisplay="CENTER" onAction="#handleBackButtonClick" prefWidth="47.0" style="-fx-background-color: #d9d9d9;" text="Back" textAlignment="CENTER">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+   </bottom>
 </BorderPane>

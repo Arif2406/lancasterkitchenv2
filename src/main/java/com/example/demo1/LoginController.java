@@ -84,7 +84,7 @@ public class LoginController {
                 stage.setY(screenBounds.getMinY());
                 stage.setWidth(screenBounds.getWidth());
                 stage.setHeight(screenBounds.getHeight());
-                stage.setTitle("Address Book");
+                stage.setTitle("Lancaster Kitchen");
                 stage.show();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -94,7 +94,7 @@ public class LoginController {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Login Error");
             alert.setHeaderText(null);
-            alert.setContentText("Credentials not recognized.");
+            alert.setContentText("Credentials not recognised.");
             alert.showAndWait();
 
             // Optionally, clear the fields after showing the alert
