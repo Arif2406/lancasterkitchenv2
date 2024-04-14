@@ -244,7 +244,7 @@ public class CurrentDishesOnMenu {
     }
 
     @FXML
-    private void handleBackButtonClick(ActionEvent event) {navigateToPage("Dishes.fxml", "Home", event);}
+    private void handleBackButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
 
     private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
