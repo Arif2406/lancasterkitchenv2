@@ -3,7 +3,10 @@ package com.example.demo1;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCombination;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert;
@@ -71,13 +74,22 @@ public class MainPageController {
         navigateToPage("Supplier.fxml", "Supplier", event);
     }
 
+
+
     private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
+        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Scene scene = new Scene(loader.load());
             Stage stage = new Stage();
             stage.setTitle(title);
             stage.setScene(scene);
+            stage.setFullScreen(true);
+            stage.setFullScreenExitHint("");
+            stage.setX(screenBounds.getMinX());
+            stage.setY(screenBounds.getMinY());
+            stage.setWidth(screenBounds.getWidth());
+            stage.setHeight(screenBounds.getHeight());
             stage.show();
             // Close the current (main) stage after opening the new one
             Stage mainStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();

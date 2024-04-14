@@ -3,12 +3,14 @@ package com.example.demo1;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.scene.control.Label;
 import java.time.LocalDateTime;
@@ -72,9 +74,16 @@ public class LoginController {
                 controller.setUsername(username);
 
                 // Setting up the scene and stage
+                Rectangle2D screenBounds = Screen.getPrimary().getBounds();
                 Stage stage = (Stage) usernameField.getScene().getWindow();
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
+                stage.setFullScreen(true);
+                stage.setFullScreenExitHint("");
+                stage.setX(screenBounds.getMinX());
+                stage.setY(screenBounds.getMinY());
+                stage.setWidth(screenBounds.getWidth());
+                stage.setHeight(screenBounds.getHeight());
                 stage.setTitle("Address Book");
                 stage.show();
             } catch (IOException e) {

@@ -60,7 +60,6 @@
 
                 <Button fx:id="viewPendingDishesButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="250.0" text="Pending for approval dishes" />
                 <Button fx:id="viewAllDishesButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="250.0" text="All the dishes" />
-                <Button fx:id="homeButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="250.0" text="Home Page" />
             </children>
         </FlowPane>
    </center>

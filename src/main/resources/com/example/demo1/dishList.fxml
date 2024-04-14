@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
 
-<?import java.net.URL?>
-<BorderPane minHeight="1080.0" minWidth="1920.0" xmlns="http://javafx.com/javafx/11" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.CurrentDishesOnMenu">
+<BorderPane prefHeight="500.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.CurrentDishesOnMenu">
     <top>
         <HBox prefHeight="70.0" prefWidth="800.0" BorderPane.alignment="CENTER">
             <children>
@@ -22,7 +23,7 @@
                 </Label>
             </children>
             <stylesheets>
-                <URL value="@style.css"/>
+                <URL value="@style.css" />
             </stylesheets>
         </HBox>
     </top>
@@ -31,19 +32,19 @@
     </left>
     <center>
         <VBox spacing="10">
-            <Label text="Dish Information"/>
+            <Label text="Dish Information" />
             <Label fx:id="nameLabel" />
             <Label fx:id="courseLabel" />
             <Label fx:id="statusLabel" />
             <Label fx:id="chefLabel" />
-            <TextArea fx:id="stepsTextArea" wrapText="true" prefWidth="300" prefHeight="200"/>
+            <TextArea fx:id="stepsTextArea" prefHeight="200" prefWidth="300" wrapText="true" />
             <Label fx:id="description" />
 
-            <TextArea fx:id="descriptionArea" wrapText="true" prefWidth="300" prefHeight="200"/>
-            <TableView fx:id="recipeTable">
+            <TextArea fx:id="descriptionArea" prefHeight="200" prefWidth="300" wrapText="true" />
+            <TableView fx:id="recipeTable" prefWidth="1420.0">
                 <columns>
                     <TableColumn fx:id="nameColumn" text="Recipe Name">
-                        <cellValueFactory><PropertyValueFactory property="name"/></cellValueFactory>
+                        <cellValueFactory><PropertyValueFactory property="name" /></cellValueFactory>
                     </TableColumn>
                 </columns>
             </TableView>
@@ -51,12 +52,12 @@
     </center>
     <right>
         <VBox spacing="10">
-            <Label text="Recipe Details"/>
+            <Label text="Recipe Details" />
             <Label fx:id="rnameLabel" />
             <Label fx:id="reviewDateLabel" />
-            <TextArea fx:id="rdescriptionArea" wrapText="true" prefWidth="300" prefHeight="200"/>
-            <Label text="Recipe Steps"/>
-            <TextArea fx:id="rstepsTextArea" wrapText="true" prefWidth="300" prefHeight="200"/>
+            <TextArea fx:id="rdescriptionArea" prefHeight="200" prefWidth="300" wrapText="true" />
+            <Label text="Recipe Steps" />
+            <TextArea fx:id="rstepsTextArea" prefHeight="200" prefWidth="300" wrapText="true" />
 
         </VBox>
     </right>
