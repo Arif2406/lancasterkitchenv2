@@ -27,7 +27,7 @@ public class MainPageController {
     public void setUsername(String username) {
         this.currentUser = username;
         if (usernameLabel != null) {
-            usernameLabel.setText("Logged in as: " + username);
+            usernameLabel.setText("Logged in as:\n" + username);
         }
     }
 
