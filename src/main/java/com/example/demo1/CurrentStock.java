@@ -29,6 +29,8 @@ public class CurrentStock {
     private TableColumn<ObservableList<String>, String> ingredientNameColumn;
     @FXML
     private TableColumn<ObservableList<String>, String> stockLevelColumn;
+    @FXML
+    private TableColumn<ObservableList<String>, String> unitColumn; // New column for unit
 
     @FXML
     public void initialize() {
@@ -39,11 +41,12 @@ public class CurrentStock {
     private void setupColumns() {
         ingredientNameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(0)));
         stockLevelColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(1)));
+        unitColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(2))); // Setup for unit column
     }
 
     private void loadStockData() {
         ObservableList<ObservableList<String>> data = FXCollections.observableArrayList();
-        String query = "SELECT Name, Stock_Level FROM in2033t02Ingredient";
+        String query = "SELECT Name, Stock_Level, Unit FROM in2033t02Ingredient"; // Query now includes the 'Unit'
         try (Connection connection = DatabaseUtil.connectToDatabase();
              PreparedStatement stmt = connection.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
@@ -54,6 +57,7 @@ public class CurrentStock {
                 ObservableList<String> row = FXCollections.observableArrayList();
                 row.add(rs.getString("Name"));
                 row.add(rs.getString("Stock_Level"));
+                row.add(rs.getString("Unit")); // Adding unit data to the row
                 data.add(row);
             }
             stockTable.setItems(data);
@@ -115,16 +119,24 @@ public class CurrentStock {
     }
 
     @FXML
-    private void handleHomeButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
+    private void handleHomeButtonClick(ActionEvent event) {
+        navigateToPage("MainPage.fxml", "Home", event);
+    }
 
     @FXML
-    private void handleNewDishButtonClick(ActionEvent event) {navigateToPage("AddNewDish.fxml", "Home", event);}
+    private void handleNewDishButtonClick(ActionEvent event) {
+        navigateToPage("AddNewDish.fxml", "Add New Dish", event);
+    }
 
     @FXML
-    private void handleNewRecipeButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
+    private void handleNewRecipeButtonClick(ActionEvent event) {
+        navigateToPage("MainPage.fxml", "Add New Recipe", event);
+    }
 
     @FXML
-    private void handleNewMenuButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
+    private void handleNewMenuButtonClick(ActionEvent event) {
+        navigateToPage("MainPage.fxml", "Add New Menu", event);
+    }
 
     private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
@@ -149,4 +161,3 @@ public class CurrentStock {
         }
     }
 }
-
