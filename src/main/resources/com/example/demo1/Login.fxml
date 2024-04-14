@@ -16,7 +16,7 @@
     <children>
         <BorderPane prefHeight="360.0" prefWidth="490.0">
             <right>
-                <VBox alignment="CENTER" prefHeight="344.0" prefWidth="331.0" spacing="10.0" style="-fx-background-color: #636d7d; -fx-border-color: #FFFFFF;" BorderPane.alignment="CENTER">
+                <VBox alignment="CENTER" prefHeight="344.0" prefWidth="331.0" spacing="10.0" style="-fx-background-color: #445055; -fx-border-color: #FFFFFF;" BorderPane.alignment="CENTER">
                     <children>
                         <Label text="Login" textFill="#d9d9d9" underline="true">
                             <font>
