@@ -1,227 +1,159 @@
 package com.example.demo1;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Orders {
 
-private Button OrdersButton;
-
     @FXML
-    private void Order(ActionEvent event) {
-        // Implement the action for viewing current dishes
-        try {
-            BorderPane root = (BorderPane) OrdersButton.getScene().getRoot();
-            BorderPane pane = FXMLLoader.load(getClass().getResource("Orders.fxml"));
-            root.setCenter(pane);
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert(Alert.AlertType.ERROR, "Error", "Error loading.", e.getMessage());
-        }
+    private GridPane ordersGrid;
+
+    private List<Order> orders = new ArrayList<>();
+    @FXML
+    private VBox pendingColumn;
+    @FXML
+    private VBox inProgressColumn;
+    @FXML
+    private VBox finishedColumn;
+
+    public void viewTodayOrders() {
+        System.out.println("Showing all orders for today...");
     }
 
-    private void showAlert(Alert.AlertType error, String error1, String s, String message) {
+    public void viewAllOrders() {
+        System.out.println("Showing all orders total...");
     }
-
-
-    @FXML
-    private TableView<ObservableList<String>> ordersTable;
-
-    @FXML
-    private TableColumn<ObservableList<String>, String> dishNameColumn;
-    @FXML
-    private TableColumn<ObservableList<String>, String> quantityColumn;
-    @FXML
-    private TableColumn<ObservableList<String>, String> commentsColumn;
-    @FXML
-    private TableColumn<ObservableList<String>, String> orderNumberColumn;
-
-    @FXML
-    private Button updateStockButton;  // Button to trigger stock update
 
     public void initialize() {
-        setupColumns();
-        loadOrderData();
-        setupButtonActions();
+        createSampleOrders();
+        initializeStatusColumns();
+        refreshOrdersGrid();
     }
 
-    private void setupColumns() {
-        dishNameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(1)));
-        quantityColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(2)));
-        commentsColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(3)));
-        orderNumberColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(4)));
+    private void initializeStatusColumns() {
+        pendingColumn = new VBox();
+        pendingColumn.setSpacing(10);
+        ordersGrid.add(pendingColumn, 0, 0);
+        pendingColumn.getChildren().add(new Label("Pending"));
+
+        inProgressColumn = new VBox();
+        inProgressColumn.setSpacing(10);
+        ordersGrid.add(inProgressColumn, 1, 0);
+        inProgressColumn.getChildren().add(new Label("In Progress"));
+
+        finishedColumn = new VBox();
+        finishedColumn.setSpacing(10);
+        ordersGrid.add(finishedColumn, 2, 0);
+        finishedColumn.getChildren().add(new Label("Finished"));
     }
 
-    private void loadOrderData() {
-        ObservableList<ObservableList<String>> data = FXCollections.observableArrayList();
-        String query = "SELECT o.Order_ID, d.Name, o.Quantity, o.Comments, o.Order_Number " +
-                "FROM in2033t02Order o JOIN in2033t02Dish d ON o.Dish_ID = d.Dish_ID";
-        try (Connection connection = DatabaseUtil.connectToDatabase();
-             PreparedStatement stmt = connection.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
+    public void createSampleOrders() {
+        addOrder(new String[]{"Pizza"}, new int[]{2});
+        addOrder(new String[]{"Burger", "Fries"}, new int[]{1, 3});
+        addOrder(new String[]{"Salad", "Pasta"}, new int[]{1, 2});
+    }
 
-            while (rs.next()) {
-                ObservableList<String> row = FXCollections.observableArrayList();
-                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) {
-                    row.add(rs.getString(i));
-                }
-                data.add(row);
+    private void addOrder(String[] dishes, int[] quantities) {
+        Order order = new Order(dishes, quantities);
+        orders.add(order);
+    }
+
+    private void refreshOrdersGrid() {
+        // Clear all columns
+        pendingColumn.getChildren().clear();
+        inProgressColumn.getChildren().clear();
+        finishedColumn.getChildren().clear();
+
+        // Populate columns with orders
+        for (Order order : orders) {
+            VBox column;
+            switch (order.getStatus()) {
+                case "Pending":
+                    column = pendingColumn;
+                    break;
+                case "In Progress":
+                    column = inProgressColumn;
+                    break;
+                case "Finished":
+                    column = finishedColumn;
+                    break;
+                default:
+                    column = null;
             }
-            ordersTable.setItems(data);
-        } catch (SQLException | ClassNotFoundException ex) {
-            showAlert("Error loading orders from database.", ex.getMessage());
-        }
-    }
-
-    private void setupButtonActions() {
-        updateStockButton.setOnAction(this::updateStock);
-    }
-
-    @FXML
-    private void processOrder(ActionEvent event) {
-        try (Connection connection = DatabaseUtil.connectToDatabase()) {
-            // Loop through each order item in the table
-            for (ObservableList<String> order : ordersTable.getItems()) {
-                int dishID = Integer.parseInt(order.get(0)); // Assuming the first column is the dish ID
-                int quantity = Integer.parseInt(order.get(2)); // Assuming the third column is the quantity
-
-                // Update ingredient stock and record the order
-                updateIngredientStock(dishID, quantity, connection);
-                recordOrder(order, connection);
-            }
-        } catch (Exception e) {
-            showAlert("Error processing order.", e.getMessage());
-        }
-    }
-
-
-    @FXML
-    private void updateStock(ActionEvent event) {
-        try (Connection connection = DatabaseUtil.connectToDatabase()) {
-            for (ObservableList<String> order : ordersTable.getItems()) {
-                int dishID = Integer.parseInt(order.get(0)); // Assuming the first column is the dish ID
-                int quantity = Integer.parseInt(order.get(2)); // Assuming the third column is the quantity
-                updateIngredientStock(dishID, quantity, connection);
-            }
-        } catch (Exception e) {
-            showAlert("Error updating stock.", e.getMessage());
-        }
-    }
-
-    private void updateIngredientStock(int dishID, int quantity, Connection connection) throws SQLException {
-        String query = "SELECT r.Ingredient_ID, r.Quantity FROM in2033t02Recipe_Ingredients r " +
-                "JOIN in2033t02Dish_Recipes dr ON r.Recipe_ID = dr.Recipe_ID WHERE dr.Dish_ID = ?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setInt(1, dishID);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                int ingredientID = rs.getInt("Ingredient_ID");
-                double requiredQuantity = rs.getDouble("Quantity") * quantity;
-                deductStock(ingredientID, requiredQuantity, connection);
+            if (column != null) {
+                column.getChildren().add(createOrderBox(order));
             }
         }
     }
 
-    private void deductStock(int ingredientID, double quantity, Connection connection) throws SQLException {
-        String updateQuery = "UPDATE in2033t02Ingredient SET Stock_Level = Stock_Level - ? WHERE Ingredient_ID = ?";
-        try (PreparedStatement updateStmt = connection.prepareStatement(updateQuery)) {
-            updateStmt.setDouble(1, quantity);
-            updateStmt.setInt(2, ingredientID);
-            updateStmt.executeUpdate();
+    private VBox createOrderBox(Order order) {
+        VBox orderBox = new VBox();
+        orderBox.setStyle("-fx-border-color: black; -fx-border-width: 1px; -fx-padding: 5;");
+        orderBox.getChildren().add(new Label("Order ID: " + order.getId()));
+        for (int i = 0; i < order.getDishes().length; i++) {
+            orderBox.getChildren().add(new Label(order.getQuantities()[i] + " x " + order.getDishes()[i]));
+        }
+        Button statusButton = new Button(order.getStatus());
+        statusButton.setOnAction(e -> {
+            order.advanceStatus();
+            refreshOrdersGrid();
+        });
+        orderBox.getChildren().add(statusButton);
+        return orderBox;
+    }
+
+    private static class Order {
+        private static int orderIdCounter = 1;
+        private int id;
+        private String[] dishes;
+        private int[] quantities;
+        private String status = "Pending"; // Default to Pending
+
+        public Order(String[] dishes, int[] quantities) {
+            this.id = orderIdCounter++;
+            this.dishes = dishes;
+            this.quantities = quantities;
+        }
+
+        public void advanceStatus() {
+            switch (status) {
+                case "Pending":
+                    status = "In Progress";
+                    break;
+                case "In Progress":
+                    status = "Finished";
+                    break;
+                case "Finished":
+                    // Do nothing, as it can't advance beyond "Finished"
+                    break;
+                default:
+                    // Invalid status
+                    break;
+            }
+        }
+
+        public String getStatus() {
+            return status;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public String[] getDishes() {
+            return dishes;
+        }
+
+        public int[] getQuantities() {
+            return quantities;
         }
     }
-
-
-    private void recordOrder(ObservableList<String> order, Connection connection) throws SQLException {
-        String insertQuery = "INSERT INTO in2033t02Order (Dish_ID, Quantity, Comments, Order_Number) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement insertStmt = connection.prepareStatement(insertQuery)) {
-            insertStmt.setInt(1, Integer.parseInt(order.get(0))); // Dish_ID
-            insertStmt.setInt(2, Integer.parseInt(order.get(2))); // Quantity
-            insertStmt.setString(3, order.get(3)); // Comments
-            insertStmt.setString(4, order.get(4)); // Order_Number
-            insertStmt.executeUpdate();
-        }
-    }
-    private void showAlert(String message, String details) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Error");
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        TextArea textArea = new TextArea(details);
-        textArea.setEditable(false);
-        textArea.setWrapText(true);
-        textArea.setMaxWidth(Double.MAX_VALUE);
-        textArea.setMaxHeight(Double.MAX_VALUE);
-        alert.getDialogPane().setContent(textArea);
-        alert.showAndWait();
-    }
-
-
-    @FXML
-    private void handleChefsButtonClick(ActionEvent event) {
-        navigateToPage("Chefs.fxml", "Chefs", event);
-    }
-
-    private void navigateToPage(String s, String chefs, ActionEvent event) {
-    }
-
-    @FXML
-    private void handleWasteButtonClick(ActionEvent event) {
-        navigateToPage("Waste.fxml", "Waste", event);
-    }
-
-    @FXML
-    private void handleMenusButtonClick(ActionEvent event) {
-        navigateToPage("Menus.fxml", "Menus", event);
-    }
-
-    @FXML
-    private void handleOrdersButtonClick(ActionEvent event) {
-        navigateToPage("Orders.fxml", "Orders", event);
-    }
-
-    @FXML
-    private void handleDishesButtonClick(ActionEvent event) {
-        navigateToPage("Dishes.fxml", "Dishes", event);
-    }
-
-    @FXML
-    private void handleSupplierButtonClick(ActionEvent event) {
-        navigateToPage("SupplierStock.fxml", "Stock", event);
-    }
-
-    @FXML
-    private void handleStockButtonClick(ActionEvent event) {
-        navigateToPage("Supplier.fxml", "Supplier", event);
-    }
-
-    @FXML
-    private void handleHomeButtonClick(ActionEvent event) {
-        navigateToPage("MainPage.fxml", "Home", event);
-    }
-
-    @FXML
-    private void handleNewDishButtonClick(ActionEvent event) {navigateToPage("AddNewDish.fxml", "Home", event);}
-
-    @FXML
-    private void handleNewRecipeButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
-
-    @FXML
-    private void handleNewMenuButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
-
 }
 
 
