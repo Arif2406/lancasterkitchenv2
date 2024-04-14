@@ -146,13 +146,24 @@
          <center>
             <VBox spacing="10">
                <children>
-                  <Label text="Dish Information" />
+                  <Label text="Dish Information">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
                   <Label fx:id="nameLabel" />
                   <Label fx:id="courseLabel" />
                   <Label fx:id="statusLabel" />
                   <Label fx:id="chefLabel" />
+                  <Label fx:id="chefLabel1" text="Steps:">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
                   <TextArea fx:id="stepsTextArea" prefHeight="200" prefWidth="300" wrapText="true" />
-                  <Label fx:id="description" />
+                  <Label fx:id="description" text="Description:">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Label>
                   <TextArea fx:id="descriptionArea" prefHeight="200" prefWidth="300" wrapText="true" />
                   <TableView fx:id="recipeTable" prefWidth="1420.0">
                      <columns>

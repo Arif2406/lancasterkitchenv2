@@ -3,6 +3,7 @@ package com.example.demo1;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -38,14 +39,13 @@ public class AddNewDish {
     @FXML
     private VBox stepFieldsVBox;
 
-@FXML
-private List<ComboBox<String>> recipeComboBoxes = new ArrayList<>();
-@FXML
+    private List<ComboBox<String>> recipeComboBoxes = new ArrayList<>();
+
     private List<TextField> stepTextFields = new ArrayList<>();
 
     @FXML
     private void initialize() {
-        courseDropdown.getItems().addAll("First", "Second", "Third");
+        courseDropdown.getItems().addAll();
         addRecipeField(); // Initially add one recipe field
         addStepField(); // Initially add one step field
     }
@@ -172,6 +172,7 @@ private List<ComboBox<String>> recipeComboBoxes = new ArrayList<>();
         }
         recipeFieldsVBox.getChildren().add(recipeComboBox);
         recipeComboBoxes.add(recipeComboBox);
+        recipeFieldsVBox.setAlignment(Pos.CENTER);
     }
 
     @FXML
