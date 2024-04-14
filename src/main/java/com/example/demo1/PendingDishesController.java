@@ -19,7 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Dishes {
+public class PendingDishesController {
 
     @FXML
     private TableColumn<Recipe, String> nameColumn;
@@ -213,22 +213,6 @@ public class Dishes {
     }
 
 
-
-    @FXML
-    private void handleAddNewDish(ActionEvent event) {
-        navigateToPage("AddNewDish.fxml", "addNewDishButton", event);
-    }
-
-    @FXML
-    private void handleViewPendingDishes(ActionEvent event) {
-        navigateToPage("PendingDishes.fxml", "viewPendingDishesButton", event);
-    }
-
-    @FXML
-    private void handleViewAllDishes(ActionEvent event) {
-        navigateToPage("AllDishes.fxml", "viewAllDishesButton", event);
-    }
-
     // Add any additional methods and fields as needed
     private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
@@ -295,10 +279,14 @@ public class Dishes {
         navigateToPage("Supplier.fxml", "Supplier", event);
     }
 
+
     @FXML
     private void handleHomeButtonClick(ActionEvent event) {
         navigateToPage("MainPage.fxml", "Home", event);
     }
+
+    @FXML
+    private void backButton(ActionEvent event) {navigateToPage("Dishes.fxml", "Home", event);}
 
     @FXML
     private void handleNewDishButtonClick(ActionEvent event) {navigateToPage("AddNewDish.fxml", "Home", event);}

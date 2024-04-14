@@ -61,7 +61,7 @@ public class MainPageController {
 
     @FXML
     private void handleDishesButtonClick(ActionEvent event) {
-        navigateToPage("dishList.fxml", "Dishes", event);
+        navigateToPage("Dishes.fxml", "Dishes", event);
     }
 
     @FXML
@@ -74,6 +74,14 @@ public class MainPageController {
         navigateToPage("Supplier.fxml", "Supplier", event);
     }
 
+    @FXML
+    private void handleNewDishButtonClick(ActionEvent event) {navigateToPage("AddNewDish.fxml", "Home", event);}
+
+    @FXML
+    private void handleNewRecipeButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
+
+    @FXML
+    private void handleNewMenuButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
 
 
     private void navigateToPage(String fxmlFile, String title, ActionEvent event) {

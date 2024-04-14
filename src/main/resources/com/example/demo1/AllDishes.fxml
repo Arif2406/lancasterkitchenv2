@@ -3,8 +3,11 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -13,9 +16,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="544.0" prefWidth="972.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.Waste">
+<BorderPane prefHeight="544.0" prefWidth="972.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.AllDishesController">
    <left>
-      <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #2B3336;" BorderPane.alignment="CENTER">
+      <VBox style="-fx-background-color: #2B3336;" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="homeButton" mnemonicParsing="false" onAction="#handleHomeButtonClick" prefHeight="55.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #FFFFFF;" text="Home" textFill="#d9d9d9">
                <font>
@@ -27,7 +30,7 @@
                   <Font name="Times New Roman Bold" size="16.0" />
                </font>
             </Button>
-            <Button fx:id="dishesButton" mnemonicParsing="false" onAction="#handleDishesButtonClick" prefHeight="51.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #d9d9d9;" text="Dishes" textFill="#d9d9d9">
+            <Button fx:id="dishesButton" mnemonicParsing="false" onAction="#handleDishesButtonClick" prefHeight="51.0" prefWidth="100.0" style="-fx-background-color: #445055; -fx-border-color: #d9d9d9;" text="Dishes" textFill="#d9d9d9">
                <font>
                   <Font name="Times New Roman Bold" size="16.0" />
                </font>
@@ -47,12 +50,12 @@
                   <Font name="Times New Roman Bold" size="16.0" />
                </font>
             </Button>
-            <Button fx:id="supplierButton" mnemonicParsing="false" onAction="#handleSupplierButtonClick" prefHeight="55.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #FFFFFF;" text="Supplier" textFill="#d9d9d9">
+            <Button fx:id="supplierButton" mnemonicParsing="false" onAction="#handleSupplierButtonClick" prefHeight="51.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #FFFFFF;" text="Supplier" textFill="#d9d9d9">
                <font>
                   <Font name="Times New Roman Bold" size="16.0" />
                </font>
             </Button>
-            <Button fx:id="wasteButton" mnemonicParsing="false" onAction="#handleWasteButtonClick" prefHeight="51.0" prefWidth="100.0" style="-fx-background-color: #445055; -fx-border-color: #FFFFFF;" text="Waste" textFill="#d9d9d9">
+            <Button fx:id="wasteButton" mnemonicParsing="false" onAction="#handleWasteButtonClick" prefHeight="51.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #FFFFFF;" text="Waste" textFill="#d9d9d9">
                <font>
                   <Font name="Times New Roman Bold" size="16.0" />
                </font>
@@ -98,35 +101,8 @@
          </children>
       </VBox>
    </left>
-   <bottom>
-      <HBox alignment="CENTER" prefHeight="29.0" prefWidth="670.0" spacing="10.0" style="-fx-background-color: #2B3336;" BorderPane.alignment="CENTER">
-         <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" onAction="#handleHomeButtonClick" text="Add Waste" textAlignment="CENTER">
-               <font>
-                  <Font name="Times New Roman Bold" size="12.0" />
-               </font>
-            </Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" onAction="#handleHomeButtonClick" text="Remove Waste" textAlignment="CENTER">
-               <font>
-                  <Font name="Times New Roman Bold" size="12.0" />
-               </font>
-            </Button>
-         </children>
-      </HBox>
-   </bottom>
-   <center>
-        <TableView fx:id="wasteTable" prefHeight="365.0" prefWidth="570.0" BorderPane.alignment="CENTER">
-            <columns>
-                <TableColumn fx:id="ingredientNameColumn" minWidth="114.66665649414062" prefWidth="114.66665649414062" text="Ingredient Name" />
-                <TableColumn fx:id="quantityWastedColumn" minWidth="100.0" prefWidth="114.66668701171875" text="Quantity Wasted" />
-                <TableColumn fx:id="unitColumn" minWidth="49.33331298828125" prefWidth="57.33331298828125" text="Unit" />
-                <TableColumn fx:id="dateOfWasteColumn" minWidth="0.0" prefWidth="96.6666259765625" text="Date of Waste" />
-                <TableColumn fx:id="reasonColumn" maxWidth="196.0" prefWidth="185.3333740234375" text="Reason" />
-            </columns>
-        </TableView>
-   </center>
    <top>
-      <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+      <HBox BorderPane.alignment="CENTER">
          <children>
             <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -141,4 +117,57 @@
          </children>
       </HBox>
    </top>
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="29.0" prefWidth="670.0" spacing="10.0" style="-fx-background-color: #2B3336;" BorderPane.alignment="CENTER">
+         <children>
+            <Button alignment="CENTER" contentDisplay="CENTER" onAction="#backButton" text="Back" textAlignment="CENTER">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+   </bottom>
+   <center>
+      <BorderPane BorderPane.alignment="CENTER">
+         <left>
+            <ListView fx:id="dishList" prefWidth="200" />
+         </left>
+         <center>
+            <VBox spacing="10">
+               <children>
+                  <Label text="Dish Information" />
+                  <Label fx:id="nameLabel" />
+                  <Label fx:id="courseLabel" />
+                  <Label fx:id="statusLabel" />
+                  <Label fx:id="chefLabel" />
+                  <TextArea fx:id="stepsTextArea" prefHeight="200" prefWidth="300" wrapText="true" />
+                  <Label fx:id="description" />
+                  <TextArea fx:id="descriptionArea" prefHeight="200" prefWidth="300" wrapText="true" />
+                  <TableView fx:id="recipeTable" prefWidth="1420.0">
+                     <columns>
+                        <TableColumn fx:id="nameColumn" minWidth="-1.0" prefWidth="463.33335876464844" text="Recipe Name">
+                           <cellValueFactory>
+                              <PropertyValueFactory property="name" />
+                           </cellValueFactory>
+                        </TableColumn>
+                     </columns>
+                  </TableView>
+               </children>
+            </VBox>
+         </center>
+         <right>
+            <VBox spacing="10">
+               <children>
+                  <Label text="Recipe Details" />
+                  <Label fx:id="rnameLabel" />
+                  <Label fx:id="reviewDateLabel" />
+                  <TextArea fx:id="rdescriptionArea" prefHeight="200" prefWidth="300" wrapText="true" />
+                  <Label text="Recipe Steps" />
+                  <TextArea fx:id="rstepsTextArea" prefHeight="200" prefWidth="300" wrapText="true" />
+               </children>
+            </VBox>
+         </right>
+      </BorderPane>
+   </center>
 </BorderPane>

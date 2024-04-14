@@ -195,6 +195,53 @@ public class AddNewDish {
     @FXML
     private void cancel(ActionEvent event) {navigateToPage("Dishes.fxml", "Home", event);}
 
+    @FXML
+    private void handleChefsButtonClick(ActionEvent event) {
+        navigateToPage("Chefs.fxml", "Chefs", event);
+    }
+
+    @FXML
+    private void handleWasteButtonClick(ActionEvent event) {
+        navigateToPage("Waste.fxml", "Waste", event);
+    }
+
+    @FXML
+    private void handleMenusButtonClick(ActionEvent event) {
+        navigateToPage("Menus.fxml", "Menus", event);
+    }
+
+    @FXML
+    private void handleOrdersButtonClick(ActionEvent event) {
+        navigateToPage("Orders.fxml", "Orders", event);
+    }
+
+    @FXML
+    private void handleDishesButtonClick(ActionEvent event) {
+        navigateToPage("Dishes.fxml", "Dishes", event);
+    }
+
+    @FXML
+    private void handleSupplierButtonClick(ActionEvent event) {
+        navigateToPage("SupplierStock.fxml", "Stock", event);
+    }
+
+    @FXML
+    private void handleStockButtonClick(ActionEvent event) {
+        navigateToPage("Supplier.fxml", "Supplier", event);
+    }
+
+    @FXML
+    private void handleNewDishButtonClick(ActionEvent event) {navigateToPage("AddNewDish.fxml", "Home", event);}
+
+    @FXML
+    private void handleNewRecipeButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
+
+    @FXML
+    private void handleNewMenuButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
+
+    @FXML
+    private void handleHomeButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
+
     private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         try {
