@@ -19,7 +19,7 @@
                   <Button layoutX="192.0" layoutY="88.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="139.0" style="-fx-background-color: #2B3336;" text="Waste" textFill="#f4f2f2" />
                   <Button layoutX="359.0" layoutY="88.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="139.0" style="-fx-background-color: #2B3336;" text="Chef" textFill="#f8f5f5" />
                   <Button layoutX="498.0" layoutY="87.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="139.0" style="-fx-background-color: #2B3336;" text="Dish" textFill="#edecec" />
-                  <ImageView fitHeight="98.0" fitWidth="155.0" layoutY="52.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="149.0" fitWidth="171.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../../../../../../TeamProject/Lancaster-Kitchen-System/pic.png" />
                      </image>

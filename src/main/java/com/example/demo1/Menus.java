@@ -13,14 +13,30 @@ import java.io.IOException;
 
 public class Menus {
 
-    @FXML
+
+    private Button viewMenuButton;
+    private Button BackButton;
     private Button addNewMenu;
 
     @FXML
+    private void Menus(ActionEvent event) {
+        // Implement the action for viewing current dishes
+        try {
+            BorderPane root = (BorderPane) viewMenuButton.getScene().getRoot();
+            BorderPane pane = FXMLLoader.load(getClass().getResource("Menus.fxml"));
+            root.setCenter(pane);
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert(Alert.AlertType.ERROR, "Error", "Error loading.", e.getMessage());
+        }
+    }
     private Button viewCurrentMenu;
 
     @FXML
     private Button viewPreviousMenus;
+
+
+
 
 
     // Add action methods for other buttons as needed

@@ -26,6 +26,9 @@ public class MainPageController {
     }
 
     @FXML
+    private void handleHomeButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
+
+    @FXML
     private void handleChefsButtonClick(ActionEvent event) {
         navigateToPage("Chefs.fxml", "Chefs", event);
     }
@@ -61,6 +64,11 @@ public class MainPageController {
     @FXML
     private void handleStockButtonClick(ActionEvent event) {
         navigateToPage("SupplierStock.fxml", "Stock", event);
+    }
+
+    @FXML
+    private void handleSupplierButtonClick(ActionEvent event) {
+        navigateToPage("Supplier.fxml", "Supplier", event);
     }
 
     private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
