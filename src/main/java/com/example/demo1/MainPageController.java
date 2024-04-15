@@ -43,16 +43,7 @@ public class MainPageController {
 
     @FXML
     private void handleMenusButtonClick(ActionEvent event) {
-        // Assuming 'currentUserRole' holds the role of the logged-in user
-        if (!"headchef".equals(currentUser) && !"souschef".equals(currentUser)) {
-            Alert alert = new Alert(AlertType.ERROR);
-            alert.setTitle("Permission Denied");
-            alert.setHeaderText(null);
-            alert.setContentText("Not enough permissions to access this page.");
-            alert.showAndWait();
-        } else {
-            navigateToPage("Menus.fxml", "Menus", event);
-        }
+        navigateToPage("Menus.fxml", "Menu", event);
     }
 
 
