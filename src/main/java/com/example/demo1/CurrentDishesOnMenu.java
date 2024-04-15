@@ -105,7 +105,8 @@ public class CurrentDishesOnMenu {
     }
     private void populateDishesList() throws SQLException, ClassNotFoundException {
         Connection connection = DatabaseUtil.connectToDatabase();
-        String query = "SELECT Name FROM in2033t02Dish";
+        // Updated query to select only dishes with status 'Pending'
+        String query = "SELECT Name FROM in2033t02Dish WHERE Status = 'Pending'";
 
         try (PreparedStatement stmt = connection.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {

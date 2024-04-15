@@ -93,7 +93,8 @@ public class PendingDishesController {
     }
     private void populateDishesList() throws SQLException, ClassNotFoundException {
         Connection connection = DatabaseUtil.connectToDatabase();
-        String query = "SELECT Name FROM in2033t02Dish";
+        // Updated query to select only dishes with status 'Pending'
+        String query = "SELECT Name FROM in2033t02Dish WHERE Status = 'Pending'";
 
         try (PreparedStatement stmt = connection.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
@@ -104,7 +105,6 @@ public class PendingDishesController {
             dishList.setItems(dishes);
         }
     }
-
     private void openDishInformation(String selectedDish) throws SQLException, ClassNotFoundException {
         Connection connection = DatabaseUtil.connectToDatabase();
         String query = "SELECT d.Course, d.Status, d.Description, d.Chef_Creator_ID, s.Step_Description " +
