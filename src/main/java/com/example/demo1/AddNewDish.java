@@ -48,8 +48,8 @@ public class AddNewDish {
     @FXML
     private void initialize() {
         courseDropdown.getItems().addAll();
-        addRecipeField(); // Initially add one recipe field
-        addStepField(); // Initially add one step field
+        addRecipeField();
+        addStepField();
     }
 
     @FXML
@@ -69,8 +69,8 @@ public class AddNewDish {
             statement.setString(1, name);
             statement.setString(2, description);
             statement.setString(3, course);
-            statement.setString(4, "Pending"); // Set status as Pending by default
-            statement.setString(5, "1"); // Set Chef_Creator_ID as 1 for now
+            statement.setString(4, "Pending");
+            statement.setString(5, "1");
 
             statement.executeUpdate();
             ResultSet generatedKeys = statement.getGeneratedKeys();
@@ -254,23 +254,22 @@ public class AddNewDish {
             Stage stage = new Stage();
             stage.setTitle(title);
             stage.setScene(scene);
-            // Maximize instead of full screen
+
             stage.setMaximized(true);
 
             stage.show();
 
-            // Close the current (main) stage after opening the new one
+
             Stage mainStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             mainStage.close();
 
-            // Optional: Smooth transition for showing the stage
             FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), scene.getRoot());
             fadeIn.setFromValue(0);
             fadeIn.setToValue(1);
             fadeIn.play();
 
         } catch (IOException e) {
-            // Better error handling
+
             System.err.println("Failed to load the FXML file: " + fxmlFile);
             e.printStackTrace();
         }

@@ -53,7 +53,7 @@ public class Waste {
 
             while (rs.next()) {
                 ObservableList<String> row = FXCollections.observableArrayList();
-                for (int i = 2; i <= rs.getMetaData().getColumnCount(); i++) {  // Skip Waste_ID and Ingredient_ID
+                for (int i = 2; i <= rs.getMetaData().getColumnCount(); i++) {
                     row.add(rs.getString(i));
                 }
                 data.add(row);
@@ -157,7 +157,7 @@ public class Waste {
             stage.setWidth(screenBounds.getWidth());
             stage.setHeight(screenBounds.getHeight());
             stage.show();
-            // Close the current (main) stage after opening the new one
+
             Stage mainStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             mainStage.close();
         } catch (IOException e) {

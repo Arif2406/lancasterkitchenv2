@@ -27,11 +27,11 @@ import java.util.Map;
 
 public class Orders {
     @FXML
-    private Label usernameLabel; // Label to display the username
+    private Label usernameLabel;
 
-    private String currentUser; // Variable to store the current user's username
+    private String currentUser;
 
-    // Method to set the current user's username
+
     public void setUsername(String username) {
         this.currentUser = username;
         if (usernameLabel != null) {
@@ -135,13 +135,13 @@ public class Orders {
     }
 
     private static int getNextStatus(int currentStatus) {
-        return (currentStatus + 1) % 3;  // Cycles through 0, 1, 2
+        return (currentStatus + 1) % 3;
     }
 
     public void viewAllOrders(ActionEvent actionEvent) {
     }
     public static class Dish {
-        int dishId;  // Dish ID to reference in the database
+        int dishId;
         String name;
         int quantity;
         int status;
@@ -156,7 +156,7 @@ public class Orders {
         }
 
         void advanceStatus() {
-            status = (status + 1) % 3; // Cycles through 0, 1, 2
+            status = (status + 1) % 3;
             updateStatusInDatabase();
         }
 
@@ -266,23 +266,23 @@ public class Orders {
             Stage stage = new Stage();
             stage.setTitle(title);
             stage.setScene(scene);
-            // Maximize instead of full screen
+
             stage.setMaximized(true);
 
             stage.show();
 
-            // Close the current (main) stage after opening the new one
+
             Stage mainStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             mainStage.close();
 
-            // Optional: Smooth transition for showing the stage
+
             FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), scene.getRoot());
             fadeIn.setFromValue(0);
             fadeIn.setToValue(1);
             fadeIn.play();
 
         } catch (IOException e) {
-            // Better error handling
+
             System.err.println("Failed to load the FXML file: " + fxmlFile);
             e.printStackTrace();
         }

@@ -32,7 +32,7 @@ public class CurrentStock {
     @FXML
     private TableColumn<ObservableList<String>, String> stockLevelColumn;
     @FXML
-    private TableColumn<ObservableList<String>, String> unitColumn; // New column for unit
+    private TableColumn<ObservableList<String>, String> unitColumn;
 
     @FXML
     public void initialize() {
@@ -43,12 +43,12 @@ public class CurrentStock {
     private void setupColumns() {
         ingredientNameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(0)));
         stockLevelColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(1)));
-        unitColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(2))); // Setup for unit column
+        unitColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(2)));
     }
 
     private void loadStockData() {
         ObservableList<ObservableList<String>> data = FXCollections.observableArrayList();
-        String query = "SELECT Name, Stock_Level, Unit FROM in2033t02Ingredient"; // Query now includes the 'Unit'
+        String query = "SELECT Name, Stock_Level, Unit FROM in2033t02Ingredient";
         try (Connection connection = DatabaseUtil.connectToDatabase();
              PreparedStatement stmt = connection.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
@@ -59,7 +59,7 @@ public class CurrentStock {
                 ObservableList<String> row = FXCollections.observableArrayList();
                 row.add(rs.getString("Name"));
                 row.add(rs.getString("Stock_Level"));
-                row.add(rs.getString("Unit")); // Adding unit data to the row
+                row.add(rs.getString("Unit"));
                 data.add(row);
             }
             stockTable.setItems(data);
@@ -144,23 +144,23 @@ public class CurrentStock {
             Stage stage = new Stage();
             stage.setTitle(title);
             stage.setScene(scene);
-            // Maximize instead of full screen
+
             stage.setMaximized(true);
 
             stage.show();
 
-            // Close the current (main) stage after opening the new one
+
             Stage mainStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             mainStage.close();
 
-            // Optional: Smooth transition for showing the stage
+
             FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), scene.getRoot());
             fadeIn.setFromValue(0);
             fadeIn.setToValue(1);
             fadeIn.play();
 
         } catch (IOException e) {
-            // Better error handling
+
             System.err.println("Failed to load the FXML file: " + fxmlFile);
             e.printStackTrace();
         }

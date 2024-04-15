@@ -26,7 +26,7 @@ public class SupplierStock {
     @FXML
     private TableView<ObservableList<String>> stockTable;
 
-    // Explicitly declaring columns
+
     @FXML
     private TableColumn<ObservableList<String>, String> ingredientNameColumn;
     @FXML
@@ -38,7 +38,7 @@ public class SupplierStock {
 
     @FXML
     public void initialize() {
-        // You might want to set up columns only once and not re-add them
+
         setupColumns();
         loadStockData();
     }
@@ -51,12 +51,12 @@ public class SupplierStock {
              PreparedStatement stmt = connection.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
 
-            // Clear previous data
+
             stockTable.getItems().clear();
 
             while (rs.next()) {
                 ObservableList<String> row = FXCollections.observableArrayList();
-                for (int i = 2; i <= rs.getMetaData().getColumnCount(); i++) {  // Start from 2 to skip Stock_ID
+                for (int i = 2; i <= rs.getMetaData().getColumnCount(); i++) {
                     row.add(rs.getString(i));
                 }
                 data.add(row);
@@ -69,7 +69,7 @@ public class SupplierStock {
     }
 
     private void setupColumns() {
-        // Assuming columns are properly initialized in FXML and do not need to be added dynamically
+
         ingredientNameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(0)));
         quantityColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(1)));
         unitColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(2)));
@@ -154,23 +154,23 @@ public class SupplierStock {
             Stage stage = new Stage();
             stage.setTitle(title);
             stage.setScene(scene);
-            // Maximize instead of full screen
+
             stage.setMaximized(true);
 
             stage.show();
 
-            // Close the current (main) stage after opening the new one
+
             Stage mainStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             mainStage.close();
 
-            // Optional: Smooth transition for showing the stage
+
             FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), scene.getRoot());
             fadeIn.setFromValue(0);
             fadeIn.setToValue(1);
             fadeIn.play();
 
         } catch (IOException e) {
-            // Better error handling
+
             System.err.println("Failed to load the FXML file: " + fxmlFile);
             e.printStackTrace();
         }

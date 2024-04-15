@@ -187,23 +187,22 @@ public class AddNewMenu {
             Stage stage = new Stage();
             stage.setTitle(title);
             stage.setScene(scene);
-            // Maximize instead of full screen
+
             stage.setMaximized(true);
 
             stage.show();
 
-            // Close the current (main) stage after opening the new one
             Stage mainStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             mainStage.close();
 
-            // Optional: Smooth transition for showing the stage
+
             FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), scene.getRoot());
             fadeIn.setFromValue(0);
             fadeIn.setToValue(1);
             fadeIn.play();
 
         } catch (IOException e) {
-            // Better error handling
+
             System.err.println("Failed to load the FXML file: " + fxmlFile);
             e.printStackTrace();
         }

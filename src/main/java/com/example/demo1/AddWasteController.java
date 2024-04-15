@@ -50,7 +50,7 @@ public class AddWasteController {
         } catch (SQLException | ClassNotFoundException e) {
             System.out.println("Error loading ingredients from database: " + e.getMessage());
             showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to load ingredients from database.", e.getMessage());
-            e.printStackTrace(); // Consider logging this properly in a real application
+            e.printStackTrace();
         }
     }
 
@@ -90,7 +90,7 @@ public class AddWasteController {
         }
 
         try (Connection connection = DatabaseUtil.connectToDatabase()) {
-            // Adjust stock
+
             int quantityWasted = Integer.parseInt(quantity);
             int currentStock = getCurrentStock(ingredientName, connection);
             int newStock = currentStock - quantityWasted;
@@ -102,7 +102,7 @@ public class AddWasteController {
 
             updateIngredientStock(ingredientName, newStock, connection);
 
-            // Insert waste log
+
             Date formattedDate = Date.valueOf(date.format(DateTimeFormatter.ISO_LOCAL_DATE));
             PreparedStatement stmt = connection.prepareStatement("INSERT INTO in2033t02Waste_Log (Ingredient_ID, Quantity_Wasted, Unit, Date_of_Waste, Reason) VALUES ((SELECT Ingredient_ID FROM in2033t02Ingredient WHERE Name = ?), ?, ?, ?, ?)");
             stmt.setString(1, ingredientName);
@@ -130,7 +130,7 @@ public class AddWasteController {
         if (rs.next()) {
             return rs.getInt("Stock_Level");
         }
-        return 0; // or throw an exception if preferred
+        return 0;
     }
 
     private void updateIngredientStock(String ingredientName, int newStock, Connection connection) throws SQLException {
@@ -214,7 +214,7 @@ public class AddWasteController {
             stage.setWidth(screenBounds.getWidth());
             stage.setHeight(screenBounds.getHeight());
             stage.show();
-            // Close the current (main) stage after opening the new one
+
             Stage mainStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             mainStage.close();
         } catch (IOException e) {

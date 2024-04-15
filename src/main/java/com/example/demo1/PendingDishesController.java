@@ -57,15 +57,15 @@ public class PendingDishesController {
     @FXML
     private TextArea rstepsTextArea;
     @FXML
-    private TableView<Recipe> recipeTable; // Change the type to TableView<Recipe>
+    private TableView<Recipe> recipeTable;
 
     public void initialize() {
-        // Initialize columns
-        nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
 
         nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
 
-        // Populate dishes list
+        nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
+
+
         try {
             populateDishesList();
         } catch (SQLException | ClassNotFoundException ex) {
@@ -73,13 +73,12 @@ public class PendingDishesController {
             showAlert(Alert.AlertType.ERROR, "Error", "Error loading dishes from database.", ex.getMessage());
         }
 
-        // Handle dish selection
+
         dishList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 try {
                     openDishInformation(newValue);
-                    // Clear table on selection (optional, comment out if needed)
-                    // recipeTable.getItems().clear();
+
                 } catch (ClassNotFoundException | SQLException e) {
                     e.printStackTrace();
                     showAlert(Alert.AlertType.ERROR, "Error", "Error opening dish information.", e.getMessage());
@@ -88,14 +87,14 @@ public class PendingDishesController {
         });
         recipeTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                // Fetch and display recipe description
+
                 fetchAndDisplayRecipeDescription(newValue.getRecipeID());
             }
         });
     }
     private void populateDishesList() throws SQLException, ClassNotFoundException {
         Connection connection = DatabaseUtil.connectToDatabase();
-        // Updated query to select only dishes with status 'Pending'
+
         String query = "SELECT Name FROM in2033t02Dish WHERE Status = 'Pending'";
 
         try (PreparedStatement stmt = connection.prepareStatement(query);
@@ -127,7 +126,7 @@ public class PendingDishesController {
                 }
                 stepsTextArea.setText("Steps: \n" + stepDescriptions.toString());
 
-                // Fetch and display recipe names
+
                 fetchAndDisplayRecipeNames(selectedDish);
             }
         }
@@ -135,25 +134,24 @@ public class PendingDishesController {
 
     private void fetchAndDisplayRecipeDescription(int recipeID) {
         try {
-            // Fetch recipe details from the database
+
             Connection connection = DatabaseUtil.connectToDatabase();
             String query = "SELECT Name, Status, Review_Date, Description FROM in2033t02Recipe WHERE Recipe_ID = ?";
             try (PreparedStatement stmt = connection.prepareStatement(query)) {
                 stmt.setInt(1, recipeID);
                 try (ResultSet rs = stmt.executeQuery()) {
                     if (rs.next()) {
-                        // Display recipe details
+
                         String name = rs.getString("Name");
                         String status = rs.getString("Status");
                         String reviewDate = rs.getString("Review_Date");
                         String description = rs.getString("Description");
 
-                        // Set detzails in appropriate labels
+
                         rnameLabel.setText("Name: " + name);
-                        //reviewDateLabel.setText("Review Date: " + reviewDate);
+
                         rdescriptionArea.setText("Description: " + description);
 
-                        // Fetch and display recipe steps
                         fetchAndDisplayRecipeSteps(recipeID);
                     }
                 }
@@ -166,7 +164,7 @@ public class PendingDishesController {
 
     private void fetchAndDisplayRecipeSteps(int recipeID) {
         try {
-            // Fetch recipe steps from the database
+
             Connection connection = DatabaseUtil.connectToDatabase();
             String query = "SELECT Step_Description FROM in2033t02Recipe_Steps WHERE Recipe_ID = ?";
             try (PreparedStatement stmt = connection.prepareStatement(query)) {
@@ -176,7 +174,7 @@ public class PendingDishesController {
                     while (rs.next()) {
                         steps.append(rs.getString("Step_Description")).append("\n");
                     }
-                    // Display recipe steps in the text area
+
                     rstepsTextArea.setText("Steps: \n" + steps.toString());
                 }
             }
@@ -205,17 +203,17 @@ public class PendingDishesController {
                     recipes.add(recipe);
                 }
 
-                // Debug print to check fetched recipe count
+
                 System.out.println("Fetched " + recipes.size() + " recipe(s).");
 
-                // Set the items directly to the tableview
+
                 recipeTable.setItems(recipes);
             }
         }
     }
 
 
-    // Add any additional methods and fields as needed
+
     private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
@@ -223,23 +221,23 @@ public class PendingDishesController {
             Stage stage = new Stage();
             stage.setTitle(title);
             stage.setScene(scene);
-            // Maximize instead of full screen
+
             stage.setMaximized(true);
 
             stage.show();
 
-            // Close the current (main) stage after opening the new one
+
             Stage mainStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             mainStage.close();
 
-            // Optional: Smooth transition for showing the stage
+
             FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), scene.getRoot());
             fadeIn.setFromValue(0);
             fadeIn.setToValue(1);
             fadeIn.play();
 
         } catch (IOException e) {
-            // Better error handling
+
             System.err.println("Failed to load the FXML file: " + fxmlFile);
             e.printStackTrace();
         }

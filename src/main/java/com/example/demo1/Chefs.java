@@ -50,11 +50,11 @@ public class Chefs {
     }
 
     @FXML
-    private Label usernameLabel; // Label to display the username
+    private Label usernameLabel;
 
-    private String currentUser; // Variable to store the current user's username
+    private String currentUser;
 
-    // Method to set the current user's username
+
     public void setUsername(String username) {
         this.currentUser = username;
         if (usernameLabel != null) {
@@ -63,7 +63,7 @@ public class Chefs {
     }
 
     private void loadChefData() {
-        table.getItems().clear();  // Clear existing data
+        table.getItems().clear();
         try {
             Connection connection = DatabaseUtil.connectToDatabase();
             String query = "SELECT Name, Role FROM in2033t02Chef";
@@ -155,23 +155,23 @@ public class Chefs {
             Stage stage = new Stage();
             stage.setTitle(title);
             stage.setScene(scene);
-            // Maximize instead of full screen
+
             stage.setMaximized(true);
 
             stage.show();
 
-            // Close the current (main) stage after opening the new one
+
             Stage mainStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             mainStage.close();
 
-            // Optional: Smooth transition for showing the stage
+
             FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), scene.getRoot());
             fadeIn.setFromValue(0);
             fadeIn.setToValue(1);
             fadeIn.play();
 
         } catch (IOException e) {
-            // Better error handling
+
             System.err.println("Failed to load the FXML file: " + fxmlFile);
             e.printStackTrace();
         }
@@ -190,11 +190,11 @@ public class Chefs {
 
 
         try {
-            // Create a new Stage (window)
+
             Stage stage = new Stage();
             stage.setTitle("Add New Chef");
 
-            // Form elements
+
             Label nameLabel = new Label("Name:");
             TextField nameTextField = new TextField();
             Label usernameLabel = new Label("Username:");
@@ -204,26 +204,25 @@ public class Chefs {
             Label roleLabel = new Label("Role:");
             ComboBox<String> roleComboBox = new ComboBox<>();
             roleComboBox.getItems().addAll("Head Chef", "Sous Chef", "Line Chef");
-            roleComboBox.getSelectionModel().selectFirst();  // Selects the first role by default
+            roleComboBox.getSelectionModel().selectFirst();
             Button submitButton = new Button("Submit");
 
-            // Submit button action
             submitButton.setOnAction(e -> {
                 String name = nameTextField.getText();
                 String username = usernameTextField.getText();
                 String password = passwordField.getText();
-                String role = roleComboBox.getValue(); // Get selected role from ComboBox
-                // Call method to insert data into database
+                String role = roleComboBox.getValue();
+
                 insertChefData(name, username, password, role);
-                stage.close(); // Close the form window after submission
+                stage.close();
             });
 
-            // Layout the form
+
             VBox layout = new VBox(10);
             layout.setPadding(new Insets(10));
             layout.getChildren().addAll(nameLabel, nameTextField, usernameLabel, usernameTextField, passwordLabel, passwordField, roleLabel, roleComboBox, submitButton);
 
-            // Display the stage
+
             Scene scene = new Scene(layout, 300, 300);
             stage.setScene(scene);
             stage.showAndWait();
@@ -247,7 +246,7 @@ public class Chefs {
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {
                 showAlert(Alert.AlertType.INFORMATION, "Success", "New chef added successfully.", null);
-                loadChefData();  // Refresh the chef list
+                loadChefData();
             } else {
                 showAlert(Alert.AlertType.ERROR, "Error", "Failed to add new chef.", null);
             }
@@ -278,7 +277,7 @@ public class Chefs {
             return;
         }
 
-        String chefName = selectedChef[0].toString(); // Assuming the first column is the name
+        String chefName = selectedChef[0].toString();
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -290,7 +289,7 @@ public class Chefs {
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {
                 showAlert(Alert.AlertType.INFORMATION, "Success", "Chef Removed", "The chef has been successfully removed.");
-                loadChefData();  // Refresh the chef list
+                loadChefData();
             } else {
                 showAlert(Alert.AlertType.ERROR, "Error", "Failed to Remove Chef", "No chef was removed. Please check your selection.");
             }

@@ -51,7 +51,7 @@ public class Menus {
             Connection connection = DatabaseUtil.connectToDatabase();
             System.out.println("Connecting to database...");
 
-            // Adjust your SQL query to include all necessary fields and show only in use dishes
+
             String query = "SELECT Dish_ID, Name, Course, Status FROM in2033t02Dish WHERE Status = 'In use'";
             System.out.println("SQL Query: " + query);
 
@@ -59,8 +59,8 @@ public class Menus {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                Object[] row = new Object[4];  // Create an array to hold the values for each row
-                for (int i = 1; i <= 4; i++) {  // There are four columns in the result set
+                Object[] row = new Object[4];
+                for (int i = 1; i <= 4; i++) {
                     row[i - 1] = rs.getString(i);
                 }
                 currentMenuTable.getItems().add(row);
@@ -146,23 +146,23 @@ public class Menus {
             Stage stage = new Stage();
             stage.setTitle(title);
             stage.setScene(scene);
-            // Maximize instead of full screen
+
             stage.setMaximized(true);
 
             stage.show();
 
-            // Close the current (main) stage after opening the new one
+
             Stage mainStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             mainStage.close();
 
-            // Optional: Smooth transition for showing the stage
+
             FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), scene.getRoot());
             fadeIn.setFromValue(0);
             fadeIn.setToValue(1);
             fadeIn.play();
 
         } catch (IOException e) {
-            // Better error handling
+
             System.err.println("Failed to load the FXML file: " + fxmlFile);
             e.printStackTrace();
         }

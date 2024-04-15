@@ -127,7 +127,7 @@ public class MainPageController {
     }
 
     private static int getNextStatus(int currentStatus) {
-        return (currentStatus + 1) % 3;  // Cycles through 0, 1, 2
+        return (currentStatus + 1) % 3;
     }
 
 
@@ -174,7 +174,7 @@ public class MainPageController {
         }
 
         void advanceStatus() {
-            status = (status + 1) % 3; // Cycles through 0, 1, 2
+            status = (status + 1) % 3;
             updateStatusInDatabase();
         }
 
@@ -187,8 +187,8 @@ public class MainPageController {
                 stmt.setInt(3, dishId);
                 int affectedRows = stmt.executeUpdate();
 
-                if (status == 2 && affectedRows > 0) { // Check if the status is 'Finished' and update was successful
-                    updateIngredientStockLevels(connection, quantity); // Pass the quantity of the dish
+                if (status == 2 && affectedRows > 0) {
+                    updateIngredientStockLevels(connection, quantity);
                 }
             } catch (SQLException e) {
                 System.err.println("SQL Error: " + e.getMessage());
@@ -231,7 +231,7 @@ public class MainPageController {
                 updateStockStmt.setInt(2, ingredientId);
                 updateStockStmt.executeUpdate();
 
-                // Check the new stock level
+
                 String checkStockQuery = "SELECT Stock_Level FROM in2033t02Ingredient WHERE Ingredient_ID = ?";
                 try (PreparedStatement checkStockStmt = connection.prepareStatement(checkStockQuery)) {
                     checkStockStmt.setInt(1, ingredientId);
@@ -246,7 +246,7 @@ public class MainPageController {
 
         List<String> getAffectedDishes(Connection connection, int ingredientId) throws SQLException {
             List<String> dishes = new ArrayList<>();
-            // Adjusted query to properly join tables based on your schema
+
             String query = "SELECT DISTINCT d.Name FROM in2033t02Dish d " +
                     "JOIN in2033t02Dish_Recipes dr ON d.Dish_ID = dr.Dish_ID " +
                     "JOIN in2033t02Recipe_Ingredients ri ON dr.Recipe_ID = ri.Recipe_ID " +
@@ -276,11 +276,11 @@ public class MainPageController {
     }
 
         @FXML
-        private Label usernameLabel; // Label to display the username
+        private Label usernameLabel;
 
-        private String currentUser; // Variable to store the current user's username
+        private String currentUser;
 
-        // Method to set the current user's username
+
         public void setUsername(String username) {
             this.currentUser = username;
             if (usernameLabel != null) {
@@ -299,7 +299,7 @@ public class MainPageController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Chefs.fxml"));
             Scene scene = new Scene(loader.load());
             Chefs chefsController = loader.getController();
-            chefsController.setUsername(currentUser); // Pass the current user
+            chefsController.setUsername(currentUser);
 
             Stage stage = new Stage();
             stage.setTitle("Chefs");
@@ -307,7 +307,7 @@ public class MainPageController {
             stage.setMaximized(true);
             stage.show();
 
-            // Close the current (main) stage after opening the new one
+
             Stage mainStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             mainStage.close();
         } catch (IOException e) {
@@ -382,23 +382,22 @@ public class MainPageController {
             Stage stage = new Stage();
             stage.setTitle(title);
             stage.setScene(scene);
-            // Maximize instead of full screen
+
             stage.setMaximized(true);
 
             stage.show();
 
-            // Close the current (main) stage after opening the new one
+
             Stage mainStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             mainStage.close();
 
-            // Optional: Smooth transition for showing the stage
             FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), scene.getRoot());
             fadeIn.setFromValue(0);
             fadeIn.setToValue(1);
             fadeIn.play();
 
         } catch (IOException e) {
-            // Better error handling
+
             System.err.println("Failed to load the FXML file: " + fxmlFile);
             e.printStackTrace();
         }

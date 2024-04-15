@@ -11,7 +11,7 @@ public class DatabaseUtil {
 
 
     public static Connection connectToDatabase() throws SQLException, ClassNotFoundException {
-        String driverClassName = "com.mysql.cj.jdbc.Driver"; // Replace with the actual driver class name
+        String driverClassName = "com.mysql.cj.jdbc.Driver";
         String url = "jdbc:mysql://smcse-stuproj00.city.ac.uk:3306/in2033t02";
         String username = "in2033t02_a";
         String password = "b3NV3PntAcI";
@@ -23,10 +23,10 @@ public class DatabaseUtil {
             return connection;
         } catch (ClassNotFoundException e) {
             System.err.println("Error: Driver class not found: " + e.getMessage());
-            throw e; // Re-throw the exception for handling in the calling code
+            throw e;
         } catch (SQLException e) {
             System.err.println("Error connecting to database: " + e.getMessage());
-            throw e; // Re-throw the exception for handling in the calling code
+            throw e;
         }
     }
 
