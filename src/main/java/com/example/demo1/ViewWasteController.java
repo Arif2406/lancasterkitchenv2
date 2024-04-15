@@ -70,7 +70,7 @@ public class ViewWasteController {
 
     @FXML
     private void handleStockButtonClick(ActionEvent event) {
-        navigateToPage("SupplierStock.fxml", "Stock", event);
+        navigateToPage("CurrentStock.fxml", "Stock", event);
     }
 
 

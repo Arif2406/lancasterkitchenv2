@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.paint.Color;
 
 public class MainPageController {
 
@@ -98,22 +100,35 @@ public class MainPageController {
         });
     }
 
+
     private VBox createCourseBox(Order order, String course, List<Dish> dishes) {
         VBox courseBox = new VBox(5);
-        courseBox.setStyle("-fx-border-color: black; -fx-border-width: 1px; -fx-padding: 5;");
+        courseBox.setStyle("-fx-border-color: black; -fx-border-width: 1px; -fx-padding: 5; ");
+
+        // Applying drop shadow directly to the VBox
+        DropShadow dropShadow = new DropShadow();
+        dropShadow.setRadius(5.0);
+        dropShadow.setOffsetX(3.0);
+        dropShadow.setOffsetY(3.0);
+        dropShadow.setColor(Color.color(0.4, 0.5, 0.5));
+        courseBox.setEffect(dropShadow);
+
         Label courseLabel = new Label("Order ID: " + order.getId() + " - Course: " + course);
         courseLabel.setStyle("-fx-font-weight: bold; -fx-underline: true;");
         courseBox.getChildren().add(courseLabel);
+
         dishes.forEach(dish -> {
             Label dishLabel = new Label(dish.quantity + " x " + dish.name);
             courseBox.getChildren().add(dishLabel);
         });
+
         Button statusButton = new Button(getStatusAsString(dishes.get(0).status));
         statusButton.setOnAction(e -> {
             dishes.forEach(Dish::advanceStatus);
             refreshOrdersGrid();
         });
         courseBox.getChildren().add(statusButton);
+
         return courseBox;
     }
 
