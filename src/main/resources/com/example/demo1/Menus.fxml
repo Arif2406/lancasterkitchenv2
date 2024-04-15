@@ -135,7 +135,7 @@
                         <PropertyValueFactory property="name" />
                      </cellValueFactory>
                   </TableColumn>
-                  <TableColumn fx:id="courseColumn" minWidth="-1.0" prefWidth="190.04876708984375" text="Course">
+                  <TableColumn fx:id="CourseColumn" minWidth="-1.0" prefWidth="190.04876708984375" text="Course">
                      <cellValueFactory>
                         <PropertyValueFactory property="name" />
                      </cellValueFactory>
