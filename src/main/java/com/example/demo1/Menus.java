@@ -50,7 +50,7 @@ public class Menus {
             System.out.println("Connecting to database...");
 
             // Adjust your SQL query to include all necessary fields
-            String query = "SELECT Dish_ID, Name, Course, Status FROM in2033t02Dish";
+            String query = "SELECT Dish_ID, Name, Course, Status FROM in2033t02Dish WHERE Status = 'In use'";
             System.out.println("SQL Query: " + query);
 
             PreparedStatement stmt = connection.prepareStatement(query);
