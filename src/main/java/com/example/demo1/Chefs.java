@@ -50,17 +50,17 @@ public class Chefs {
     }
 
     @FXML
-        private Label usernameLabel; // Label to display the username
+    private Label usernameLabel; // Label to display the username
 
-        private String currentUser; // Variable to store the current user's username
+    private String currentUser; // Variable to store the current user's username
 
-        // Method to set the current user's username
-        public void setUsername(String username) {
-            this.currentUser = username;
-            if (usernameLabel != null) {
-                usernameLabel.setText("Logged in as: " + username);
-            }
+    // Method to set the current user's username
+    public void setUsername(String username) {
+        this.currentUser = username;
+        if (usernameLabel != null) {
+            usernameLabel.setText("Logged in as: " + username);
         }
+    }
 
     private void loadChefData() {
         table.getItems().clear();  // Clear existing data
@@ -127,12 +127,12 @@ public class Chefs {
 
     @FXML
     private void handleSupplierButtonClick(ActionEvent event) {
-        navigateToPage("SupplierStock.fxml", "Supplier", event);
+        navigateToPage("SupplierStock.fxml", "Stock", event);
     }
 
     @FXML
     private void handleStockButtonClick(ActionEvent event) {
-        navigateToPage("CurrentStock.fxml", "Stock", event);
+        navigateToPage("Supplier.fxml", "Supplier", event);
     }
 
     @FXML
@@ -143,6 +143,7 @@ public class Chefs {
 
     @FXML
     private void handleNewRecipeButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
+
 
     @FXML
     private void handleNewMenuButtonClick(ActionEvent event) {navigateToPage("AddNewMenu.fxml", "Home", event);}
@@ -180,8 +181,14 @@ public class Chefs {
 
     @FXML
     private void handleAddChefButtonClick(ActionEvent event) {
-        
-                
+        if (!"headchef".equals(currentUser) && !"souschef".equals(currentUser)) {
+            showAlert(Alert.AlertType.ERROR, "Permission Denied", "Not enough permissions to add a chef.", null);
+            return;
+        }
+
+
+
+
         try {
             // Create a new Stage (window)
             Stage stage = new Stage();
@@ -224,7 +231,7 @@ public class Chefs {
             e.printStackTrace();
         }
     }
-    
+
 
     private void insertChefData(String name, String username, String password, String role) {
         Connection conn = null;
@@ -257,9 +264,15 @@ public class Chefs {
     }
     @FXML
     private void handleRemoveChefButtonClick(ActionEvent event) {
-       
-                
-        Object[] selectedChef = table.getSelectionModel().getSelectedItem();
+        if (!"headchef".equals(currentUser) && !"souschef".equals(currentUser)) {
+            showAlert(Alert.AlertType.ERROR, "Permission Denied", "Not enough permissions to remove a chef.", null);
+            return;
+        }
+
+
+
+
+    Object[] selectedChef = table.getSelectionModel().getSelectedItem();
         if (selectedChef == null) {
             showAlert(Alert.AlertType.WARNING, "No Selection", "No Chef Selected", "Please select a chef in the table.");
             return;
