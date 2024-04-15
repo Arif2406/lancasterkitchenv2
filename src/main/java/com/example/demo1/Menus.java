@@ -49,7 +49,7 @@ public class Menus {
             Connection connection = DatabaseUtil.connectToDatabase();
             System.out.println("Connecting to database...");
 
-            // Adjust your SQL query to include all necessary fields
+            // Adjust your SQL query to include all necessary fields and show only in use dishes
             String query = "SELECT Dish_ID, Name, Course, Status FROM in2033t02Dish WHERE Status = 'In use'";
             System.out.println("SQL Query: " + query);
 
