@@ -78,7 +78,7 @@
          <children>
             <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../java/images/Lancasters-logos.jpeg" />
+                  <Image url="https://i.ibb.co/HzvcPvd/Lancasters-logos-2.jpg" />
                </image>
             </ImageView>
             <Label alignment="CENTER" prefHeight="100.0" prefWidth="1920.0" style="-fx-background-color: #2B3336;" text="Lancaster Kitchen" textFill="#d9d9d9">
