@@ -1,4 +1,4 @@
-package com.example.demo1;
+        package com.example.demo1;
 
 import javafx.animation.FadeTransition;
 import javafx.beans.property.SimpleStringProperty;
@@ -10,6 +10,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -25,6 +27,8 @@ public class Dishes {
 
     @FXML
     private TableColumn<Recipe, String> nameColumn;
+    @FXML
+    private ImageView dishImageView; // Reference to the FXML ImageView
 
     @FXML
     private ListView<String> dishList;
@@ -37,8 +41,8 @@ public class Dishes {
 
     @FXML
     private Label statusLabel;
-@FXML
-private TextArea ingredientsTextArea; // Make sure this is declared at the beginning of your class with other FXML fields.
+    @FXML
+    private TextArea ingredientsTextArea; // Make sure this is declared at the beginning of your class with other FXML fields.
 
     @FXML
     private Label chefLabel;
@@ -111,7 +115,7 @@ private TextArea ingredientsTextArea; // Make sure this is declared at the begin
 
     private void openDishInformation(String selectedDish) throws SQLException, ClassNotFoundException {
         Connection connection = DatabaseUtil.connectToDatabase();
-        String query = "SELECT d.Course, d.Status, d.Description, d.Chef_Creator_ID, s.Step_Description " +
+        String query = "SELECT d.Course, d.Status, d.Description, d.Chef_Creator_ID, s.Step_Description, Picture_URL " +
                 "FROM in2033t02Dish d " +
                 "LEFT JOIN in2033t02Dish_Steps s ON d.Dish_ID = s.Dish_ID " +
                 "WHERE d.Name = ?";
@@ -126,6 +130,12 @@ private TextArea ingredientsTextArea; // Make sure this is declared at the begin
                     descriptionArea.setText(rs.getString("Description"));
                     chefLabel.setText("Chef ID: " + rs.getString("Chef_Creator_ID"));
                     stepDescriptions.append(rs.getString("Step_Description")).append("\n");
+
+                    String Picture_URL = rs.getString("Picture_URL");
+                    if (Picture_URL != null && !Picture_URL.isEmpty()) {
+                        Image image = new Image(Picture_URL, true);
+                        dishImageView.setImage(image);
+                    }
                 }
                 stepsTextArea.setText(stepDescriptions.toString());
 

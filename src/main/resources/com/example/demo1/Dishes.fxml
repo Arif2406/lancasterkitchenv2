@@ -145,6 +145,8 @@
                   <Label fx:id="courseLabel" />
                   <Label fx:id="statusLabel" />
                   <Label fx:id="chefLabel" />
+                  <ImageView fx:id="dishImageView" fitHeight="150" fitWidth="150" pickOnBounds="true" preserveRatio="true"/>
+
                   <TextArea fx:id="stepsTextArea" prefHeight="200" prefWidth="300" wrapText="true" />
                   <Label fx:id="description" />
                   <TextArea fx:id="descriptionArea" prefHeight="200" prefWidth="300" wrapText="true" />
