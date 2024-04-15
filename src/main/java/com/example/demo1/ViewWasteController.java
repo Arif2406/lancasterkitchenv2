@@ -67,14 +67,11 @@ public class ViewWasteController {
     }
 
     @FXML
-    private void handleSupplierButtonClick(ActionEvent event) {
-        navigateToPage("SupplierStock.fxml", "Supplier", event);
+    private void handleStockButtonClick(ActionEvent event) {
+        navigateToPage("SupplierStock.fxml", "Stock", event);
     }
 
-    @FXML
-    private void handleStockButtonClick(ActionEvent event) {
-        navigateToPage("CurrentStock.fxml", "Stock", event);
-    }
+
     public void initialize() {
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
         ingredientColumn.setCellValueFactory(new PropertyValueFactory<>("ingredient"));
