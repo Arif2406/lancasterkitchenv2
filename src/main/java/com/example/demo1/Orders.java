@@ -24,6 +24,18 @@ import java.util.List;
 import java.util.Map;
 
 public class Orders {
+    @FXML
+    private Label usernameLabel; // Label to display the username
+
+    private String currentUser; // Variable to store the current user's username
+
+    // Method to set the current user's username
+    public void setUsername(String username) {
+        this.currentUser = username;
+        if (usernameLabel != null) {
+            usernameLabel.setText("Logged in as: " + username);
+        }
+    }
 
     @FXML
     private GridPane ordersGrid;
@@ -124,12 +136,9 @@ public class Orders {
         return (currentStatus + 1) % 3;  // Cycles through 0, 1, 2
     }
 
-    public void viewTodayOrders(ActionEvent actionEvent) {
-    }
-
     public void viewAllOrders(ActionEvent actionEvent) {
     }
-    private static class Dish {
+    public static class Dish {
         int dishId;  // Dish ID to reference in the database
         String name;
         int quantity;
@@ -169,7 +178,7 @@ public class Orders {
     }
 
 
-    private static class Order {
+    public static class Order {
         private int id;
         private Map<String, List<Dish>> dishesByCourse = new HashMap<>();
 
@@ -194,6 +203,11 @@ public class Orders {
 
     }
 
+    @FXML
+    public void HandleviewTodayOrders(ActionEvent event) {
+        navigateToPage("ViewAllOrdersToday.fxml", "ViewAllOrdersToday",event);
+
+    }
     @FXML
     private void handleChefsButtonClick(ActionEvent event) {
         navigateToPage("Chefs.fxml", "Chefs", event);

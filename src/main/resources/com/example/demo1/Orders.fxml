@@ -132,21 +132,5 @@
          </children>
       </VBox>
    </left>
-   <bottom>
-      <HBox alignment="CENTER" prefHeight="29.0" prefWidth="670.0" spacing="10.0" style="-fx-background-color: #2B3336;" BorderPane.alignment="CENTER">
-         <children>
-               <Button onAction="#viewTodayOrders" text="View All Orders Today">
-               <font>
-                  <Font name="Times New Roman Bold" size="12.0" />
-               </font>
-            </Button>
-               <Button onAction="#viewAllOrders" text="View All Orders Total">
-               <font>
-                  <Font name="Times New Roman Bold" size="12.0" />
-               </font>
-            </Button>
-         </children>
-      </HBox>
-   </bottom>
 
 </BorderPane>

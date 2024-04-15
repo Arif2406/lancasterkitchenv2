@@ -38,11 +38,18 @@
                   <Font name="Times New Roman Bold" size="16.0" />
                </font>
             </Button>
-            <Button fx:id="chefsButton" mnemonicParsing="false" onAction="#handleChefsButtonClick" prefHeight="51.0" prefWidth="100.0" style="-fx-background-color: #445055; -fx-border-color: #FFFFFF;" text="Chefs" textFill="#d9d9d9">
+            <Button fx:id="addChefButton" onAction="#handleAddChefButtonClick" text="Add Chef" textAlignment="CENTER">
                <font>
-                  <Font name="Times New Roman Bold" size="16.0" />
+                  <Font name="Times New Roman Bold" size="12.0" />
                </font>
             </Button>
+            <Button fx:id="removeChefButton" onAction="#handleRemoveChefButtonClick" text="Remove Chef" textAlignment="CENTER">
+               <font>
+                  <Font name="Times New Roman Bold" size="12.0" />
+               </font>
+            </Button>
+
+
             <Button fx:id="dishesButton" mnemonicParsing="false" onAction="#handleDishesButtonClick" prefHeight="51.0" prefWidth="100.0" style="-fx-background-color: #2B3336; -fx-border-color: #d9d9d9;" text="Dishes" textFill="#d9d9d9">
                <font>
                   <Font name="Times New Roman Bold" size="16.0" />
