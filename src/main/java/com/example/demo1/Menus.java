@@ -62,6 +62,7 @@ public class Menus {
             Connection connection = DatabaseUtil.connectToDatabase();
             System.out.println("Connecting to database...");
 
+            // retrieve data from database
             // Adjusted query to select only the non-sensitive data
             String query = "SELECT Dish_ID, Name, Course, Status FROM in2033t02Dish";
             System.out.println("SQL Query: " + query);
