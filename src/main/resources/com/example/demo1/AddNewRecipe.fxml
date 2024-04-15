@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -10,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="544.0" prefWidth="972.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.Dishes">
+<BorderPane prefHeight="544.0" prefWidth="972.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.AddNewRecipe">
    <left>
       <VBox style="-fx-background-color: #2B3336;" BorderPane.alignment="CENTER">
          <children>
@@ -80,18 +81,18 @@
       </VBox>
    </left>
    <top>
-      <HBox BorderPane.alignment="CENTER">
+      <HBox style="-fx-background-color: #2B3336;" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="CENTER" prefHeight="100.0" prefWidth="1920.0" style="-fx-background-color: #2B3336;" text="Lancaster Kitchen" textFill="#d9d9d9">
-               <font>
-                  <Font name="Times New Roman Bold" size="24.0" />
-               </font>
-            </Label>
             <ImageView fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../java/images/Lancasters-logos.jpeg" />
                </image>
             </ImageView>
+            <Label alignment="CENTER" prefHeight="100.0" prefWidth="1920.0" style="-fx-background-color: #2B3336;" text="Lancaster Kitchen" textFill="#d9d9d9">
+               <font>
+                  <Font name="Times New Roman Bold" size="24.0" />
+               </font>
+            </Label>
          </children>
       </HBox>
    </top>
@@ -112,28 +113,36 @@
       </HBox>
    </bottom>
    <center>
-      <BorderPane BorderPane.alignment="CENTER">
-         <center>
+      <ScrollPane>
+         <content>
             <VBox prefHeight="409.0" prefWidth="871.0" spacing="10">
                <children>
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="728.0" text="Name Of Recipe:">
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="871.0" text="Name Of Recipe:">
                      <font>
                         <Font name="System Bold" size="12.0" />
-                     </font></Label>
+                     </font>
+                  </Label>
                   <TextField fx:id="nameField" promptText="Enter Recipe name" />
-                  <Label fx:id="courseLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="743.0" text="Description:">
+                  <Label fx:id="courseLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="873.0" text="Description:">
                      <font>
                         <Font name="System Bold" size="12.0" />
-                     </font></Label>
+                     </font>
+                  </Label>
                   <TextField fx:id="descriptionField" promptText="Enter description" />
+                  <VBox fx:id="recipeFieldsVBox" prefHeight="40.0" prefWidth="871.0" />
                   <HBox alignment="CENTER" prefHeight="29.0" prefWidth="670.0" spacing="10.0" style="-fx-background-color: #FFFFF;">
                      <children>
-                        <Button contentDisplay="CENTER" onAction="#addStepField" prefHeight="22.0" prefWidth="123.0" text="Add Step">
+                        <Button contentDisplay="CENTER" onAction="#addIngredientField" prefHeight="22.0" text="Add Ingredient">
                            <font>
                               <Font name="Times New Roman Bold" size="12.0" />
                            </font>
                         </Button>
-                        <Button contentDisplay="CENTER" onAction="#addIngredientField" prefHeight="22.0" prefWidth="107.0" text="Add Ingredient">
+                     </children>
+                  </HBox>
+                  <VBox fx:id="stepFieldsVBox" layoutX="10.0" layoutY="175.0" prefHeight="40.0" prefWidth="871.0" />
+                  <HBox alignment="CENTER" prefHeight="29.0" prefWidth="670.0" spacing="10.0" style="-fx-background-color: #FFFFF;">
+                     <children>
+                        <Button contentDisplay="CENTER" onAction="#addStepField" text="Add Step">
                            <font>
                               <Font name="Times New Roman Bold" size="12.0" />
                            </font>
@@ -142,10 +151,7 @@
                   </HBox>
                </children>
             </VBox>
-         </center>
-         <bottom>
-            <HBox accessibleRole="BUTTON" alignment="CENTER" prefHeight="30.0" prefWidth="871.0" BorderPane.alignment="CENTER" />
-         </bottom>
-      </BorderPane>
+         </content>
+      </ScrollPane>
    </center>
 </BorderPane>
