@@ -95,12 +95,7 @@
    <bottom>
       <HBox alignment="CENTER" prefHeight="29.0" prefWidth="670.0" spacing="10.0" style="-fx-background-color: #2B3336;" BorderPane.alignment="CENTER">
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" onAction="#handleHomeButtonClick" text="Add Waste" textAlignment="CENTER">
-               <font>
-                  <Font name="Times New Roman Bold" size="12.0" />
-               </font>
-            </Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" onAction="#handleHomeButtonClick" text="Remove Waste" textAlignment="CENTER">
+            <Button alignment="CENTER" contentDisplay="CENTER" onAction="#handleNewWaste" text="Add Waste" textAlignment="CENTER">
                <font>
                   <Font name="Times New Roman Bold" size="12.0" />
                </font>
