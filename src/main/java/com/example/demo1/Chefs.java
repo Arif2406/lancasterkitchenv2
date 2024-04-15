@@ -49,6 +49,19 @@ public class Chefs {
         loadChefData();
     }
 
+    @FXML
+        private Label usernameLabel; // Label to display the username
+
+        private String currentUser; // Variable to store the current user's username
+
+        // Method to set the current user's username
+        public void setUsername(String username) {
+            this.currentUser = username;
+            if (usernameLabel != null) {
+                usernameLabel.setText("Logged in as: " + username);
+            }
+        }
+
     private void loadChefData() {
         table.getItems().clear();  // Clear existing data
         try {
