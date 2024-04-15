@@ -305,7 +305,18 @@ public class MainPageController {
 
         @FXML
         private void handleMenusButtonClick(ActionEvent event) {
-            navigateToPage("Menus.fxml", "Menu", event);
+            if (!"headchef".equals(currentUser)&& !"souschef".equals(currentUser)){
+                Alert alert = new Alert (AlertType.ERROR);
+                alert.setTitle("Permission Denied");
+                alert.setHeaderText(null);
+                alert.setContentText("Not enough permissions to access this page.");
+                alert.showAndWait();
+            } else{
+                navigateToPage("Menus.fxml", "Menu", event);
+            }
+            
+            
+
         }
 
 
