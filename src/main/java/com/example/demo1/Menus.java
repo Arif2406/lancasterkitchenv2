@@ -138,12 +138,12 @@ public class Menus {
 
     @FXML
     private void handleSupplierButtonClick(ActionEvent event) {
-        navigateToPage("SupplierStock.fxml", "Stock", event);
+        navigateToPage("SupplierStock.fxml", "Supplier", event);
     }
 
     @FXML
     private void handleStockButtonClick(ActionEvent event) {
-        navigateToPage("Supplier.fxml", "Supplier", event);
+        navigateToPage("CurrentStock.fxml", "Stock", event);
     }
 
     @FXML
