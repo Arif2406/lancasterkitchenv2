@@ -30,29 +30,16 @@ public class Menus {
     private TableColumn<Object[], String> nameColumn;
 
     @FXML
-    private TableColumn<Object[], String> courseColumn;
+    private TableColumn<Object[], String> CourseColumn;
 
     @FXML
     private TableColumn<Object[], String> statusColumn;
 
-    @FXML
-    private TextField dishIdField;
-
-    @FXML
-    private TextField nameField;
-
-    @FXML
-    private TextField courseField;
-
-    @FXML
-    private TextField statusField;
-
     public void initialize() {
         dishIdColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[0].toString()));
-        nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[0].toString()));
-        courseColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[1].toString()));
-        statusColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[1].toString()));
-
+        nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[1].toString()));
+        CourseColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[2].toString()));
+        statusColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[3].toString()));
 
         loadMenuData();
     }
@@ -62,34 +49,23 @@ public class Menus {
             Connection connection = DatabaseUtil.connectToDatabase();
             System.out.println("Connecting to database...");
 
-            // retrieve data from database
-            // Adjusted query to select only the non-sensitive data
+            // Adjust your SQL query to include all necessary fields
             String query = "SELECT Dish_ID, Name, Course, Status FROM in2033t02Dish";
             System.out.println("SQL Query: " + query);
 
             PreparedStatement stmt = connection.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
 
-            // These indexes start at 0 because when you store the results in the Object array, you start with index 0
-            dishIdColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[0].toString()));
-            nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[1].toString()));
-            courseColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[2].toString()));
-            statusColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[3].toString()));
-
-            // Remove the ID column from the display, as it is now not being queried
-            dishIdColumn.setVisible(false);
-
             while (rs.next()) {
-                // Adjusted to fit the new query, now only two columns
-                Object[] row = new Object[2];
-                for (int i = 1; i <= 2; i++) {
+                Object[] row = new Object[4];  // Create an array to hold the values for each row
+                for (int i = 1; i <= 4; i++) {  // There are four columns in the result set
                     row[i - 1] = rs.getString(i);
                 }
                 currentMenuTable.getItems().add(row);
             }
         } catch (SQLException | ClassNotFoundException ex) {
             ex.printStackTrace();
-            showAlert(AlertType.ERROR, "Error", "Error loading chefs from database.", ex.getMessage());
+            showAlert(AlertType.ERROR, "Error", "Error loading menu data from database.", ex.getMessage());
         }
     }
 
@@ -110,6 +86,8 @@ public class Menus {
         }
         alert.showAndWait();
     }
+
+
 
     @FXML
     private void handleChefsButtonClick(ActionEvent event) {
