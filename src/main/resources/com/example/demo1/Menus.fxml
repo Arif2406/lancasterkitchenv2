@@ -107,7 +107,7 @@
          </children>
       </HBox>
    </top>
-   <right>
+   <center>
       <VBox spacing="10" BorderPane.alignment="CENTER">
          <children>
             <Label prefHeight="44.0" prefWidth="102.0" text="Current Menu" translateX="385.0">
@@ -141,5 +141,5 @@
             </TableView>
          </children>
       </VBox>
-   </right>
+   </center>
 </BorderPane>

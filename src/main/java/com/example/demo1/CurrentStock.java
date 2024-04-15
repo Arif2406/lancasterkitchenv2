@@ -1,5 +1,6 @@
 package com.example.demo1;
 
+import javafx.animation.FadeTransition;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -138,25 +140,33 @@ public class CurrentStock {
     }
 
     private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
-        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Scene scene = new Scene(loader.load());
             Stage stage = new Stage();
             stage.setTitle(title);
             stage.setScene(scene);
-            stage.setFullScreen(true);
-            stage.setFullScreenExitHint("");
-            stage.setX(screenBounds.getMinX());
-            stage.setY(screenBounds.getMinY());
-            stage.setWidth(screenBounds.getWidth());
-            stage.setHeight(screenBounds.getHeight());
+            // Maximize instead of full screen
+            stage.setMaximized(true);
+
             stage.show();
+
             // Close the current (main) stage after opening the new one
             Stage mainStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
             mainStage.close();
+
+            // Optional: Smooth transition for showing the stage
+            FadeTransition fadeIn = new FadeTransition(Duration.seconds(0.5), scene.getRoot());
+            fadeIn.setFromValue(0);
+            fadeIn.setToValue(1);
+            fadeIn.play();
+
         } catch (IOException e) {
+            // Better error handling
+            System.err.println("Failed to load the FXML file: " + fxmlFile);
             e.printStackTrace();
         }
     }
+
+
 }
