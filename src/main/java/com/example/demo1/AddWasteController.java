@@ -2,10 +2,17 @@ package com.example.demo1;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -82,17 +89,29 @@ public class AddWasteController {
             return;
         }
 
-        Date formattedDate = Date.valueOf(date.format(DateTimeFormatter.ISO_LOCAL_DATE));
+        try (Connection connection = DatabaseUtil.connectToDatabase()) {
+            // Adjust stock
+            int quantityWasted = Integer.parseInt(quantity);
+            int currentStock = getCurrentStock(ingredientName, connection);
+            int newStock = currentStock - quantityWasted;
 
-        try (Connection connection = DatabaseUtil.connectToDatabase();
-             PreparedStatement stmt = connection.prepareStatement("INSERT INTO in2033t02Waste_Log (Ingredient_ID, Quantity_Wasted, Unit, Date_of_Waste, Reason) VALUES ((SELECT Ingredient_ID FROM in2033t02Ingredient WHERE Name = ?), ?, ?, ?, ?)")) {
+            if (newStock < 0) {
+                showAlert(Alert.AlertType.ERROR, "Stock Error", "Not enough stock available to record this waste.", null);
+                return;
+            }
+
+            updateIngredientStock(ingredientName, newStock, connection);
+
+            // Insert waste log
+            Date formattedDate = Date.valueOf(date.format(DateTimeFormatter.ISO_LOCAL_DATE));
+            PreparedStatement stmt = connection.prepareStatement("INSERT INTO in2033t02Waste_Log (Ingredient_ID, Quantity_Wasted, Unit, Date_of_Waste, Reason) VALUES ((SELECT Ingredient_ID FROM in2033t02Ingredient WHERE Name = ?), ?, ?, ?, ?)");
             stmt.setString(1, ingredientName);
-            stmt.setString(2, quantity);
+            stmt.setInt(2, quantityWasted);
             stmt.setString(3, unit);
             stmt.setDate(4, formattedDate);
             stmt.setString(5, reason);
             int affectedRows = stmt.executeUpdate();
-            System.out.println("Database update executed, affected rows: " + affectedRows);
+
             if (affectedRows > 0) {
                 showAlert(Alert.AlertType.INFORMATION, "Success", "Waste entry added successfully!", null);
             } else {
@@ -104,11 +123,102 @@ public class AddWasteController {
         }
     }
 
+    private int getCurrentStock(String ingredientName, Connection connection) throws SQLException {
+        PreparedStatement stmt = connection.prepareStatement("SELECT Stock_Level FROM in2033t02Ingredient WHERE Name = ?");
+        stmt.setString(1, ingredientName);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("Stock_Level");
+        }
+        return 0; // or throw an exception if preferred
+    }
+
+    private void updateIngredientStock(String ingredientName, int newStock, Connection connection) throws SQLException {
+        PreparedStatement stmt = connection.prepareStatement("UPDATE in2033t02Ingredient SET Stock_Level = ? WHERE Name = ?");
+        stmt.setInt(1, newStock);
+        stmt.setString(2, ingredientName);
+        stmt.executeUpdate();
+    }
+
     private void showAlert(Alert.AlertType type, String title, String header, String content) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
         alert.setHeaderText(header);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    @FXML
+    private void handleChefsButtonClick(ActionEvent event) {
+        navigateToPage("Chefs.fxml", "Chefs", event);
+    }
+
+    @FXML
+    private void handleWasteButtonClick(ActionEvent event) {
+        navigateToPage("Waste.fxml", "Waste", event);
+    }
+
+    @FXML
+    private void handleMenusButtonClick(ActionEvent event) {
+        navigateToPage("Menus.fxml", "Menus", event);
+    }
+
+    @FXML
+    private void handleOrdersButtonClick(ActionEvent event) {
+        navigateToPage("Orders.fxml", "Orders", event);
+    }
+
+    @FXML
+    private void handleDishesButtonClick(ActionEvent event) {
+        navigateToPage("Dishes.fxml", "Dishes", event);
+    }
+
+    @FXML
+    private void handleSupplierButtonClick(ActionEvent event) {
+        navigateToPage("SupplierStock.fxml", "Supplier", event);
+    }
+
+    @FXML
+    private void handleStockButtonClick(ActionEvent event) {
+        navigateToPage("CurrentStock.fxml", "Stock", event);
+    }
+
+    @FXML
+    private void handleHomeButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
+
+    @FXML
+    private void handleNewDishButtonClick(ActionEvent event) {navigateToPage("AddNewDish.fxml", "Home", event);}
+
+    @FXML
+    private void handleNewRecipeButtonClick(ActionEvent event) {navigateToPage("AddNewRecipe.fxml", "AddNewRecipe", event);}
+
+
+    @FXML
+    private void handleNewMenuButtonClick(ActionEvent event) {navigateToPage("AddNewMenu.fxml", "Home", event);}
+    @FXML
+    private void handleNewWaste(ActionEvent event) {navigateToPage("AddWaste.fxml", "Home", event);}
+
+
+    private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
+        Rectangle2D screenBounds = Screen.getPrimary().getBounds();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+            Scene scene = new Scene(loader.load());
+            Stage stage = new Stage();
+            stage.setTitle(title);
+            stage.setScene(scene);
+            stage.setFullScreen(true);
+            stage.setFullScreenExitHint("");
+            stage.setX(screenBounds.getMinX());
+            stage.setY(screenBounds.getMinY());
+            stage.setWidth(screenBounds.getWidth());
+            stage.setHeight(screenBounds.getHeight());
+            stage.show();
+            // Close the current (main) stage after opening the new one
+            Stage mainStage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+            mainStage.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
