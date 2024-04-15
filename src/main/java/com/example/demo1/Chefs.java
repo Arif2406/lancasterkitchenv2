@@ -167,6 +167,14 @@ public class Chefs {
 
     @FXML
     private void handleAddChefButtonClick(ActionEvent event) {
+        if (!"headchef".equals(currentUser) && !"souschef".equals(currentUser)){
+                Alert alert = new Alert (AlertType.ERROR);
+                alert.setTitle("Permission Denied");
+                alert.setHeaderText(null);
+                alert.setContentText("Not enough permissions to access this page.");
+                alert.showAndWait();
+            } else{
+                
         try {
             // Create a new Stage (window)
             Stage stage = new Stage();
@@ -209,6 +217,7 @@ public class Chefs {
             e.printStackTrace();
         }
     }
+    }
 
     private void insertChefData(String name, String username, String password, String role) {
         Connection conn = null;
@@ -241,6 +250,14 @@ public class Chefs {
     }
     @FXML
     private void handleRemoveChefButtonClick(ActionEvent event) {
+        if (!"headchef".equals(currentUser) && !"souschef".equals(currentUser)){
+                Alert alert = new Alert (AlertType.ERROR);
+                alert.setTitle("Permission Denied");
+                alert.setHeaderText(null);
+                alert.setContentText("Not enough permissions to access this page.");
+                alert.showAndWait();
+            } else {
+                
         Object[] selectedChef = table.getSelectionModel().getSelectedItem();
         if (selectedChef == null) {
             showAlert(Alert.AlertType.WARNING, "No Selection", "No Chef Selected", "Please select a chef in the table.");
@@ -274,4 +291,5 @@ public class Chefs {
             }
         }
     }
+}
 }

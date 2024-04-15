@@ -305,7 +305,7 @@ public class MainPageController {
 
         @FXML
         private void handleMenusButtonClick(ActionEvent event) {
-            if (!"headchef".equals(currentUser)&& !"souschef".equals(currentUser)){
+            if (!"headchef".equals(currentUser) && !"souschef".equals(currentUser)){
                 Alert alert = new Alert (AlertType.ERROR);
                 alert.setTitle("Permission Denied");
                 alert.setHeaderText(null);
