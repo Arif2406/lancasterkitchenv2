@@ -137,7 +137,7 @@ public class Waste {
 
 
     @FXML
-    private void handleNewMenuButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
+    private void handleNewMenuButtonClick(ActionEvent event) {navigateToPage("AddNewMenu.fxml", "Home", event);}
     @FXML
     private void handleNewWaste(ActionEvent event) {navigateToPage("AddWaste.fxml", "Home", event);}
 

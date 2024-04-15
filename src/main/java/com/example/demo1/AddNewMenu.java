@@ -177,7 +177,7 @@ public class AddNewMenu {
 
 
     @FXML
-    private void handleNewMenuButtonClick(ActionEvent event) {navigateToPage("Menu.fxml", "Home", event);}
+    private void handleNewMenuButtonClick(ActionEvent event) {navigateToPage("AddNewMenu.fxml", "Home", event);}
 
 
     private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
