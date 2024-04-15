@@ -271,8 +271,7 @@ public class Dishes {
     }
 
     @FXML
-    private void handleMenusButtonClick(ActionEvent event) {
-        navigateToPage("Menus.fxml", "Menus", event);
+    private void handleMenusButtonClick(ActionEvent event) {navigateToPage("Menus.fxml", "Menus", event);
     }
 
     @FXML

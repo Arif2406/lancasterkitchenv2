@@ -74,7 +74,7 @@ public class MainPageController {
     private void handleNewRecipeButtonClick(ActionEvent event) {navigateToPage("AddNewRecipe.fxml", "AddNewRecipe", event);}
 
     @FXML
-    private void handleNewMenuButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
+    private void handleNewMenuButtonClick(ActionEvent event) {navigateToPage("AddNewMenu.fxml", "Home", event);}
 
 
     private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
