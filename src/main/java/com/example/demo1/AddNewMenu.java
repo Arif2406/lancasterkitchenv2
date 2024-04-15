@@ -5,11 +5,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-
+import javafx.scene.control.Label;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -36,43 +40,44 @@ public class AddNewMenu {
 
     @FXML
     public void initialize() {
-        addDishDropdown(firstCourseVBox, firstCourseDishes);
-        addDishDropdown(secondCourseVBox, secondCourseDishes);
-        addDishDropdown(thirdCourseVBox, thirdCourseDishes);
+        addDishDropdown(firstCourseVBox, firstCourseDishes, "First");
+        addDishDropdown(secondCourseVBox, secondCourseDishes, "Second");
+        addDishDropdown(thirdCourseVBox, thirdCourseDishes, "Third");
     }
 
-    private void addDishDropdown(VBox vBox, List<ComboBox<String>> dishList) {
+    private void addDishDropdown(VBox vBox, List<ComboBox<String>> dishList, String course) {
         ComboBox<String> comboBox = new ComboBox<>();
-        populateDishComboBox(comboBox);
+        populateDishComboBox(comboBox, course);
         vBox.getChildren().add(comboBox);
         dishList.add(comboBox);
     }
 
-    private void populateDishComboBox(ComboBox<String> comboBox) {
+    private void populateDishComboBox(ComboBox<String> comboBox, String course) {
         try (Connection connection = DatabaseUtil.connectToDatabase();
-             PreparedStatement stmt = connection.prepareStatement("SELECT Name FROM in2033t02Dish")) {
+             PreparedStatement stmt = connection.prepareStatement("SELECT Name FROM in2033t02Dish WHERE Course = ?")) {
+            stmt.setString(1, course);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 comboBox.getItems().add(rs.getString("Name"));
             }
         } catch (SQLException | ClassNotFoundException e) {
-            showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to load dishes."+ e.getMessage());
+            showAlert(Alert.AlertType.ERROR, "Database Error", "Failed to load dishes for " + course + " course: " + e.getMessage());
         }
     }
 
     @FXML
     private void addFirstCourseDish() {
-        addDishDropdown(firstCourseVBox, firstCourseDishes);
+        addDishDropdown(firstCourseVBox, firstCourseDishes, "First");
     }
 
     @FXML
     private void addSecondCourseDish() {
-        addDishDropdown(secondCourseVBox, secondCourseDishes);
+        addDishDropdown(secondCourseVBox, secondCourseDishes, "Second");
     }
 
     @FXML
     private void addThirdCourseDish() {
-        addDishDropdown(thirdCourseVBox, thirdCourseDishes);
+        addDishDropdown(thirdCourseVBox, thirdCourseDishes, "Third");
     }
 
     @FXML
@@ -98,7 +103,6 @@ public class AddNewMenu {
             showAlert(Alert.AlertType.ERROR, "Database Error", e.getMessage());
         }
     }
-
     private void insertMenuDishes(List<ComboBox<String>> dishes, long menuId, Connection connection) throws SQLException {
         for (ComboBox<String> dish : dishes) {
             String dishName = dish.getValue();

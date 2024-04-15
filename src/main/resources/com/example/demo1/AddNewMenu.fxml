@@ -88,29 +88,32 @@
                 </Label>
             </children>
         </HBox>
-    </top>
-    <center>
-
-    <HBox alignment="CENTER" spacing="10" style="-fx-background-color: #333;">
+    </top><center>
+    <VBox alignment="TOP_CENTER" spacing="10" style="-fx-padding: 20;">
+        <HBox alignment="CENTER" spacing="10" style="-fx-background-color: #333; -fx-padding: 10;">
             <Label text="Select Start Date:" />
             <DatePicker fx:id="startDatePicker" />
         </HBox>
-        <VBox spacing="20" alignment="TOP_CENTER">
-            <VBox fx:id="firstCourseVBox" spacing="10">
-                <Label text="First Course:" />
-                <Button text="Add another dish" onAction="#addFirstCourseDish" />
+        <ScrollPane fitToWidth="true">
+            <VBox spacing="20">
+                <VBox fx:id="firstCourseVBox" spacing="10">
+                    <Label text="First Course:" />
+                    <Button text="Add another dish" onAction="#addFirstCourseDish" />
+                </VBox>
+                <VBox fx:id="secondCourseVBox" spacing="10">
+                    <Label text="Second Course:" />
+                    <Button text="Add another dish" onAction="#addSecondCourseDish" />
+                </VBox>
+                <VBox fx:id="thirdCourseVBox" spacing="10">
+                    <Label text="Third Course:" />
+                    <Button text="Add another dish" onAction="#addThirdCourseDish" />
+                </VBox>
             </VBox>
-            <VBox fx:id="secondCourseVBox" spacing="10">
-                <Label text="Second Course:" />
-                <Button text="Add another dish" onAction="#addSecondCourseDish" />
-            </VBox>
-            <VBox fx:id="thirdCourseVBox" spacing="10">
-                <Label text="Third Course:" />
-                <Button text="Add another dish" onAction="#addThirdCourseDish" />
-            </VBox>
-            <Button text="Submit Menu" onAction="#submitMenu" />
-        </VBox>
-    </center>
+        </ScrollPane>
+        <Button text="Submit Menu" onAction="#submitMenu" style="-fx-margin-top: 20;" />
+    </VBox>
+</center>
+
     <bottom>
         <!-- Include navigation buttons as in your provided examples -->
     </bottom>
