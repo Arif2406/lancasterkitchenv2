@@ -107,17 +107,9 @@
          </children>
       </HBox>
    </top>
-   <center>
-      <Label text="Current Menu" translateY="-175.0" BorderPane.alignment="CENTER">
-         <font>
-            <Font name="Times New Roman" size="18.0" />
-         </font>
-      </Label>
-   </center>
    <right>
       <VBox spacing="10" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="nameLabel" />
             <Label prefHeight="44.0" prefWidth="102.0" text="Current Menu" translateX="385.0">
                <font>
                   <Font name="Times New Roman" size="18.0" />
