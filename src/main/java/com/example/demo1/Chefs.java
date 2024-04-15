@@ -4,7 +4,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -48,24 +47,38 @@ public class Chefs {
     }
 
     private void loadChefData() {
-        table.getItems().clear();  // Clear existing data
         try {
             Connection connection = DatabaseUtil.connectToDatabase();
+            System.out.println("Connecting to database...");
+
+            // Adjusted query to select only the non-sensitive data
             String query = "SELECT Name, Role FROM in2033t02Chef";
+            System.out.println("SQL Query: " + query);
+
             PreparedStatement stmt = connection.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
 
+            // Assuming that the first column is Chef_Name and the second column is Chef_Role
+            // These indexes start at 0 because when you store the results in the Object array, you start with index 0
+            nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[0].toString()));
+            roleColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[1].toString()));
+
+            // Remove the ID column from the display, as it is now not being queried
+            idColumn.setVisible(false);
+
             while (rs.next()) {
+                // Adjusted to fit the new query, now only two columns
                 Object[] row = new Object[2];
-                row[0] = rs.getString("Name");
-                row[1] = rs.getString("Role");
+                for (int i = 1; i <= 2; i++) {
+                    row[i - 1] = rs.getString(i);
+                }
                 table.getItems().add(row);
             }
         } catch (SQLException | ClassNotFoundException ex) {
-            showAlert(Alert.AlertType.ERROR, "Error", "Error loading chefs from database.", ex.getMessage());
+            ex.printStackTrace();
+            showAlert(AlertType.ERROR, "Error", "Error loading chefs from database.", ex.getMessage());
         }
     }
-
 
     private void showAlert(AlertType alertType, String title, String message, String details) {
         Alert alert = new Alert(alertType);
@@ -112,12 +125,12 @@ public class Chefs {
 
     @FXML
     private void handleSupplierButtonClick(ActionEvent event) {
-        navigateToPage("SupplierStock.fxml", "Supplier", event);
+        navigateToPage("SupplierStock.fxml", "Stock", event);
     }
 
     @FXML
     private void handleStockButtonClick(ActionEvent event) {
-        navigateToPage("CurrentStock.fxml", "Stock", event);
+        navigateToPage("Supplier.fxml", "Supplier", event);
     }
 
     @FXML
@@ -152,115 +165,6 @@ public class Chefs {
             mainStage.close();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-    @FXML
-    private void handleAddChefButtonClick(ActionEvent event) {
-        try {
-            // Create a new Stage (window)
-            Stage stage = new Stage();
-            stage.setTitle("Add New Chef");
-
-            // Form elements
-            Label nameLabel = new Label("Name:");
-            TextField nameTextField = new TextField();
-            Label usernameLabel = new Label("Username:");
-            TextField usernameTextField = new TextField();
-            Label passwordLabel = new Label("Password:");
-            PasswordField passwordField = new PasswordField();
-            Label roleLabel = new Label("Role:");
-            ComboBox<String> roleComboBox = new ComboBox<>();
-            roleComboBox.getItems().addAll("Head Chef", "Sous Chef", "Line Chef");
-            roleComboBox.getSelectionModel().selectFirst();  // Selects the first role by default
-            Button submitButton = new Button("Submit");
-
-            // Submit button action
-            submitButton.setOnAction(e -> {
-                String name = nameTextField.getText();
-                String username = usernameTextField.getText();
-                String password = passwordField.getText();
-                String role = roleComboBox.getValue(); // Get selected role from ComboBox
-                // Call method to insert data into database
-                insertChefData(name, username, password, role);
-                stage.close(); // Close the form window after submission
-            });
-
-            // Layout the form
-            VBox layout = new VBox(10);
-            layout.setPadding(new Insets(10));
-            layout.getChildren().addAll(nameLabel, nameTextField, usernameLabel, usernameTextField, passwordLabel, passwordField, roleLabel, roleComboBox, submitButton);
-
-            // Display the stage
-            Scene scene = new Scene(layout, 300, 300);
-            stage.setScene(scene);
-            stage.showAndWait();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void insertChefData(String name, String username, String password, String role) {
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        try {
-            conn = DatabaseUtil.connectToDatabase();
-            String sql = "INSERT INTO in2033t02Chef (Name, Username, Password, Role) VALUES (?, ?, ?, ?)";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, name);
-            pstmt.setString(2, username);
-            pstmt.setString(3, password);
-            pstmt.setString(4, role);
-            int affectedRows = pstmt.executeUpdate();
-            if (affectedRows > 0) {
-                showAlert(Alert.AlertType.INFORMATION, "Success", "New chef added successfully.", null);
-                loadChefData();  // Refresh the chef list
-            } else {
-                showAlert(Alert.AlertType.ERROR, "Error", "Failed to add new chef.", null);
-            }
-        } catch (SQLException | ClassNotFoundException ex) {
-            showAlert(Alert.AlertType.ERROR, "Database Error", "Error inserting chef data into the database.", ex.getMessage());
-        } finally {
-            try {
-                if (pstmt != null) pstmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
-        }
-    }
-    @FXML
-    private void handleRemoveChefButtonClick(ActionEvent event) {
-        Object[] selectedChef = table.getSelectionModel().getSelectedItem();
-        if (selectedChef == null) {
-            showAlert(Alert.AlertType.WARNING, "No Selection", "No Chef Selected", "Please select a chef in the table.");
-            return;
-        }
-
-        String chefName = selectedChef[0].toString(); // Assuming the first column is the name
-
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-        try {
-            conn = DatabaseUtil.connectToDatabase();
-            String sql = "DELETE FROM in2033t02Chef WHERE Name = ?";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, chefName);
-            int affectedRows = pstmt.executeUpdate();
-            if (affectedRows > 0) {
-                showAlert(Alert.AlertType.INFORMATION, "Success", "Chef Removed", "The chef has been successfully removed.");
-                loadChefData();  // Refresh the chef list
-            } else {
-                showAlert(Alert.AlertType.ERROR, "Error", "Failed to Remove Chef", "No chef was removed. Please check your selection.");
-            }
-        } catch (SQLException | ClassNotFoundException ex) {
-            showAlert(Alert.AlertType.ERROR, "Database Error", "Error removing chef from the database.", ex.getMessage());
-        } finally {
-            try {
-                if (pstmt != null) pstmt.close();
-                if (conn != null) conn.close();
-            } catch (SQLException ex) {
-                ex.printStackTrace();
-            }
         }
     }
 }

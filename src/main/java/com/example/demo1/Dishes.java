@@ -287,12 +287,12 @@ public class Dishes {
 
     @FXML
     private void handleSupplierButtonClick(ActionEvent event) {
-        navigateToPage("SupplierStock.fxml", "Supplier", event);
+        navigateToPage("SupplierStock.fxml", "Stock", event);
     }
 
     @FXML
     private void handleStockButtonClick(ActionEvent event) {
-        navigateToPage("CurrentStock.fxml", "Stock", event);
+        navigateToPage("Supplier.fxml", "Supplier", event);
     }
 
     @FXML
@@ -309,12 +309,4 @@ public class Dishes {
     @FXML
     private void handleNewMenuButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
 
-    public void addStepField(ActionEvent actionEvent) {
-    }
-
-    public void addIngredientField(ActionEvent actionEvent) {
-    }
-
-    public void submit(ActionEvent actionEvent) {
-    }
 }
