@@ -21,6 +21,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Controls the supplier stock view within the application.
+ * This class is responsible for managing the supplier stock information displayed in a table view.
+ */
 public class SupplierStock {
 
     @FXML
@@ -36,6 +40,10 @@ public class SupplierStock {
     @FXML
     private TableColumn<ObservableList<String>, String> deliveryDateColumn;
 
+    /**
+     * Initializes the controller class. This method is automatically called
+     * after the FXML file has been loaded. It sets up the table columns and loads the initial stock data.
+     */
     @FXML
     public void initialize() {
 
@@ -43,6 +51,10 @@ public class SupplierStock {
         loadStockData();
     }
 
+    /**
+     * Loads stock data from the database and adds it to the table view.
+     * This method queries the database for all current supplier stock and displays it.
+     */
     private void loadStockData() {
         ObservableList<ObservableList<String>> data = FXCollections.observableArrayList();
         String query = "SELECT s.Stock_ID, i.Name, s.Received_Quantity, s.Unit, s.Delivery_Date " +
@@ -68,6 +80,9 @@ public class SupplierStock {
         }
     }
 
+    /**
+     * Configures the table columns to use specific properties of the ObservableList to display data.
+     */
     private void setupColumns() {
 
         ingredientNameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(0)));
@@ -76,7 +91,13 @@ public class SupplierStock {
         deliveryDateColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(3)));
     }
 
-
+    /**
+     * Displays an alert to the user.
+     * @param alertType the type of alert to display
+     * @param title the title of the alert dialog
+     * @param message the main message of the alert
+     * @param details detailed message or stack trace
+     */
     private void showAlert(Alert.AlertType alertType, String title, String message, String details) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -95,58 +116,95 @@ public class SupplierStock {
         alert.showAndWait();
     }
 
+    /**
+     * Takes you to the chefs page when chefs button is clicked.
+     */
     @FXML
     private void handleChefsButtonClick(ActionEvent event) {
         navigateToPage("Chefs.fxml", "Chefs", event);
     }
 
+    /**
+     * Takes you to the waste page when waste button is clicked.
+     */
     @FXML
     private void handleWasteButtonClick(ActionEvent event) {
         navigateToPage("Waste.fxml", "Waste", event);
     }
 
+    /**
+     * Takes you to the menus page when menus button is clicked.
+     */
     @FXML
     private void handleMenusButtonClick(ActionEvent event) {
         navigateToPage("Menus.fxml", "Menus", event);
     }
 
+    /**
+     * Takes you to the orders/home page when orders button is clicked.
+     */
     @FXML
     private void handleOrdersButtonClick(ActionEvent event) {
         navigateToPage("Orders.fxml", "Orders", event);
     }
 
+    /**
+     * Takes you to the dishes page when dishes button is clicked.
+     */
     @FXML
     private void handleDishesButtonClick(ActionEvent event) {
         navigateToPage("Dishes.fxml", "Dishes", event);
     }
 
+    /**
+     * Takes you to the supplier page when supplier button is clicked.
+     */
     @FXML
     private void handleSupplierButtonClick(ActionEvent event) {
         navigateToPage("SupplierStock.fxml", "Supplier", event);
     }
 
+    /**
+     * Takes you to the stock page when stock button is clicked.
+     */
     @FXML
     private void handleStockButtonClick(ActionEvent event) {
         navigateToPage("CurrentStock.fxml", "Stock", event);
     }
 
-
+    /**
+     * Takes you to the home page when stock button is clicked.
+     */
     @FXML
     private void handleHomeButtonClick(ActionEvent event) {
         navigateToPage("MainPage.fxml", "Home", event);
     }
 
+    /**
+     * Takes you to the new dishes page when add new dish button is clicked.
+     */
     @FXML
     private void handleNewDishButtonClick(ActionEvent event) {navigateToPage("AddNewDish.fxml", "Home", event);}
 
+    /**
+     * Takes you to the new recipe page when add new recipe button is clicked.
+     */
     @FXML
     private void handleNewRecipeButtonClick(ActionEvent event) {navigateToPage("AddNewRecipe.fxml", "AddNewRecipe", event);}
 
-
+    /**
+     * Takes you to the new menu page when add new menu button is clicked.
+     */
     @FXML
     private void handleNewMenuButtonClick(ActionEvent event) {navigateToPage("AddNewMenu.fxml", "Home", event);}
 
-
+    /**
+     * Utility method to navigate to different pages within the application.
+     * This method loads the given FXML file and transitions to the specified scene with a fade animation.
+     * @param fxmlFile the FXML file to load
+     * @param title the title of the new stage
+     * @param event the event that triggered the navigation
+     */
     private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));

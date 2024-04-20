@@ -26,6 +26,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The controller for the main page of the application that handles navigation and order processing.
+ */
 public class MainPageController {
 
     @FXML
@@ -34,6 +37,10 @@ public class MainPageController {
     @FXML
     private VBox pendingColumn, inProgressColumn, finishedColumn;
 
+    /**
+     * Initializes the controller class. Called after the FXML file has been loaded.
+     * Populates the orders from the database and initializes the UI elements for order statuses.
+     */
     public void initialize() {
         try {
             populateOrdersFromDatabase();
@@ -44,6 +51,9 @@ public class MainPageController {
         refreshOrdersGrid();
     }
 
+    /**
+     * Initializes the columns for the pending, in-progress, and finished orders within the UI.
+     */
     private void initializeStatusColumns() {
         pendingColumn = new VBox(10);
         inProgressColumn = new VBox(10);
@@ -56,6 +66,11 @@ public class MainPageController {
         finishedColumn.getChildren().add(new Label("Finished"));
     }
 
+    /**
+     * Retrieves and populates the order data from the database into the application.
+     * @throws SQLException If a database access error occurs.
+     * @throws ClassNotFoundException If the JDBC driver class is not found.
+     */
     private void populateOrdersFromDatabase() throws SQLException, ClassNotFoundException {
         Connection connection = DatabaseUtil.connectToDatabase();
         String query = "SELECT o.Order_ID, d.Dish_ID, d.Name AS DishName, d.Course AS Course, od.Dish_Quantity AS Quantity, od.Status AS Status FROM in2033t02Orders o JOIN in2033t02Order_Dishes od ON o.Order_ID = od.Order_ID JOIN in2033t02Dish d ON od.Dish_ID = d.Dish_ID;";
@@ -78,7 +93,9 @@ public class MainPageController {
         }
     }
 
-
+    /**
+     * Refreshes the orders displayed on the GridPane based on their current status.
+     */
     private void refreshOrdersGrid() {
         Platform.runLater(() -> {
             pendingColumn.getChildren().clear();
@@ -98,6 +115,14 @@ public class MainPageController {
         });
     }
 
+    /**
+     * Creates a VBox containing UI elements for a course within an order, such as the dish names and quantity.
+     * Also includes a button to update the status of the dishes in the course.
+     * @param order The order containing the course.
+     * @param course The name of the course.
+     * @param dishes A list of dishes within that course.
+     * @return A VBox with the course and dish details.
+     */
     private VBox createCourseBox(Order order, String course, List<Dish> dishes) {
         VBox courseBox = new VBox(5);
         courseBox.setStyle("-fx-border-color: black; -fx-border-width: 1px; -fx-padding: 5;");
@@ -117,6 +142,11 @@ public class MainPageController {
         return courseBox;
     }
 
+    /**
+     * Converts the numeric status code of an order to its String representation.
+     * @param status The numeric status code.
+     * @return The String representation of the status.
+     */
     private static String getStatusAsString(int status) {
         return switch (status) {
             case 0 -> "Pending";
@@ -126,38 +156,73 @@ public class MainPageController {
         };
     }
 
+    /**
+     * Determines the next status code for an order based on its current status.
+     * @param currentStatus The current status code of the order.
+     * @return The next status code.
+     */
     private static int getNextStatus(int currentStatus) {
         return (currentStatus + 1) % 3;
     }
 
 
-
-
-
+    /**
+     * Views all orders from the system. This method should contain logic to
+     * retrieve and display all orders, but currently does not implement any functionality.
+     *
+     * @param actionEvent The event that triggered this method.
+     */
     public void viewAllOrders(ActionEvent actionEvent) {
     }
 
+    /**
+     * Represents an order with associated dishes categorized by course.
+     */
     private static class Order {
         private int id;
         private Map<String, List<Dish>> dishesByCourse = new HashMap<>();
 
+        /**
+         * Constructs an Order object with a given ID.
+         *
+         * @param id The unique identifier for the order.
+         */
         public Order(int id) {
             this.id = id;
         }
 
+        /**
+         * Adds a dish to the order under the specified course.
+         *
+         * @param dish   The dish to be added.
+         * @param course The course under which the dish is categorized.
+         */
         public void addDish(Dish dish, String course) {
             dishesByCourse.computeIfAbsent(course, k -> new ArrayList<>()).add(dish);
         }
 
+        /**
+         * Retrieves the mapping of courses to dishes for this order.
+         *
+         * @return A map where each key is a course name and the value is a list of dishes.
+         */
         public Map<String, List<Dish>> getDishesByCourse() {
             return dishesByCourse;
         }
 
+        /**
+         * Retrieves the order ID.
+         *
+         * @return The ID of the order.
+         */
         public int getId() {
             return id;
         }
     }
 
+    /**
+     * Represents a dish in an order, including its name, quantity, and status.
+     */
     private static class Dish {
         int dishId;
         String name;
@@ -165,6 +230,15 @@ public class MainPageController {
         int status;
         int orderId;
 
+        /**
+         * Constructs a Dish object with the specified details.
+         *
+         * @param dishId   The unique identifier for the dish.
+         * @param name     The name of the dish.
+         * @param quantity The quantity ordered.
+         * @param status   The current status of the dish (e.g., pending, in progress, finished).
+         * @param orderId  The ID of the order this dish belongs to.
+         */
         Dish(int dishId, String name, int quantity, int status, int orderId) {
             this.dishId = dishId;
             this.name = name;
@@ -173,11 +247,17 @@ public class MainPageController {
             this.orderId = orderId;
         }
 
+        /**
+         * Advances the status of the dish and updates the database record.
+         */
         void advanceStatus() {
             status = (status + 1) % 3;
             updateStatusInDatabase();
         }
 
+        /**
+         * Updates the status of the dish in the database.
+         */
         void updateStatusInDatabase() {
             String query = "UPDATE in2033t02Order_Dishes SET Status = ? WHERE Order_ID = ? AND Dish_ID = ?";
             try (Connection connection = DatabaseUtil.connectToDatabase();
@@ -198,6 +278,13 @@ public class MainPageController {
             }
         }
 
+        /**
+         * Updates the stock levels for ingredients based on the dish quantity.
+         *
+         * @param connection A database connection.
+         * @param quantity   The quantity of the dish prepared.
+         * @throws SQLException If an SQL error occurs during the update.
+         */
         void updateIngredientStockLevels(Connection connection, int quantity) throws SQLException {
             String recipeQuery = "SELECT Recipe_ID FROM in2033t02Dish_Recipes WHERE Dish_ID = ?";
             try (PreparedStatement recipeStmt = connection.prepareStatement(recipeQuery)) {
@@ -210,6 +297,14 @@ public class MainPageController {
             }
         }
 
+        /**
+         * Updates the stock for a specific recipe.
+         *
+         * @param connection   A database connection.
+         * @param recipeId     The ID of the recipe.
+         * @param dishQuantity The quantity of the dish prepared.
+         * @throws SQLException If an SQL error occurs during the update.
+         */
         void updateStockForRecipe(Connection connection, int recipeId, int dishQuantity) throws SQLException {
             String ingredientQuery = "SELECT Ingredient_ID, Quantity FROM in2033t02Recipe_Ingredients WHERE Recipe_ID = ?";
             try (PreparedStatement ingredientStmt = connection.prepareStatement(ingredientQuery)) {
@@ -223,6 +318,15 @@ public class MainPageController {
             }
         }
 
+        /**
+         * Decrements the stock level for an ingredient.
+         *
+         * @param connection      A database connection.
+         * @param ingredientId    The ID of the ingredient to decrement.
+         * @param quantityPerRecipe The quantity of the ingredient used per recipe.
+         * @param dishQuantity    The quantity of the dish prepared.
+         * @throws SQLException If an SQL error occurs during the update.
+         */
         void decrementIngredientStock(Connection connection, int ingredientId, double quantityPerRecipe, int dishQuantity) throws SQLException {
             double totalQuantity = quantityPerRecipe * dishQuantity;
             String updateStockQuery = "UPDATE in2033t02Ingredient SET Stock_Level = Stock_Level - ? WHERE Ingredient_ID = ?";
@@ -244,6 +348,14 @@ public class MainPageController {
             }
         }
 
+        /**
+         * Retrieves a list of dishes that are affected by the depletion of a specific ingredient.
+         *
+         * @param connection   The database connection to be used for the query.
+         * @param ingredientId The unique identifier of the ingredient that has been depleted.
+         * @return A list of strings, where each string is the name of an affected dish.
+         * @throws SQLException If there is an error performing the database query.
+         */
         List<String> getAffectedDishes(Connection connection, int ingredientId) throws SQLException {
             List<String> dishes = new ArrayList<>();
 
@@ -262,7 +374,11 @@ public class MainPageController {
         }
 
 
-
+        /**
+         * Displays a warning popup listing the dishes that cannot be served due to insufficient ingredients.
+         *
+         * @param dishes A list of dish names that have become unavailable.
+         */
         void showWarningPopup(List<String> dishes) {
             if (!dishes.isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -280,7 +396,11 @@ public class MainPageController {
 
         private String currentUser;
 
-
+    /**
+     * Sets the username of the current user and updates the username label on the UI.
+     *
+     * @param username The username of the current user.
+     */
         public void setUsername(String username) {
             this.currentUser = username;
             if (usernameLabel != null) {
@@ -288,11 +408,17 @@ public class MainPageController {
             }
         }
 
+    /**
+     * Takes you to the home page when stock button is clicked.
+     */
         @FXML
         private void handleHomeButtonClick(ActionEvent event) {
             navigateToPage("MainPage.fxml", "Home", event);
         }
 
+    /**
+     * Takes you to the chefs page when chefs button is clicked.
+     */
     @FXML
     private void handleChefsButtonClick(ActionEvent event) {
         try {
@@ -316,12 +442,17 @@ public class MainPageController {
         }
     }
 
-
+    /**
+     * Takes you to the waste page when waste button is clicked.
+     */
     @FXML
         private void handleWasteButtonClick(ActionEvent event) {
             navigateToPage("Waste.fxml", "Waste", event);
         }
 
+    /**
+     * Takes you to the menus page when menus button is clicked.
+     */
         @FXML
         private void handleMenusButtonClick(ActionEvent event) {
             if (!"headchef".equals(currentUser) && !"souschef".equals(currentUser)){
@@ -338,43 +469,69 @@ public class MainPageController {
 
         }
 
-
+    /**
+     * Takes you to the orders/home page when orders button is clicked.
+     */
         @FXML
         private void handleOrdersButtonClick(ActionEvent event) {
             navigateToPage("Orders.fxml", "Orders", event);
         }
 
+    /**
+     * Takes you to the dishes page when dishes button is clicked.
+     */
         @FXML
         private void handleDishesButtonClick(ActionEvent event) {
             navigateToPage("Dishes.fxml", "Dishes", event);
         }
 
+    /**
+     * Takes you to the supplier page when supplier button is clicked.
+     */
         @FXML
         private void handleSupplierButtonClick(ActionEvent event) {
             navigateToPage("SupplierStock.fxml", "Supplier", event);
         }
 
+    /**
+     * Takes you to the stock page when stock button is clicked.
+     */
         @FXML
         private void handleStockButtonClick(ActionEvent event) {
             navigateToPage("CurrentStock.fxml", "Stock", event);
         }
 
+    /**
+     * Takes you to the new dishes page when add new dish button is clicked.
+     */
         @FXML
         private void handleNewDishButtonClick(ActionEvent event) {
             navigateToPage("AddNewDish.fxml", "Home", event);
         }
 
+    /**
+     * Takes you to the new recipe page when add new recipe button is clicked.
+     */
         @FXML
         private void handleNewRecipeButtonClick(ActionEvent event) {
             navigateToPage("AddNewRecipe.fxml", "AddNewRecipe", event);
         }
 
+    /**
+     * Takes you to the new menu page when add new menu button is clicked.
+     */
         @FXML
         private void handleNewMenuButtonClick(ActionEvent event) {
             navigateToPage("AddNewMenu.fxml", "Home", event);
         }
 
 
+    /**
+     * Navigates to the specified page when a button is clicked.
+     * @param fxmlFile The FXML file corresponding to the page to navigate to.
+     * @param title The title of the window to be displayed.
+     * @param event The event that triggered the navigation.
+     */
     private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));

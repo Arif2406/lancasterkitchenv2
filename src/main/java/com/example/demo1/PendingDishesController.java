@@ -21,6 +21,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Controls the GUI for managing pending dishes in the system.
+ */
 public class PendingDishesController {
 
     @FXML
@@ -59,6 +62,10 @@ public class PendingDishesController {
     @FXML
     private TableView<Recipe> recipeTable;
 
+    /**
+     * Initializes the controller class. This method is automatically called
+     * after the FXML file has been loaded. It sets up the table views and loads initial data.
+     */
     public void initialize() {
 
         nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
@@ -92,6 +99,12 @@ public class PendingDishesController {
             }
         });
     }
+
+    /**
+     * Populates the list of dishes with status 'Pending' from the database.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the database driver is not found.
+     */
     private void populateDishesList() throws SQLException, ClassNotFoundException {
         Connection connection = DatabaseUtil.connectToDatabase();
 
@@ -106,6 +119,13 @@ public class PendingDishesController {
             dishList.setItems(dishes);
         }
     }
+
+    /**
+     * Opens and displays detailed information for the selected dish.
+     * @param selectedDish the dish to display information for.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the database driver is not found.
+     */
     private void openDishInformation(String selectedDish) throws SQLException, ClassNotFoundException {
         Connection connection = DatabaseUtil.connectToDatabase();
         String query = "SELECT d.Course, d.Status, d.Description, d.Chef_Creator_ID, s.Step_Description " +
@@ -132,6 +152,10 @@ public class PendingDishesController {
         }
     }
 
+    /**
+     * Fetches and displays the description of a recipe given its ID.
+     * @param recipeID the ID of the recipe to fetch.
+     */
     private void fetchAndDisplayRecipeDescription(int recipeID) {
         try {
 
@@ -162,6 +186,10 @@ public class PendingDishesController {
         }
     }
 
+    /**
+     * Fetches and displays the steps for a recipe given its ID.
+     * @param recipeID the ID of the recipe whose steps are to be displayed.
+     */
     private void fetchAndDisplayRecipeSteps(int recipeID) {
         try {
 
@@ -184,7 +212,13 @@ public class PendingDishesController {
         }
     }
 
-
+    /**
+     * Fetches and displays the names and descriptions of recipes associated with a selected dish.
+     *
+     * @param selectedDish The name of the dish for which recipes need to be fetched.
+     * @throws SQLException If a database access error occurs or this method is called on a closed connection.
+     * @throws ClassNotFoundException If the JDBC Driver class is not found.
+     */
     private void fetchAndDisplayRecipeNames(String selectedDish) throws SQLException, ClassNotFoundException {
         Connection connection = DatabaseUtil.connectToDatabase();
         String query = "SELECT dr.Recipe_ID, r.Name, r.Description " +
@@ -213,7 +247,13 @@ public class PendingDishesController {
     }
 
 
-
+    /**
+     * Navigates to a specified FXML page, applying a fade-in transition to the scene.
+     *
+     * @param fxmlFile The FXML file to load for the new scene.
+     * @param title    The title to set for the new stage.
+     * @param event    The event that triggered the navigation, used to close the current stage.
+     */
     private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
@@ -243,7 +283,13 @@ public class PendingDishesController {
         }
     }
 
-
+    /**
+     * Shows an alert of a specified type with a title, message, and optionally detailed text.
+     * @param alertType the type of alert.
+     * @param title the title of the alert.
+     * @param message the main text message of the alert.
+     * @param details the detailed text to display in the alert (can be null).
+     */
     private void showAlert(Alert.AlertType alertType, String title, String message, String details) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -252,56 +298,94 @@ public class PendingDishesController {
         alert.showAndWait();
     }
 
+    /**
+     * Takes you to the chefs page when chefs button is clicked.
+     */
     @FXML
     private void handleChefsButtonClick(ActionEvent event) {
         navigateToPage("Chefs.fxml", "Chefs", event);
     }
 
+    /**
+     * Takes you to the waste page when waste button is clicked.
+     */
     @FXML
     private void handleWasteButtonClick(ActionEvent event) {
         navigateToPage("Waste.fxml", "Waste", event);
     }
 
+    /**
+     * Takes you to the menus page when menus button is clicked.
+     */
     @FXML
     private void handleMenusButtonClick(ActionEvent event) {
         navigateToPage("Menus.fxml", "Menus", event);
     }
 
+    /**
+     * Takes you to the orders/home page when orders button is clicked.
+     */
     @FXML
     private void handleOrdersButtonClick(ActionEvent event) {
         navigateToPage("Orders.fxml", "Orders", event);
     }
 
+    /**
+     * Takes you to the dishes page when dishes button is clicked.
+     */
     @FXML
     private void handleDishesButtonClick(ActionEvent event) {
         navigateToPage("Dishes.fxml", "Dishes", event);
     }
 
+    /**
+     * Takes you to the supplier page when supplier button is clicked.
+     */
     @FXML
     private void handleSupplierButtonClick(ActionEvent event) {
         navigateToPage("SupplierStock.fxml", "Supplier", event);
     }
 
+    /**
+     * Takes you to the stock page when stock button is clicked.
+     */
     @FXML
     private void handleStockButtonClick(ActionEvent event) {
         navigateToPage("CurrentStock.fxml", "Stock", event);
     }
 
-
+    /**
+     * Takes you to the home page when stock button is clicked.
+     */
     @FXML
     private void handleHomeButtonClick(ActionEvent event) {
         navigateToPage("MainPage.fxml", "Home", event);
     }
 
+    /**
+     * Handles the action triggered by the back button.
+     * This method redirects the user to the "Dishes" page by calling the navigateToPage method.
+     *
+     * @param event The event that triggered this method call, typically from user interaction with the GUI.
+     */
     @FXML
     private void backButton(ActionEvent event) {navigateToPage("Dishes.fxml", "Home", event);}
 
+    /**
+     * Takes you to the new dishes page when add new dish button is clicked.
+     */
     @FXML
     private void handleNewDishButtonClick(ActionEvent event) {navigateToPage("AddNewDish.fxml", "Home", event);}
 
+    /**
+     * Takes you to the new recipe page when add new recipe button is clicked.
+     */
     @FXML
     private void handleNewRecipeButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
 
+    /**
+     * Takes you to the new menu page when add new menu button is clicked.
+     */
     @FXML
     private void handleNewMenuButtonClick(ActionEvent event) {navigateToPage("AddNewMenu.fxml", "Home", event);}
 

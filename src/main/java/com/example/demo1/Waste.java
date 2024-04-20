@@ -19,6 +19,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Controller class for managing waste data in the application.
+ * This class is responsible for loading and displaying waste records from the database,
+ * and provides navigation to different parts of the application related to waste management.
+ */
 public class Waste {
 
     @FXML
@@ -35,12 +40,20 @@ public class Waste {
     @FXML
     private TableColumn<ObservableList<String>, String> reasonColumn;
 
+    /**
+     * Initializes the controller class. This method is automatically called
+     * after the FXML file has been loaded. It sets up the table columns and loads the initial waste data.
+     */
     @FXML
     public void initialize() {
         setupColumns();
         loadWasteData();
     }
 
+    /**
+     * Loads waste data from the database and populates the table.
+     * This method queries the database for waste records and displays them in the wasteTable.
+     */
     private void loadWasteData() {
         ObservableList<ObservableList<String>> data = FXCollections.observableArrayList();
         String query = "SELECT w.Waste_ID, i.Name, w.Quantity_Wasted, w.Unit, w.Date_of_Waste, w.Reason " +
@@ -65,6 +78,10 @@ public class Waste {
         }
     }
 
+    /**
+     * Initializes the controller class. This method is automatically called
+     * after the FXML file has been loaded. It sets up the table columns and loads the initial waste data.
+     */
     private void setupColumns() {
         ingredientNameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(0)));
         quantityWastedColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(1)));
@@ -73,6 +90,13 @@ public class Waste {
         reasonColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(4)));
     }
 
+    /**
+     * Displays an alert dialog to the user with a detailed message.
+     * @param alertType the type of alert (information, warning, error)
+     * @param title the title of the alert dialog
+     * @param message the main message of the alert
+     * @param details additional details to be displayed in an expandable content area
+     */
     private void showAlert(Alert.AlertType alertType, String title, String message, String details) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -91,57 +115,102 @@ public class Waste {
         alert.showAndWait();
     }
 
+    /**
+     * Takes you to the chefs page when chefs button is clicked.
+     */
     @FXML
     private void handleChefsButtonClick(ActionEvent event) {
         navigateToPage("Chefs.fxml", "Chefs", event);
     }
 
+    /**
+     * Takes you to the waste page when waste button is clicked.
+     */
     @FXML
     private void handleWasteButtonClick(ActionEvent event) {
         navigateToPage("Waste.fxml", "Waste", event);
     }
 
+    /**
+     * Takes you to the menus page when menus button is clicked.
+     */
     @FXML
     private void handleMenusButtonClick(ActionEvent event) {
         navigateToPage("Menus.fxml", "Menus", event);
     }
 
+    /**
+     * Takes you to the orders/home page when orders button is clicked.
+     */
     @FXML
     private void handleOrdersButtonClick(ActionEvent event) {
         navigateToPage("Orders.fxml", "Orders", event);
     }
 
+    /**
+     * Takes you to the dishes page when dishes button is clicked.
+     */
     @FXML
     private void handleDishesButtonClick(ActionEvent event) {
         navigateToPage("Dishes.fxml", "Dishes", event);
     }
 
+    /**
+     * Takes you to the supplier page when supplier button is clicked.
+     */
     @FXML
     private void handleSupplierButtonClick(ActionEvent event) {
         navigateToPage("SupplierStock.fxml", "Supplier", event);
     }
 
+    /**
+     * Takes you to the stock page when stock button is clicked.
+     */
     @FXML
     private void handleStockButtonClick(ActionEvent event) {
         navigateToPage("CurrentStock.fxml", "Stock", event);
     }
 
+    /**
+     * Takes you to the home page when stock button is clicked.
+     */
     @FXML
     private void handleHomeButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
 
+    /**
+     * Takes you to the new dishes page when add new dish button is clicked.
+     */
     @FXML
     private void handleNewDishButtonClick(ActionEvent event) {navigateToPage("AddNewDish.fxml", "Home", event);}
 
+    /**
+     * Takes you to the new recipe page when add new recipe button is clicked.
+     */
     @FXML
     private void handleNewRecipeButtonClick(ActionEvent event) {navigateToPage("AddNewRecipe.fxml", "AddNewRecipe", event);}
 
-
+    /**
+     * Takes you to the new menu page when add new menu button is clicked.
+     */
     @FXML
     private void handleNewMenuButtonClick(ActionEvent event) {navigateToPage("AddNewMenu.fxml", "Home", event);}
+
+    /**
+     * Handles the action event for the "New Waste" button.
+     * This method triggers when the "New Waste" button is clicked and navigates to the 'AddWaste.fxml' scene.
+     *
+     * @param event The action event triggered by clicking the button.
+     */
     @FXML
     private void handleNewWaste(ActionEvent event) {navigateToPage("AddWaste.fxml", "Home", event);}
 
-
+    /**
+     * Navigates to different parts of the application based on user interaction.
+     * This method is called by multiple FXML-defined buttons for navigation.
+     * @param fxmlFile the path to the FXML file that describes the next scene
+     * @param title the title of the next scene's window
+     * @param event the event that triggered the navigation
+     */
     private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         try {

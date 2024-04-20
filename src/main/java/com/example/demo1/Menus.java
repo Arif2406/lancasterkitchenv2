@@ -20,6 +20,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Controller class for managing the menu view in a restaurant application.
+ * It provides functionalities to load and display the current menu from the database,
+ * and navigate between different UI views like chefs, waste management, etc.
+ */
 public class Menus {
 
     @FXML
@@ -37,6 +42,11 @@ public class Menus {
     @FXML
     private TableColumn<Object[], String> statusColumn;
 
+    /**
+     * Initializes the controller class. This method is automatically called
+     * after the fxml file has been loaded. It sets up the table columns and
+     * loads menu data from the database.
+     */
     public void initialize() {
         dishIdColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[0].toString()));
         nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[1].toString()));
@@ -46,6 +56,10 @@ public class Menus {
         loadMenuData();
     }
 
+    /**
+     * Loads the menu data from the database and adds it to the current menu table.
+     * It fetches dishes that are currently marked as 'In use'.
+     */
     private void loadMenuData() {
         try {
             Connection connection = DatabaseUtil.connectToDatabase();
@@ -71,6 +85,14 @@ public class Menus {
         }
     }
 
+    /**
+     * Shows an alert dialog on the screen.
+     *
+     * @param alertType The type of the alert dialog.
+     * @param title     The title of the alert dialog.
+     * @param message   The message to be displayed in the alert dialog.
+     * @param details   Additional details to be displayed in the alert dialog.
+     */
     private void showAlert(AlertType alertType, String title, String message, String details) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -90,55 +112,93 @@ public class Menus {
     }
 
 
-
+    /**
+     * Takes you to the chefs page when chefs button is clicked.
+     */
     @FXML
     private void handleChefsButtonClick(ActionEvent event) {
         navigateToPage("Chefs.fxml", "Chefs", event);
     }
 
+    /**
+     * Takes you to the waste page when waste button is clicked.
+     */
     @FXML
     private void handleWasteButtonClick(ActionEvent event) {
         navigateToPage("Waste.fxml", "Waste", event);
     }
 
+    /**
+     * Takes you to the menus page when menus button is clicked.
+     */
     @FXML
     private void handleMenusButtonClick(ActionEvent event) {
         navigateToPage("Menus.fxml", "Menus", event);
     }
 
+    /**
+     * Takes you to the orders/home page when orders button is clicked.
+     */
     @FXML
     private void handleOrdersButtonClick(ActionEvent event) {
         navigateToPage("Orders.fxml", "Orders", event);
     }
 
+    /**
+     * Takes you to the dishes page when dishes button is clicked.
+     */
     @FXML
     private void handleDishesButtonClick(ActionEvent event) {
         navigateToPage("Dishes.fxml", "Dishes", event);
     }
 
+    /**
+     * Takes you to the supplier page when supplier button is clicked.
+     */
     @FXML
     private void handleSupplierButtonClick(ActionEvent event) {
         navigateToPage("SupplierStock.fxml", "Supplier", event);
     }
 
+    /**
+     * Takes you to the stock page when stock button is clicked.
+     */
     @FXML
     private void handleStockButtonClick(ActionEvent event) {
         navigateToPage("CurrentStock.fxml", "Stock", event);
     }
 
+    /**
+     * Takes you to the home page when stock button is clicked.
+     */
     @FXML
     private void handleHomeButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
 
+    /**
+     * Takes you to the new dishes page when add new dish button is clicked.
+     */
     @FXML
     private void handleNewDishButtonClick(ActionEvent event) {navigateToPage("AddNewDish.fxml", "Home", event);}
 
+    /**
+     * Takes you to the new recipe page when add new recipe button is clicked.
+     */
     @FXML
     private void handleNewRecipeButtonClick(ActionEvent event) {navigateToPage("AddNewRecipe.fxml", "AddNewRecipe", event);}
 
-
+    /**
+     * Takes you to the new menu page when add new menu button is clicked.
+     */
     @FXML
     private void handleNewMenuButtonClick(ActionEvent event) {navigateToPage("AddNewMenu.fxml", "Home", event);}
 
+    /**
+     * Navigates to the relevant FXML page.
+     *
+     * @param fxmlFile The name of FXML file to navigate to
+     * @param title    The title of the page
+     * @param event    The action event
+     */
     private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));

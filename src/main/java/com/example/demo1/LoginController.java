@@ -27,6 +27,9 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Controller class that handles user authentication for the application.
+ */
 public class LoginController {
 
     @FXML private TextField usernameField;
@@ -34,10 +37,16 @@ public class LoginController {
 
     private Map<String, String> validUsers = new HashMap<>();
 
+    /**
+     * Constructor for the controller. Loads valid user credentials.
+     */
     public LoginController() {
         loadValidUsers();
     }
 
+    /**
+     * Loads valid usernames and passwords from the database and stores them in a map.
+     */
     private void loadValidUsers() {
         try {
             Connection connection = DatabaseUtil.connectToDatabase();
@@ -67,6 +76,9 @@ public class LoginController {
     @FXML
     private Label timeLabel;
 
+    /**
+     * Initializes the controller class. Sets up the digital clock on the login screen.
+     */
     public void initialize() {
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
             LocalDateTime now = LocalDateTime.now();
@@ -80,6 +92,11 @@ public class LoginController {
         clock.play();
     }
 
+    /**
+     * Handles the login action. Authenticates the user against the stored credentials.
+     *
+     * @param event The action event from the login button click.
+     */
     @FXML
     protected void handleLoginButton(ActionEvent event) {
         String username = usernameField.getText();
@@ -102,6 +119,11 @@ public class LoginController {
         }
     }
 
+    /**
+     * Sets up the main stage and scene for the application after successful login.
+     *
+     * @param root The root parent for the scene.
+     */
     private void setUpStage(Parent root) {
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         Stage stage = (Stage) usernameField.getScene().getWindow();
@@ -117,6 +139,9 @@ public class LoginController {
         stage.show();
     }
 
+    /**
+     * Displays an error alert for unrecognized credentials.
+     */
     private void showErrorAlert() {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Login Error");
@@ -125,6 +150,14 @@ public class LoginController {
         alert.showAndWait();
     }
 
+    /**
+     * Shows an alert of the specified type.
+     *
+     * @param alertType The type of alert to display.
+     * @param title     The title of the alert.
+     * @param header    The header text of the alert. Pass null for no header.
+     * @param content   The content text of the alert.
+     */
     private void showAlert(Alert.AlertType alertType, String title, String header, String content) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
