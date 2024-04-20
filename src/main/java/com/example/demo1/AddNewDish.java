@@ -24,27 +24,54 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller class for adding a new dish to the system.
+ */
 public class AddNewDish {
 
+    /**
+     * Text field for entering the name of the dish.
+     */
     @FXML
     private TextField nameField;
 
+    /**
+     * Text field for entering the description of the dish.
+     */
     @FXML
     private TextField descriptionField;
 
+    /**
+     * Combo box for selecting the course of the dish.
+     */
     @FXML
     private ComboBox<String> courseDropdown;
 
+    /**
+     * VBox container for additional recipe fields.
+     */
     @FXML
     private VBox recipeFieldsVBox;
 
+    /**
+     * VBox container for additional step fields.
+     */
     @FXML
     private VBox stepFieldsVBox;
 
+    /**
+     * List of combo boxes for recipes.
+     */
     private List<ComboBox<String>> recipeComboBoxes = new ArrayList<>();
 
+    /**
+     * List of text fields for entering steps.
+     */
     private List<TextField> stepTextFields = new ArrayList<>();
 
+    /**
+     * Initialises the controller.
+     */
     @FXML
     private void initialize() {
         courseDropdown.getItems().addAll();
@@ -52,6 +79,9 @@ public class AddNewDish {
         addStepField();
     }
 
+    /**
+     * Handles the submit button action for adding a new dish.
+     */
     @FXML
     private void submit() {
         String name = nameField.getText();
@@ -117,7 +147,12 @@ public class AddNewDish {
         }
     }
 
-
+    /**
+     * Retrieves the recipe ID by name from the database.
+     *
+     * @param name The name of the recipe
+     * @return The ID of the recipe, or -1 if not found
+     */
     private int getRecipeIdByName(String name) {
         try {
             Connection connection = DatabaseUtil.connectToDatabase();
@@ -138,6 +173,11 @@ public class AddNewDish {
         }
     }
 
+    /**
+     * Checks that a recipe is selected in each box.
+     *
+     * @return True if all recipe selections are valid, false otherwise
+     */
     private boolean validateRecipeSelection() {
         for (ComboBox<String> comboBox : recipeComboBoxes) {
             if (comboBox.getValue() == null || comboBox.getValue().isEmpty()) {
@@ -147,6 +187,11 @@ public class AddNewDish {
         return true;
     }
 
+    /**
+     * Checks that the step fields all contain data.
+     *
+     * @return True if all step fields are valid, false otherwise
+     */
     private boolean validateStepFields() {
         for (TextField textField : stepTextFields) {
             if (textField.getText() == null || textField.getText().isEmpty()) {
@@ -156,6 +201,9 @@ public class AddNewDish {
         return true;
     }
 
+    /**
+     * Adds a new recipe field to the UI.
+     */
     @FXML
     private void addRecipeField() {
         ComboBox<String> recipeComboBox = new ComboBox<>();
@@ -177,6 +225,9 @@ public class AddNewDish {
         recipeFieldsVBox.setAlignment(Pos.CENTER);
     }
 
+    /**
+     * Adds a new step field to the UI.
+     */
     @FXML
     private void addStepField() {
         TextField stepTextField = new TextField();
@@ -186,6 +237,15 @@ public class AddNewDish {
         stepTextFields.add(stepTextField);
     }
 
+
+    /**
+     * Displays an alert.
+     *
+     * @param alertType The type of alert
+     * @param title     The title of the alert
+     * @param message   The message of the alert
+     * @param details   The details of the alert
+     */
     private void showAlert(Alert.AlertType alertType, String title, String message, String details) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -197,56 +257,95 @@ public class AddNewDish {
         alert.showAndWait();
     }
 
+    /**
+     * Takes you to the home page when cancel button is clicked.
+     */
     @FXML
     private void cancel(ActionEvent event) {navigateToPage("Dishes.fxml", "Home", event);}
 
+    /**
+     * Takes you to the chefs page when chefs button is clicked.
+     */
     @FXML
-    private void handleChefsButtonClick(ActionEvent event) {
-        navigateToPage("Chefs.fxml", "Chefs", event);
-    }
+    private void handleChefsButtonClick(ActionEvent event) {navigateToPage("Chefs.fxml", "Chefs", event);}
 
+    /**
+     * Takes you to the waste page when waste button is clicked.
+     */
     @FXML
     private void handleWasteButtonClick(ActionEvent event) {
         navigateToPage("Waste.fxml", "Waste", event);
     }
 
+    /**
+     * Takes you to the menus page when menus button is clicked.
+     */
     @FXML
     private void handleMenusButtonClick(ActionEvent event) {
-        navigateToPage("Menus.fxml", "Menus", event);
+        navigateToPage("Home.fxml", "Menus", event);
     }
 
+    /**
+     * Takes you to the orders/home page when orders button is clicked.
+     */
     @FXML
     private void handleOrdersButtonClick(ActionEvent event) {
         navigateToPage("Orders.fxml", "Orders", event);
     }
 
+    /**
+     * Takes you to the dishes page when dishes button is clicked.
+     */
     @FXML
     private void handleDishesButtonClick(ActionEvent event) {
         navigateToPage("Dishes.fxml", "Dishes", event);
     }
 
+    /**
+     * Takes you to the supplier page when supplier button is clicked.
+     */
     @FXML
-    private void handleSupplierButtonClick(ActionEvent event) {
-        navigateToPage("SupplierStock.fxml", "Supplier", event);
-    }
+    private void handleSupplierButtonClick(ActionEvent event) { navigateToPage("SupplierStock.fxml", "Supplier", event);}
 
+    /**
+     * Takes you to the stock page when stock button is clicked.
+     */
     @FXML
     private void handleStockButtonClick(ActionEvent event) {
         navigateToPage("CurrentStock.fxml", "Stock", event);
     }
 
+    /**
+     * Takes you to the new dishes page when add new dish button is clicked.
+     */
     @FXML
     private void handleNewDishButtonClick(ActionEvent event) {navigateToPage("AddNewDish.fxml", "Home", event);}
 
+    /**
+     * Takes you to the new recipe page when add new recipe button is clicked.
+     */
     @FXML
-    private void handleNewRecipeButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
+    private void handleNewRecipeButtonClick(ActionEvent event) {navigateToPage("AddNewRecipe.fxml", "Home", event);}
 
+    /**
+     * Takes you to the new menu page when add new menu button is clicked.
+     */
     @FXML
     private void handleNewMenuButtonClick(ActionEvent event) {navigateToPage("AddNewMenu.fxml", "Home", event);}
 
+    /**
+     * Takes you to the home page when stock button is clicked.
+     */
     @FXML
     private void handleHomeButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
 
+    /**
+     * Navigates to the relevant FXML page.
+     *
+     * @param fxmlFile  The name of FXML file to navigate to
+     * @param title     The title of the page
+     * @param event     The action event
+     */
     private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));

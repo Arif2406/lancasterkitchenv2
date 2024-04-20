@@ -1,4 +1,4 @@
-        package com.example.demo1;
+package com.example.demo1;
 
 import javafx.animation.FadeTransition;
 import javafx.beans.property.SimpleStringProperty;
@@ -23,48 +23,98 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Controller class for the dishes page.
+ */
 public class Dishes {
 
+    /**
+     * TableColumn for displaying the name of the recipe.
+     */
     @FXML
     private TableColumn<Recipe, String> nameColumn;
+
+    /**
+     * ImageView for displaying the image of the dish.
+     */
     @FXML
     private ImageView dishImageView;
 
+    /**
+     * ListView for displaying the list of dishes.
+     */
     @FXML
     private ListView<String> dishList;
 
+    /**
+     * Label for displaying the name of the dish.
+     */
     @FXML
     private Label nameLabel;
 
+    /**
+     * Label for displaying the course of the dish.
+     */
     @FXML
     private Label courseLabel;
 
+    /**
+     * Label for displaying the status of the dish.
+     */
     @FXML
     private Label statusLabel;
+
+    /**
+     * TextArea for displaying the ingredients of the dish.
+     */
     @FXML
     private TextArea ingredientsTextArea;
 
+    /**
+     * Label for displaying the id of the creator of the dish.
+     */
     @FXML
     private Label chefLabel;
 
+    /**
+     * TextArea for displaying the description of the dish.
+     */
     @FXML
     private TextArea descriptionArea;
 
+    /**
+     * TextArea for displaying the steps of the dish.
+     */
     @FXML
     private TextArea stepsTextArea;
 
+    /**
+     * Label for displaying the name of the recipe.
+     */
     @FXML
     private Label rnameLabel;
 
+    /**
+     * Label for displaying the description of the recipe.
+     */
     @FXML
     private TextArea rdescriptionArea;
 
-
+    /**
+     * Label for displaying the steps of the recipe.
+     */
     @FXML
     private TextArea rstepsTextArea;
+
+    /**
+     * TableView for displaying recipes.
+     */
     @FXML
     private TableView<Recipe> recipeTable;
 
+    /**
+     * Initialises the controller.
+     */
     public void initialize() {
 
         nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
@@ -98,6 +148,13 @@ public class Dishes {
             }
         });
     }
+
+    /**
+     * Populates the dishes list from the database.
+     *
+     * @throws SQLException if a SQL exception occurs
+     * @throws ClassNotFoundException if the database driver class is not found
+     */
     private void populateDishesList() throws SQLException, ClassNotFoundException {
         Connection connection = DatabaseUtil.connectToDatabase();
         String query = "SELECT Name FROM in2033t02Dish";
@@ -112,6 +169,13 @@ public class Dishes {
         }
     }
 
+    /**
+     * Opens the information of the selected dish.
+     *
+     * @param selectedDish the name of the selected dish
+     * @throws SQLException if a SQL exception occurs
+     * @throws ClassNotFoundException if the database driver class is not found
+     */
     private void openDishInformation(String selectedDish) throws SQLException, ClassNotFoundException {
         Connection connection = DatabaseUtil.connectToDatabase();
         String query = "SELECT d.Course, d.Status, d.Description, d.Chef_Creator_ID, s.Step_Description, Picture_URL " +
@@ -143,6 +207,11 @@ public class Dishes {
         }
     }
 
+    /**
+     * Fetches and displays the recipe description.
+     *
+     * @param recipeID the ID of the recipe
+     */
     private void fetchAndDisplayRecipeDescription(int recipeID) {
         try {
 
@@ -180,6 +249,11 @@ public class Dishes {
         }
     }
 
+    /**
+     * Fetches and displays the recipe steps.
+     *
+     * @param recipeID the ID of the recipe
+     */
     private void fetchAndDisplayRecipeSteps(int recipeID) {
         try {
 
@@ -202,7 +276,11 @@ public class Dishes {
         }
     }
 
-
+    /**
+     * Fetches and displays the recipe steps.
+     *
+     * @param recipeID the ID of the recipe
+     */
     private void fetchAndDisplayIngredients(int recipeID) {
         try (Connection connection = DatabaseUtil.connectToDatabase()) {
             String query = """
@@ -231,6 +309,13 @@ public class Dishes {
         }
     }
 
+    /**
+     * Fetches and displays the recipe names for the selected dish.
+     *
+     * @param selectedDish the name of the selected dish
+     * @throws SQLException if a SQL exception occurs
+     * @throws ClassNotFoundException if the database driver class is not found
+     */
     private void fetchAndDisplayRecipeNames(String selectedDish) throws SQLException, ClassNotFoundException {
         Connection connection = DatabaseUtil.connectToDatabase();
         String query = "SELECT dr.Recipe_ID, r.Name, r.Description " +
@@ -259,23 +344,37 @@ public class Dishes {
     }
 
 
-
+    /**
+     * Takes you to the add new dishes page when add new dish button is clicked.
+     */
     @FXML
     private void handleAddNewDish(ActionEvent event) {
         navigateToPage("AddNewDish.fxml", "addNewDishButton", event);
     }
 
+    /**
+     * Takes you to the view pending dishes page when pending dishes button is clicked.
+     */
     @FXML
     private void handleViewPendingDishes(ActionEvent event) {
         navigateToPage("PendingDishes.fxml", "viewPendingDishesButton", event);
     }
 
+    /**
+     * Takes you to the view all dishes page when all dishes button is clicked.
+     */
     @FXML
     private void handleViewAllDishes(ActionEvent event) {
         navigateToPage("AllDishes.fxml", "viewAllDishesButton", event);
     }
 
-
+    /**
+     * Navigates to the relevant FXML page.
+     *
+     * @param fxmlFile The name of FXML file to navigate to
+     * @param title    The title of the page
+     * @param event    The action event
+     */
     private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
@@ -304,7 +403,14 @@ public class Dishes {
         }
     }
 
-
+    /**
+     * Displays an alert.
+     *
+     * @param alertType The type of alert
+     * @param title     The title of the alert
+     * @param message   The message of the alert
+     * @param details   The details of the alert
+     */
     private void showAlert(Alert.AlertType alertType, String title, String message, String details) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -313,52 +419,80 @@ public class Dishes {
         alert.showAndWait();
     }
 
+    /**
+     * Takes you to the chefs page when chefs button is clicked.
+     */
     @FXML
-    private void handleChefsButtonClick(ActionEvent event) {
-        navigateToPage("Chefs.fxml", "Chefs", event);
-    }
+    private void handleChefsButtonClick(ActionEvent event) {navigateToPage("Chefs.fxml", "Chefs", event);}
 
+    /**
+     * Takes you to the waste page when waste button is clicked.
+     */
     @FXML
     private void handleWasteButtonClick(ActionEvent event) {
         navigateToPage("Waste.fxml", "Waste", event);
     }
 
+    /**
+     * Takes you to the menus page when menus button is clicked.
+     */
     @FXML
-    private void handleMenusButtonClick(ActionEvent event) {navigateToPage("Menus.fxml", "Menus", event);
+    private void handleMenusButtonClick(ActionEvent event) {
+        navigateToPage("Home.fxml", "Menus", event);
     }
 
+    /**
+     * Takes you to the orders/home page when orders button is clicked.
+     */
     @FXML
     private void handleOrdersButtonClick(ActionEvent event) {
         navigateToPage("Orders.fxml", "Orders", event);
     }
 
+    /**
+     * Takes you to the dishes page when dishes button is clicked.
+     */
     @FXML
     private void handleDishesButtonClick(ActionEvent event) {
         navigateToPage("Dishes.fxml", "Dishes", event);
     }
 
+    /**
+     * Takes you to the supplier page when supplier button is clicked.
+     */
     @FXML
-    private void handleSupplierButtonClick(ActionEvent event) {
-        navigateToPage("SupplierStock.fxml", "Supplier", event);
-    }
+    private void handleSupplierButtonClick(ActionEvent event) { navigateToPage("SupplierStock.fxml", "Supplier", event);}
 
+    /**
+     * Takes you to the stock page when stock button is clicked.
+     */
     @FXML
     private void handleStockButtonClick(ActionEvent event) {
         navigateToPage("CurrentStock.fxml", "Stock", event);
     }
 
-    @FXML
-    private void handleHomeButtonClick(ActionEvent event) {
-        navigateToPage("MainPage.fxml", "Home", event);
-    }
-
+    /**
+     * Takes you to the new dishes page when add new dish button is clicked.
+     */
     @FXML
     private void handleNewDishButtonClick(ActionEvent event) {navigateToPage("AddNewDish.fxml", "Home", event);}
 
+    /**
+     * Takes you to the new recipe page when add new recipe button is clicked.
+     */
     @FXML
     private void handleNewRecipeButtonClick(ActionEvent event) {navigateToPage("AddNewRecipe.fxml", "Home", event);}
 
+    /**
+     * Takes you to the new menu page when add new menu button is clicked.
+     */
     @FXML
     private void handleNewMenuButtonClick(ActionEvent event) {navigateToPage("AddNewMenu.fxml", "Home", event);}
+
+    /**
+     * Takes you to the home page when stock button is clicked.
+     */
+    @FXML
+    private void handleHomeButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
 
 }

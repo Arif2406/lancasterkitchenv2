@@ -21,26 +21,50 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Controller class for the chefs page.
+ */
 public class Chefs {
 
+    /**
+     * TableView for displaying chef data.
+     */
     @FXML
     private TableView<Object[]> table;
 
+    /**
+     * TableColumn for displaying chef names.
+     */
     @FXML
     private TableColumn<Object[], String> nameColumn;
 
+    /**
+     * TableColumn for displaying chef roles.
+     */
     @FXML
     private TableColumn<Object[], String> roleColumn;
 
+    /**
+     * TableColumn for displaying chef IDs.
+     */
     @FXML
     private TableColumn<Object[], String> idColumn;
 
+    /**
+     * TextField for entering chef name.
+     */
     @FXML
     private TextField nameField;
 
+    /**
+     * TextField for entering chef role.
+     */
     @FXML
     private TextField roleField;
 
+    /**
+     * Initialises the controller.
+     */
     public void initialize() {
         nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[0].toString()));
         roleColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[1].toString()));
@@ -49,12 +73,21 @@ public class Chefs {
         loadChefData();
     }
 
+    /**
+     * Label for displaying the username of the currently logged in user.
+     */
     @FXML
     private Label usernameLabel;
 
+    /**
+     * String containing the username of the currently logged in user.
+     */
     private String currentUser;
 
-
+    /**
+     * Sets the username of the currently logged-in user.
+     * @param username The username of the logged-in user.
+     */
     public void setUsername(String username) {
         this.currentUser = username;
         if (usernameLabel != null) {
@@ -62,6 +95,9 @@ public class Chefs {
         }
     }
 
+    /**
+     * Loads chef data from the database and populates the TableView.
+     */
     private void loadChefData() {
         table.getItems().clear();
         try {
@@ -81,7 +117,14 @@ public class Chefs {
         }
     }
 
-
+    /**
+     * Displays an alert.
+     *
+     * @param alertType The type of alert
+     * @param title     The title of the alert
+     * @param message   The message of the alert
+     * @param details   The details of the alert
+     */
     private void showAlert(AlertType alertType, String title, String message, String details) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -100,54 +143,89 @@ public class Chefs {
         alert.showAndWait();
     }
 
+    /**
+     * Takes you to the chefs page when chefs button is clicked.
+     */
     @FXML
-    private void handleChefsButtonClick(ActionEvent event) {
-        navigateToPage("Chefs.fxml", "Chefs", event);
-    }
+    private void handleChefsButtonClick(ActionEvent event) {navigateToPage("Chefs.fxml", "Chefs", event);}
 
+    /**
+     * Takes you to the waste page when waste button is clicked.
+     */
     @FXML
     private void handleWasteButtonClick(ActionEvent event) {
         navigateToPage("Waste.fxml", "Waste", event);
     }
 
+    /**
+     * Takes you to the menus page when menus button is clicked.
+     */
     @FXML
     private void handleMenusButtonClick(ActionEvent event) {
-        navigateToPage("Menus.fxml", "Menus", event);
+        navigateToPage("Home.fxml", "Menus", event);
     }
 
+    /**
+     * Takes you to the orders/home page when orders button is clicked.
+     */
     @FXML
     private void handleOrdersButtonClick(ActionEvent event) {
         navigateToPage("Orders.fxml", "Orders", event);
     }
 
+    /**
+     * Takes you to the dishes page when dishes button is clicked.
+     */
     @FXML
     private void handleDishesButtonClick(ActionEvent event) {
         navigateToPage("Dishes.fxml", "Dishes", event);
     }
 
+    /**
+     * Takes you to the supplier page when supplier button is clicked.
+     */
     @FXML
-    private void handleSupplierButtonClick(ActionEvent event) {
-        navigateToPage("SupplierStock.fxml", "Stock", event);
-    }
+    private void handleSupplierButtonClick(ActionEvent event) { navigateToPage("SupplierStock.fxml", "Supplier", event);}
 
+    /**
+     * Takes you to the stock page when stock button is clicked.
+     */
     @FXML
     private void handleStockButtonClick(ActionEvent event) {
-        navigateToPage("Supplier.fxml", "Supplier", event);
+        navigateToPage("CurrentStock.fxml", "Stock", event);
     }
 
-    @FXML
-    private void handleHomeButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
-
+    /**
+     * Takes you to the new dishes page when add new dish button is clicked.
+     */
     @FXML
     private void handleNewDishButtonClick(ActionEvent event) {navigateToPage("AddNewDish.fxml", "Home", event);}
 
+    /**
+     * Takes you to the new recipe page when add new recipe button is clicked.
+     */
     @FXML
-    private void handleNewRecipeButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
+    private void handleNewRecipeButtonClick(ActionEvent event) {navigateToPage("AddNewRecipe.fxml", "Home", event);}
 
-
+    /**
+     * Takes you to the new menu page when add new menu button is clicked.
+     */
     @FXML
     private void handleNewMenuButtonClick(ActionEvent event) {navigateToPage("AddNewMenu.fxml", "Home", event);}
 
+    /**
+     * Takes you to the home page when stock button is clicked.
+     */
+    @FXML
+    private void handleHomeButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
+
+    /**
+     * Navigates to the relevant FXML page.
+     *
+     * @param fxmlFile The name of FXML file to navigate to
+     * @param title    The title of the page
+     * @param event    The action event
+     */
     private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
@@ -178,7 +256,10 @@ public class Chefs {
     }
 
 
-
+    /**
+     * Handles the button click event for adding a new chef.
+     * @param event The ActionEvent triggered by the button click.
+     */
     @FXML
     private void handleAddChefButtonClick(ActionEvent event) {
         if (!"headchef".equals(currentUser) && !"souschef".equals(currentUser)) {
@@ -231,7 +312,13 @@ public class Chefs {
         }
     }
 
-
+    /**
+     * Inserts chef data into the database.
+     * @param name      The name of the chef.
+     * @param username  The username of the chef.
+     * @param password  The password of the chef.
+     * @param role      The role of the chef.
+     */
     private void insertChefData(String name, String username, String password, String role) {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -261,6 +348,11 @@ public class Chefs {
             }
         }
     }
+
+    /**
+     * Handles the button click event for removing a new chef.
+     * @param event The ActionEvent triggered by the button click.
+     */
     @FXML
     private void handleRemoveChefButtonClick(ActionEvent event) {
         if (!"headchef".equals(currentUser) && !"souschef".equals(currentUser)) {

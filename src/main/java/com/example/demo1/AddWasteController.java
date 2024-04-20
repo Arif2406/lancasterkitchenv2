@@ -17,6 +17,9 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Controller class for adding new waste to the system.
+ */
 public class AddWasteController {
 
     @FXML
@@ -30,6 +33,9 @@ public class AddWasteController {
     @FXML
     private TextField reasonField;
 
+    /**
+     * Initialises the controller.
+     */
     @FXML
     private void initialize() {
         System.out.println("Initializing controller...");
@@ -37,6 +43,9 @@ public class AddWasteController {
         ingredientComboBox.setOnAction(this::updateUnitField);
     }
 
+    /**
+     * Populates the ingredient combo box with data from the database.
+     */
     private void populateIngredientComboBox() {
         System.out.println("Populating ingredient combo box...");
         String query = "SELECT Name FROM in2033t02Ingredient";
@@ -54,6 +63,11 @@ public class AddWasteController {
         }
     }
 
+    /**
+     * Updates the unit field based on the selected ingredient.
+     *
+     * @param event The ActionEvent triggered by selecting an ingredient.
+     */
     private void updateUnitField(ActionEvent event) {
         System.out.println("Updating unit field...");
         String selectedIngredient = ingredientComboBox.getValue();
@@ -73,6 +87,11 @@ public class AddWasteController {
         }
     }
 
+    /**
+     * Submits the waste entry to the database.
+     *
+     * @param event The ActionEvent triggered by the submit button.
+     */
     @FXML
     private void submit(ActionEvent event) {
         System.out.println("Submitting waste entry...");
@@ -123,6 +142,14 @@ public class AddWasteController {
         }
     }
 
+    /**
+     * Retrieves the current stock level of an ingredient from the database.
+     *
+     * @param ingredientName The name of the ingredient.
+     * @param connection The database connection.
+     * @return The current stock level of the ingredient.
+     * @throws SQLException If a database access error occurs.
+     */
     private int getCurrentStock(String ingredientName, Connection connection) throws SQLException {
         PreparedStatement stmt = connection.prepareStatement("SELECT Stock_Level FROM in2033t02Ingredient WHERE Name = ?");
         stmt.setString(1, ingredientName);
@@ -133,6 +160,14 @@ public class AddWasteController {
         return 0;
     }
 
+    /**
+     * Updates the stock level of an ingredient in the database.
+     *
+     * @param ingredientName The name of the ingredient.
+     * @param newStock The new stock level of the ingredient.
+     * @param connection The database connection.
+     * @throws SQLException If a database access error occurs.
+     */
     private void updateIngredientStock(String ingredientName, int newStock, Connection connection) throws SQLException {
         PreparedStatement stmt = connection.prepareStatement("UPDATE in2033t02Ingredient SET Stock_Level = ? WHERE Name = ?");
         stmt.setInt(1, newStock);
@@ -140,6 +175,14 @@ public class AddWasteController {
         stmt.executeUpdate();
     }
 
+    /**
+     * Displays an alert.
+     *
+     * @param type      The type of alert
+     * @param title     The title of the alert
+     * @param header    The header of the alert
+     * @param content   The details of the alert
+     */
     private void showAlert(Alert.AlertType type, String title, String header, String content) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
@@ -148,57 +191,95 @@ public class AddWasteController {
         alert.showAndWait();
     }
 
+    /**
+     * Takes you to the chefs page when chefs button is clicked.
+     */
     @FXML
-    private void handleChefsButtonClick(ActionEvent event) {
-        navigateToPage("Chefs.fxml", "Chefs", event);
-    }
+    private void handleChefsButtonClick(ActionEvent event) {navigateToPage("Chefs.fxml", "Chefs", event);}
 
+    /**
+     * Takes you to the waste page when waste button is clicked.
+     */
     @FXML
     private void handleWasteButtonClick(ActionEvent event) {
         navigateToPage("Waste.fxml", "Waste", event);
     }
 
+    /**
+     * Takes you to the menus page when menus button is clicked.
+     */
     @FXML
     private void handleMenusButtonClick(ActionEvent event) {
-        navigateToPage("Menus.fxml", "Menus", event);
+        navigateToPage("Home.fxml", "Menus", event);
     }
 
+    /**
+     * Takes you to the orders/home page when orders button is clicked.
+     */
     @FXML
     private void handleOrdersButtonClick(ActionEvent event) {
         navigateToPage("Orders.fxml", "Orders", event);
     }
 
+    /**
+     * Takes you to the dishes page when dishes button is clicked.
+     */
     @FXML
     private void handleDishesButtonClick(ActionEvent event) {
         navigateToPage("Dishes.fxml", "Dishes", event);
     }
 
+    /**
+     * Takes you to the supplier page when supplier button is clicked.
+     */
     @FXML
-    private void handleSupplierButtonClick(ActionEvent event) {
-        navigateToPage("SupplierStock.fxml", "Supplier", event);
-    }
+    private void handleSupplierButtonClick(ActionEvent event) { navigateToPage("SupplierStock.fxml", "Supplier", event);}
 
+    /**
+     * Takes you to the stock page when stock button is clicked.
+     */
     @FXML
     private void handleStockButtonClick(ActionEvent event) {
         navigateToPage("CurrentStock.fxml", "Stock", event);
     }
 
-    @FXML
-    private void handleHomeButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
-
+    /**
+     * Takes you to the new dishes page when add new dish button is clicked.
+     */
     @FXML
     private void handleNewDishButtonClick(ActionEvent event) {navigateToPage("AddNewDish.fxml", "Home", event);}
 
+    /**
+     * Takes you to the new recipe page when add new recipe button is clicked.
+     */
     @FXML
-    private void handleNewRecipeButtonClick(ActionEvent event) {navigateToPage("AddNewRecipe.fxml", "AddNewRecipe", event);}
+    private void handleNewRecipeButtonClick(ActionEvent event) {navigateToPage("AddNewRecipe.fxml", "Home", event);}
 
-
+    /**
+     * Takes you to the new menu page when add new menu button is clicked.
+     */
     @FXML
     private void handleNewMenuButtonClick(ActionEvent event) {navigateToPage("AddNewMenu.fxml", "Home", event);}
+
+    /**
+     * Takes you to the home page when stock button is clicked.
+     */
+    @FXML
+    private void handleHomeButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
+
+    /**
+     * Takes you to the add new waste page when add waste button is clicked.
+     */
     @FXML
     private void handleNewWaste(ActionEvent event) {navigateToPage("AddWaste.fxml", "Home", event);}
 
-
+    /**
+     * Navigates to the relevant FXML page.
+     *
+     * @param fxmlFile The name of FXML file to navigate to
+     * @param title    The title of the page
+     * @param event    The action event
+     */
     private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         try {

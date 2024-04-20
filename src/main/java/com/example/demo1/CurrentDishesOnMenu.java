@@ -31,46 +31,87 @@ import javafx.util.Duration;
 
 import javax.swing.*;
 
+/**
+ * Controller class for the current dishes.
+ */
 public class CurrentDishesOnMenu {
 
 
-
+    /**
+     * TableColumn for displaying the name of the recipe.
+     */
     @FXML
     private TableColumn<Recipe, String> nameColumn;
 
+    /**
+     * ListView for displaying the list of dishes.
+     */
     @FXML
     private ListView<String> dishList;
 
+    /**
+     * Label for displaying the name of the dish.
+     */
     @FXML
     private Label nameLabel;
 
+    /**
+     * Label for displaying the course of the dish.
+     */
     @FXML
     private Label courseLabel;
 
+    /**
+     * Label for displaying the status of the dish.
+     */
     @FXML
     private Label statusLabel;
 
+    /**
+     * Label for displaying the id of the creator of the dish.
+     */
     @FXML
     private Label chefLabel;
 
+    /**
+     * TextArea for displaying the description of the dish.
+     */
     @FXML
     private TextArea descriptionArea;
 
+    /**
+     * TextArea for displaying the steps of the dish.
+     */
     @FXML
     private TextArea stepsTextArea;
 
+    /**
+     * Label for displaying the name of the recipe.
+     */
     @FXML
     private Label rnameLabel;
 
+    /**
+     * Label for displaying the description of the recipe.
+     */
     @FXML
     private TextArea rdescriptionArea;
 
-
+    /**
+     * Label for displaying the steps of the recipe.
+     */
     @FXML
     private TextArea rstepsTextArea;
+
+    /**
+     * TableView for displaying recipes.
+     */
     @FXML
     private TableView<Recipe> recipeTable;
 
+    /**
+     * Initialises the controller.
+     */
     public void initialize() {
 
         nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
@@ -104,6 +145,13 @@ public class CurrentDishesOnMenu {
             }
         });
     }
+
+    /**
+     * Populates the dishes list from the database.
+     *
+     * @throws SQLException if a SQL exception occurs
+     * @throws ClassNotFoundException if the database driver class is not found
+     */
     private void populateDishesList() throws SQLException, ClassNotFoundException {
         Connection connection = DatabaseUtil.connectToDatabase();
 
@@ -119,6 +167,13 @@ public class CurrentDishesOnMenu {
         }
     }
 
+    /**
+     * Opens the information of the selected dish.
+     *
+     * @param selectedDish the name of the selected dish
+     * @throws SQLException if a SQL exception occurs
+     * @throws ClassNotFoundException if the database driver class is not found
+     */
     private void openDishInformation(String selectedDish) throws SQLException, ClassNotFoundException {
         Connection connection = DatabaseUtil.connectToDatabase();
         String query = "SELECT d.Course, d.Status, d.Description, d.Chef_Creator_ID, s.Step_Description " +
@@ -144,6 +199,11 @@ public class CurrentDishesOnMenu {
         }
     }
 
+    /**
+     * Fetches and displays the recipe description.
+     *
+     * @param recipeID the ID of the recipe
+     */
     private void fetchAndDisplayRecipeDescription(int recipeID) {
         try {
 
@@ -175,6 +235,11 @@ public class CurrentDishesOnMenu {
         }
     }
 
+    /**
+     * Fetches and displays the recipe steps.
+     *
+     * @param recipeID the ID of the recipe
+     */
     private void fetchAndDisplayRecipeSteps(int recipeID) {
         try {
 
@@ -197,7 +262,13 @@ public class CurrentDishesOnMenu {
         }
     }
 
-
+    /**
+     * Fetches and displays the recipe names for the selected dish.
+     *
+     * @param selectedDish the name of the selected dish
+     * @throws SQLException if a SQL exception occurs
+     * @throws ClassNotFoundException if the database driver class is not found
+     */
     private void fetchAndDisplayRecipeNames(String selectedDish) throws SQLException, ClassNotFoundException {
         Connection connection = DatabaseUtil.connectToDatabase();
         String query = "SELECT dr.Recipe_ID, r.Name, r.Description " +
@@ -225,7 +296,14 @@ public class CurrentDishesOnMenu {
         }
     }
 
-
+    /**
+     * Displays an alert.
+     *
+     * @param alertType The type of alert
+     * @param title     The title of the alert
+     * @param message   The message of the alert
+     * @param details   The details of the alert
+     */
     private void showAlert(AlertType alertType, String title, String message, String details) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -244,9 +322,19 @@ public class CurrentDishesOnMenu {
         alert.showAndWait();
     }
 
+    /**
+     * Takes you back to the main page when back button is clicked.
+     */
     @FXML
     private void handleBackButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
 
+    /**
+     * Navigates to the relevant FXML page.
+     *
+     * @param fxmlFile The name of FXML file to navigate to
+     * @param title    The title of the page
+     * @param event    The action event
+     */
     private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));

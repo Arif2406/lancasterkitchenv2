@@ -19,44 +19,86 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Controller class for the all dishes page.
+ */
 public class AllDishesController {
 
+    /**
+     * TableColumn for displaying the name of each dish.
+     */
     @FXML
     private TableColumn<Recipe, String> nameColumn;
 
+    /**
+     * ListView for displaying the list of dishes.
+     */
     @FXML
     private ListView<String> dishList;
 
+    /**
+     * Label for displaying the name of the dish.
+     */
     @FXML
     private Label nameLabel;
 
+    /**
+     * Label for displaying the course of the dish.
+     */
     @FXML
     private Label courseLabel;
 
+    /**
+     * Label for displaying the status of the dish.
+     */
     @FXML
     private Label statusLabel;
 
+    /**
+     * Label for displaying the id of the creator of the dish.
+     */
     @FXML
     private Label chefLabel;
 
+    /**
+     * TextArea for displaying dish description.
+     */
     @FXML
     private TextArea descriptionArea;
 
+    /**
+     * TextArea for displaying dish steps.
+     */
     @FXML
     private TextArea stepsTextArea;
 
+    /**
+     * Label for displaying recipe name.
+     */
     @FXML
     private Label rnameLabel;
 
+    /**
+     * TextArea for displaying recipe description.
+     */
     @FXML
     private TextArea rdescriptionArea;
 
-
+    /**
+     * TextArea for displaying recipe steps.
+     */
     @FXML
     private TextArea rstepsTextArea;
+
+    /**
+     * TableView for displaying recipes.
+     */
     @FXML
     private TableView<Recipe> recipeTable;
 
+    /**
+     * Initialises the controller.
+     */
     public void initialize() {
 
         nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getName()));
@@ -90,6 +132,13 @@ public class AllDishesController {
             }
         });
     }
+
+    /**
+     * Populates the list of dishes from the database.
+     *
+     * @throws SQLException If a database access error occurs.
+     * @throws ClassNotFoundException If the database driver class is not found.
+     */
     private void populateDishesList() throws SQLException, ClassNotFoundException {
         Connection connection = DatabaseUtil.connectToDatabase();
         String query = "SELECT Name FROM in2033t02Dish";
@@ -104,6 +153,13 @@ public class AllDishesController {
         }
     }
 
+    /**
+     * Opens the information of the selected dish.
+     *
+     * @param selectedDish The name of the selected dish.
+     * @throws SQLException If a database access error occurs.
+     * @throws ClassNotFoundException If the database driver class is not found.
+     */
     private void openDishInformation(String selectedDish) throws SQLException, ClassNotFoundException {
         Connection connection = DatabaseUtil.connectToDatabase();
         String query = "SELECT d.Course, d.Status, d.Description, d.Chef_Creator_ID, s.Step_Description " +
@@ -130,6 +186,11 @@ public class AllDishesController {
         }
     }
 
+    /**
+     * Fetches and displays the description of the selected recipe.
+     *
+     * @param recipeID The ID of the selected recipe.
+     */
     private void fetchAndDisplayRecipeDescription(int recipeID) {
         try {
 
@@ -161,6 +222,11 @@ public class AllDishesController {
         }
     }
 
+    /**
+     * Fetches and displays the steps of the selected recipe.
+     *
+     * @param recipeID The ID of the selected recipe.
+     */
     private void fetchAndDisplayRecipeSteps(int recipeID) {
         try {
 
@@ -183,7 +249,13 @@ public class AllDishesController {
         }
     }
 
-
+    /**
+     * Fetches and displays the names of recipes associated with the selected dish.
+     *
+     * @param selectedDish The name of the selected dish.
+     * @throws SQLException If a database access error occurs.
+     * @throws ClassNotFoundException If the database driver class is not found.
+     */
     private void fetchAndDisplayRecipeNames(String selectedDish) throws SQLException, ClassNotFoundException {
         Connection connection = DatabaseUtil.connectToDatabase();
         String query = "SELECT dr.Recipe_ID, r.Name, r.Description " +
@@ -211,7 +283,13 @@ public class AllDishesController {
         }
     }
 
-
+    /**
+     * Navigates to the relevant FXML page.
+     *
+     * @param fxmlFile The name of FXML file to navigate to
+     * @param title    The title of the page
+     * @param event    The action event
+     */
     private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();
         try {
@@ -234,6 +312,15 @@ public class AllDishesController {
             e.printStackTrace();
         }
     }
+
+    /**
+     * Displays an alert.
+     *
+     * @param alertType The type of alert
+     * @param title     The title of the alert
+     * @param message   The message of the alert
+     * @param details   The details of the alert
+     */
     private void showAlert(Alert.AlertType alertType, String title, String message, String details) {
         Alert alert = new Alert(alertType);
         alert.setTitle(title);
@@ -242,56 +329,76 @@ public class AllDishesController {
         alert.showAndWait();
     }
 
+    /**
+     * Takes you to the chefs page when chefs button is clicked.
+     */
     @FXML
-    private void handleChefsButtonClick(ActionEvent event) {
-        navigateToPage("Chefs.fxml", "Chefs", event);
-    }
+    private void handleChefsButtonClick(ActionEvent event) {navigateToPage("Chefs.fxml", "Chefs", event);}
 
+    /**
+     * Takes you to the waste page when waste button is clicked.
+     */
     @FXML
-    private void handleWasteButtonClick(ActionEvent event) {
-        navigateToPage("Waste.fxml", "Waste", event);
-    }
+    private void handleWasteButtonClick(ActionEvent event) {navigateToPage("Waste.fxml", "Waste", event);}
 
+    /**
+     * Takes you to the menus page when menus button is clicked.
+     */
     @FXML
-    private void handleMenusButtonClick(ActionEvent event) {
-        navigateToPage("Menus.fxml", "Menus", event);
-    }
+    private void handleMenusButtonClick(ActionEvent event) {navigateToPage("Home.fxml", "Menus", event);}
 
+    /**
+     * Takes you to the orders/home page when orders button is clicked.
+     */
     @FXML
-    private void handleOrdersButtonClick(ActionEvent event) {
-        navigateToPage("Orders.fxml", "Orders", event);
-    }
+    private void handleOrdersButtonClick(ActionEvent event) {navigateToPage("Orders.fxml", "Orders", event);}
 
+    /**
+     * Takes you to the dishes page when dishes button is clicked.
+     */
     @FXML
-    private void handleDishesButtonClick(ActionEvent event) {
-        navigateToPage("Dishes.fxml", "Dishes", event);
-    }
+    private void handleDishesButtonClick(ActionEvent event) {navigateToPage("Dishes.fxml", "Dishes", event);}
 
+    /**
+     * Takes you to the supplier page when supplier button is clicked.
+     */
     @FXML
-    private void handleSupplierButtonClick(ActionEvent event) {
-        navigateToPage("SupplierStock.fxml", "Supplier", event);
-    }
+    private void handleSupplierButtonClick(ActionEvent event) { navigateToPage("SupplierStock.fxml", "Supplier", event);}
 
+    /**
+     * Takes you to the stock page when stock button is clicked.
+     */
     @FXML
-    private void handleStockButtonClick(ActionEvent event) {
-        navigateToPage("CurrentStock.fxml", "Stock", event);
-    }
+    private void handleStockButtonClick(ActionEvent event) {navigateToPage("CurrentStock.fxml", "Stock", event);}
 
-    @FXML
-    private void handleHomeButtonClick(ActionEvent event) {
-        navigateToPage("MainPage.fxml", "Home", event);
-    }
-
-    @FXML
-    private void backButton(ActionEvent event) {navigateToPage("Dishes.fxml", "Home", event);}
-
+    /**
+     * Takes you to the new dishes page when add new dish button is clicked.
+     */
     @FXML
     private void handleNewDishButtonClick(ActionEvent event) {navigateToPage("AddNewDish.fxml", "Home", event);}
 
+    /**
+     * Takes you to the new recipe page when add new recipe button is clicked.
+     */
     @FXML
     private void handleNewRecipeButtonClick(ActionEvent event) {navigateToPage("AddNewRecipe.fxml", "Home", event);}
 
+    /**
+     * Takes you to the new menu page when add new menu button is clicked.
+     */
     @FXML
     private void handleNewMenuButtonClick(ActionEvent event) {navigateToPage("AddNewMenu.fxml", "Home", event);}
+
+    /**
+     * Takes you to the home page when stock button is clicked.
+     */
+    @FXML
+    private void handleHomeButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
+
+    /**
+     * Takes you to the dishes page when back button is clicked.
+     */
+    @FXML
+    private void backButton(ActionEvent event) {navigateToPage("Dishes.fxml", "Home", event);}
 
 }
