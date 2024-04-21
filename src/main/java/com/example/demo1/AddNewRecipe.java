@@ -78,7 +78,7 @@ public class AddNewRecipe {
     private List<TextField> stepTextFields = new ArrayList<>();
 
     /**
-     * Initialises the controller.
+     * Initialises the controller, adding the ingredient and step comboboxes.
      */
     @FXML
     private void initialize() {
@@ -345,7 +345,7 @@ public class AddNewRecipe {
     private void handleHomeButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
 
     /**
-     * Navigates to the relevant FXML page.
+     * Navigates to the relevant FXML page when the button is clicked.
      *
      * @param fxmlFile The name of FXML file to navigate to
      * @param title    The title of the page

@@ -52,7 +52,7 @@ public class CurrentStock {
     private TableColumn<ObservableList<String>, String> unitColumn;
 
     /**
-     * Initialises the controller.
+     * Initialises the controller class, populates table with stock from database.
      */
     @FXML
     public void initialize() {
@@ -184,7 +184,7 @@ public class CurrentStock {
     private void handleHomeButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
 
     /**
-     * Navigates to the relevant FXML page.
+     * Navigates to the relevant FXML page when the button is clicked.
      *
      * @param fxmlFile The name of FXML file to navigate to
      * @param title    The title of the page

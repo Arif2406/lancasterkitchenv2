@@ -71,7 +71,7 @@ public class AddNewMenu {
     private List<ComboBox<String>> thirdCourseDishes = new ArrayList<>();
 
     /**
-     * Initialises the controller.
+     * Initialises the controller, adding the course dropdowns.
      */
     @FXML
     public void initialize() {
@@ -273,7 +273,7 @@ public class AddNewMenu {
     private void handleHomeButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
 
     /**
-     * Navigates to the relevant FXML page.
+     * Navigates to the relevant FXML page when the button is clicked.
      *
      * @param fxmlFile The name of FXML file to navigate to
      * @param title    The title of the page

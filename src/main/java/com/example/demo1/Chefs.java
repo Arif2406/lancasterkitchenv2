@@ -63,7 +63,7 @@ public class Chefs {
     private TextField roleField;
 
     /**
-     * Initialises the controller.
+     * Initialises the controller, populating table with chefs from database.
      */
     public void initialize() {
         nameColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[0].toString()));
@@ -220,7 +220,7 @@ public class Chefs {
     private void handleHomeButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
 
     /**
-     * Navigates to the relevant FXML page.
+     * Navigates to the relevant FXML page when the button is clicked.
      *
      * @param fxmlFile The name of FXML file to navigate to
      * @param title    The title of the page

@@ -26,8 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Controller class for managing orders within a restaurant application.
- * It displays orders in different statuses and allows user interaction to change these statuses.
+ * Controller class for the orders page.
  */
 public class Orders {
     @FXML
@@ -37,7 +36,6 @@ public class Orders {
 
     /**
      * Sets the current user's username and updates the UI to display it.
-     * This method is typically called upon user login to personalize the user interface.
      *
      * @param username The username of the user who has logged in.
      */
@@ -55,7 +53,7 @@ public class Orders {
     private VBox pendingColumn, inProgressColumn, finishedColumn;
 
     /**
-     * Initializes controller and populates the user interface with data.
+     * Initialises controller and populates the grid with orders data.
      */
     public void initialize() {
         try {
@@ -83,7 +81,7 @@ public class Orders {
     }
 
     /**
-     * Retrieves order data from the database and organizes it by status.
+     * Retrieves order data from the database and organises it by status.
      * @throws SQLException If a database access error occurs or this method is called on a closed connection.
      * @throws ClassNotFoundException If the database driver is not found.
      */
@@ -133,7 +131,7 @@ public class Orders {
     }
 
     /**
-     * Creates a visual representation for an order, displaying its details and a status button to change its status.
+     * Creates a VBox for the order, displaying its details and a status button to change its status.
      * @param order The order to be displayed.
      * @param dish  The specific dish within the order to be displayed.
      * @return VBox The visual component containing the order details.
@@ -156,9 +154,9 @@ public class Orders {
     }
 
     /**
-     * Converts a numeric status code to a human-readable string.
-     * @param status The status code of the dish.
-     * @return String The corresponding status description.
+     * Converts the status code of an order to a string.
+     * @param status The status code.
+     * @return The string representation of the status.
      */
     private static String getStatusAsString(int status) {
         return switch (status) {
@@ -179,14 +177,14 @@ public class Orders {
     }
 
     /**
-     * Placeholder method for viewing all orders; functionality to be implemented.
+     * Placeholder method to views all orders from the system.
      * @param actionEvent The event triggered by clicking to view all orders.
      */
     public void viewAllOrders(ActionEvent actionEvent) {
     }
 
     /**
-     * Represents a dish in an order, including details such as dish ID, name, quantity, status, and the order ID it belongs to.
+     * Represents a dish in an order, including its name, quantity, and status.
      */
     public static class Dish {
         int dishId;
@@ -196,12 +194,13 @@ public class Orders {
         int orderId;
 
         /**
-         * Constructs a new Dish instance.
-         * @param dishId The unique identifier for the dish.
-         * @param name The name of the dish.
-         * @param quantity The quantity of the dish ordered.
-         * @param status The current status of the dish (0: Pending, 1: In Progress, 2: Finished).
-         * @param orderId The identifier of the order this dish is associated with.
+         * Constructs a Dish instance with the specified details.
+         *
+         * @param dishId   The unique identifier for the dish.
+         * @param name     The name of the dish.
+         * @param quantity The quantity ordered.
+         * @param status   The current status of the dish (e.g., pending, in progress, finished).
+         * @param orderId  The ID of the order this dish belongs to.
          */
         Dish(int dishId, String name, int quantity, int status, int orderId) {
             this.dishId = dishId;
@@ -258,12 +257,12 @@ public class Orders {
 
         /**
          * Adds a dish to this order under the specified course category.
-         * @param dishId The dish's ID.
-         * @param dishName The name of the dish.
-         * @param quantity The quantity of the dish.
-         * @param course The course category the dish belongs to.
-         * @param status The initial status of the dish.
-         * @param orderId The ID of the order this dish is part of.
+         * @param dishId    The dish's ID.
+         * @param dishName  The name of the dish.
+         * @param quantity  The quantity of the dish.
+         * @param course    The course category the dish belongs to.
+         * @param status    The initial status of the dish.
+         * @param orderId   The ID of the order this dish is part of.
          */
         public void addDish(int dishId, String dishName, int quantity, String course, int status, int orderId) {
             dishesByCourse.putIfAbsent(course, new ArrayList<>());
@@ -389,7 +388,7 @@ public class Orders {
     private void handleNewMenuButtonClick(ActionEvent event) {navigateToPage("AddNewMenu.fxml", "Home", event);}
 
     /**
-     * Navigates to the relevant FXML page.
+     * Navigates to the relevant FXML page when the button is clicked.
      *
      * @param fxmlFile The name of FXML file to navigate to
      * @param title    The title of the page

@@ -97,7 +97,7 @@ public class AllDishesController {
     private TableView<Recipe> recipeTable;
 
     /**
-     * Initialises the controller.
+     * Initialises the controller, populating table with dishes from database.
      */
     public void initialize() {
 
@@ -284,7 +284,7 @@ public class AllDishesController {
     }
 
     /**
-     * Navigates to the relevant FXML page.
+     * Navigates to the relevant FXML page when the button is clicked.
      *
      * @param fxmlFile The name of FXML file to navigate to
      * @param title    The title of the page

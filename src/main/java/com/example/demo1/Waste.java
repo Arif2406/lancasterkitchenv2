@@ -20,9 +20,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Controller class for managing waste data in the application.
- * This class is responsible for loading and displaying waste records from the database,
- * and provides navigation to different parts of the application related to waste management.
+ * Controller class for the waste page.
  */
 public class Waste {
 
@@ -41,8 +39,7 @@ public class Waste {
     private TableColumn<ObservableList<String>, String> reasonColumn;
 
     /**
-     * Initializes the controller class. This method is automatically called
-     * after the FXML file has been loaded. It sets up the table columns and loads the initial waste data.
+     * Initialises the controller, populating table with waste data from database.
      */
     @FXML
     public void initialize() {
@@ -52,7 +49,6 @@ public class Waste {
 
     /**
      * Loads waste data from the database and populates the table.
-     * This method queries the database for waste records and displays them in the wasteTable.
      */
     private void loadWasteData() {
         ObservableList<ObservableList<String>> data = FXCollections.observableArrayList();
@@ -79,8 +75,7 @@ public class Waste {
     }
 
     /**
-     * Initializes the controller class. This method is automatically called
-     * after the FXML file has been loaded. It sets up the table columns and loads the initial waste data.
+     * Sets up the table columns and loads the initial waste data.
      */
     private void setupColumns() {
         ingredientNameColumn.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().get(0)));
@@ -91,11 +86,12 @@ public class Waste {
     }
 
     /**
-     * Displays an alert dialog to the user with a detailed message.
-     * @param alertType the type of alert (information, warning, error)
-     * @param title the title of the alert dialog
-     * @param message the main message of the alert
-     * @param details additional details to be displayed in an expandable content area
+     * Displays an alert.
+     *
+     * @param alertType The type of alert
+     * @param title     The title of the alert
+     * @param message   The message of the alert
+     * @param details   The details of the alert
      */
     private void showAlert(Alert.AlertType alertType, String title, String message, String details) {
         Alert alert = new Alert(alertType);
@@ -205,11 +201,11 @@ public class Waste {
     private void handleNewWaste(ActionEvent event) {navigateToPage("AddWaste.fxml", "Home", event);}
 
     /**
-     * Navigates to different parts of the application based on user interaction.
-     * This method is called by multiple FXML-defined buttons for navigation.
-     * @param fxmlFile the path to the FXML file that describes the next scene
-     * @param title the title of the next scene's window
-     * @param event the event that triggered the navigation
+     * Navigates to the relevant FXML page when the button is clicked.
+     *
+     * @param fxmlFile The name of FXML file to navigate to
+     * @param title    The title of the page
+     * @param event    The action event
      */
     private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
         Rectangle2D screenBounds = Screen.getPrimary().getBounds();

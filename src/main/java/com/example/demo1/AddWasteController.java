@@ -34,7 +34,7 @@ public class AddWasteController {
     private TextField reasonField;
 
     /**
-     * Initialises the controller.
+     * Initialises the controller, populates the list of ingredients combobox.
      */
     @FXML
     private void initialize() {
@@ -274,7 +274,7 @@ public class AddWasteController {
     private void handleNewWaste(ActionEvent event) {navigateToPage("AddWaste.fxml", "Home", event);}
 
     /**
-     * Navigates to the relevant FXML page.
+     * Navigates to the relevant FXML page when the button is clicked.
      *
      * @param fxmlFile The name of FXML file to navigate to
      * @param title    The title of the page

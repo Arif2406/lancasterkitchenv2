@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * The controller for the main page of the application that handles navigation and order processing.
+ * Controller for the main page of the application that handles navigation and orders.
  */
 public class MainPageController {
 
@@ -38,8 +38,7 @@ public class MainPageController {
     private VBox pendingColumn, inProgressColumn, finishedColumn;
 
     /**
-     * Initializes the controller class. Called after the FXML file has been loaded.
-     * Populates the orders from the database and initializes the UI elements for order statuses.
+     * Initialises the controller class, populates grid with orders from database.
      */
     public void initialize() {
         try {
@@ -52,7 +51,7 @@ public class MainPageController {
     }
 
     /**
-     * Initializes the columns for the pending, in-progress, and finished orders within the UI.
+     * Initialises the columns for the pending, in-progress, and finished orders within the orders UI.
      */
     private void initializeStatusColumns() {
         pendingColumn = new VBox(10);
@@ -116,8 +115,7 @@ public class MainPageController {
     }
 
     /**
-     * Creates a VBox containing UI elements for a course within an order, such as the dish names and quantity.
-     * Also includes a button to update the status of the dishes in the course.
+     * Creates a VBox containing order details and includes a button to update the status of the dishes in the course.
      * @param order The order containing the course.
      * @param course The name of the course.
      * @param dishes A list of dishes within that course.
@@ -143,9 +141,9 @@ public class MainPageController {
     }
 
     /**
-     * Converts the numeric status code of an order to its String representation.
-     * @param status The numeric status code.
-     * @return The String representation of the status.
+     * Converts the status code of an order to a string.
+     * @param status The status code.
+     * @return The string representation of the status.
      */
     private static String getStatusAsString(int status) {
         return switch (status) {
@@ -167,8 +165,7 @@ public class MainPageController {
 
 
     /**
-     * Views all orders from the system. This method should contain logic to
-     * retrieve and display all orders, but currently does not implement any functionality.
+     * Placeholder method to views all orders from the system.
      *
      * @param actionEvent The event that triggered this method.
      */
@@ -176,7 +173,7 @@ public class MainPageController {
     }
 
     /**
-     * Represents an order with associated dishes categorized by course.
+     * Represents an order with associated dishes categorised by course.
      */
     private static class Order {
         private int id;
@@ -231,7 +228,7 @@ public class MainPageController {
         int orderId;
 
         /**
-         * Constructs a Dish object with the specified details.
+         * Constructs a Dish instance with the specified details.
          *
          * @param dishId   The unique identifier for the dish.
          * @param name     The name of the dish.
@@ -281,8 +278,8 @@ public class MainPageController {
         /**
          * Updates the stock levels for ingredients based on the dish quantity.
          *
-         * @param connection A database connection.
-         * @param quantity   The quantity of the dish prepared.
+         * @param connection    A database connection.
+         * @param quantity      The quantity of the dish prepared.
          * @throws SQLException If an SQL error occurs during the update.
          */
         void updateIngredientStockLevels(Connection connection, int quantity) throws SQLException {
@@ -300,9 +297,9 @@ public class MainPageController {
         /**
          * Updates the stock for a specific recipe.
          *
-         * @param connection   A database connection.
-         * @param recipeId     The ID of the recipe.
-         * @param dishQuantity The quantity of the dish prepared.
+         * @param connection    A database connection.
+         * @param recipeId      The ID of the recipe.
+         * @param dishQuantity  The quantity of the dish prepared.
          * @throws SQLException If an SQL error occurs during the update.
          */
         void updateStockForRecipe(Connection connection, int recipeId, int dishQuantity) throws SQLException {
@@ -349,7 +346,7 @@ public class MainPageController {
         }
 
         /**
-         * Retrieves a list of dishes that are affected by the depletion of a specific ingredient.
+         * Retrieves a list of dishes that are affected by the use of a specific ingredient.
          *
          * @param connection   The database connection to be used for the query.
          * @param ingredientId The unique identifier of the ingredient that has been depleted.
@@ -527,10 +524,11 @@ public class MainPageController {
 
 
     /**
-     * Navigates to the specified page when a button is clicked.
-     * @param fxmlFile The FXML file corresponding to the page to navigate to.
-     * @param title The title of the window to be displayed.
-     * @param event The event that triggered the navigation.
+     * Navigates to the relevant FXML page when the button is clicked.
+     *
+     * @param fxmlFile The name of FXML file to navigate to
+     * @param title    The title of the page
+     * @param event    The action event
      */
     private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
         try {

@@ -110,7 +110,7 @@ public class CurrentDishesOnMenu {
     private TableView<Recipe> recipeTable;
 
     /**
-     * Initialises the controller.
+     * Initialises the controller, populating table with dishes from database.
      */
     public void initialize() {
 
@@ -329,7 +329,7 @@ public class CurrentDishesOnMenu {
     private void handleBackButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
 
     /**
-     * Navigates to the relevant FXML page.
+     * Navigates to the relevant FXML page when the button is clicked.
      *
      * @param fxmlFile The name of FXML file to navigate to
      * @param title    The title of the page

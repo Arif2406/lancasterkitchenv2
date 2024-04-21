@@ -6,9 +6,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.IntegerProperty;
 
 /**
- * Represents a recipe with an ID, name, and description.
- * This class is designed to manage the data model for a recipe within a JavaFX application,
- * utilizing JavaFX properties to allow for observable values that can be bound to UI components.
+ * Class for representing a recipe with an ID, name, and description.
  */
 public class Recipe {
     // Property to hold the unique ID of the recipe
@@ -39,7 +37,7 @@ public class Recipe {
     }
 
     /**
-     * Returns the name property of this recipe.
+     * Returns the name property of the recipe.
      * @return A SimpleStringProperty representing the name of the recipe.
      */
     public SimpleStringProperty nameProperty() {
@@ -103,10 +101,10 @@ public class Recipe {
     }
 
     /**
-     * Overloaded constructor for creating a Recipe object with existing properties.
-     * @param recipeID The recipeID property.
-     * @param name The name of the recipe.
-     * @param description The description property.
+     * Constructor for creating a Recipe object with existing properties.
+     * @param recipeID      The recipeID property.
+     * @param name          The name of the recipe.
+     * @param description   The description property.
      */
     public Recipe(SimpleIntegerProperty recipeID, String name, SimpleStringProperty description) {
         this.recipeID = recipeID;

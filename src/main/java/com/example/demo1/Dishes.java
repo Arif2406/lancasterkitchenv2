@@ -113,7 +113,7 @@ public class Dishes {
     private TableView<Recipe> recipeTable;
 
     /**
-     * Initialises the controller.
+     * Initialises the controller class, populates grid with orders from database.
      */
     public void initialize() {
 
@@ -369,7 +369,7 @@ public class Dishes {
     }
 
     /**
-     * Navigates to the relevant FXML page.
+     * Navigates to the relevant FXML page when the button is clicked.
      *
      * @param fxmlFile The name of FXML file to navigate to
      * @param title    The title of the page

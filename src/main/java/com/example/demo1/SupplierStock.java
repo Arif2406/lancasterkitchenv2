@@ -22,8 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Controls the supplier stock view within the application.
- * This class is responsible for managing the supplier stock information displayed in a table view.
+ * Controller class for the suppliers page.
  */
 public class SupplierStock {
 
@@ -41,8 +40,7 @@ public class SupplierStock {
     private TableColumn<ObservableList<String>, String> deliveryDateColumn;
 
     /**
-     * Initializes the controller class. This method is automatically called
-     * after the FXML file has been loaded. It sets up the table columns and loads the initial stock data.
+     * Initialises the controller, populating table with stock data from database.
      */
     @FXML
     public void initialize() {
@@ -53,7 +51,6 @@ public class SupplierStock {
 
     /**
      * Loads stock data from the database and adds it to the table view.
-     * This method queries the database for all current supplier stock and displays it.
      */
     private void loadStockData() {
         ObservableList<ObservableList<String>> data = FXCollections.observableArrayList();
@@ -81,7 +78,7 @@ public class SupplierStock {
     }
 
     /**
-     * Configures the table columns to use specific properties of the ObservableList to display data.
+     * Configures the table columns that display the data.
      */
     private void setupColumns() {
 
@@ -92,11 +89,12 @@ public class SupplierStock {
     }
 
     /**
-     * Displays an alert to the user.
-     * @param alertType the type of alert to display
-     * @param title the title of the alert dialog
-     * @param message the main message of the alert
-     * @param details detailed message or stack trace
+     * Displays an alert.
+     *
+     * @param alertType The type of alert
+     * @param title     The title of the alert
+     * @param message   The message of the alert
+     * @param details   The details of the alert
      */
     private void showAlert(Alert.AlertType alertType, String title, String message, String details) {
         Alert alert = new Alert(alertType);
@@ -199,11 +197,11 @@ public class SupplierStock {
     private void handleNewMenuButtonClick(ActionEvent event) {navigateToPage("AddNewMenu.fxml", "Home", event);}
 
     /**
-     * Utility method to navigate to different pages within the application.
-     * This method loads the given FXML file and transitions to the specified scene with a fade animation.
-     * @param fxmlFile the FXML file to load
-     * @param title the title of the new stage
-     * @param event the event that triggered the navigation
+     * Navigates to the relevant FXML page when the button is clicked.
+     *
+     * @param fxmlFile The name of FXML file to navigate to
+     * @param title    The title of the page
+     * @param event    The action event
      */
     private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
         try {

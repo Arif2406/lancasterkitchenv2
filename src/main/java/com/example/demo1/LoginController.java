@@ -38,7 +38,7 @@ public class LoginController {
     private Map<String, String> validUsers = new HashMap<>();
 
     /**
-     * Constructor for the controller. Loads valid user credentials.
+     * Constructor for the controller, loads valid user credentials.
      */
     public LoginController() {
         loadValidUsers();
@@ -77,7 +77,7 @@ public class LoginController {
     private Label timeLabel;
 
     /**
-     * Initializes the controller class. Sets up the digital clock on the login screen.
+     * Initialises the controller, including logging in and displaying time and date
      */
     public void initialize() {
         Timeline clock = new Timeline(new KeyFrame(Duration.ZERO, e -> {
@@ -93,7 +93,7 @@ public class LoginController {
     }
 
     /**
-     * Handles the login action. Authenticates the user against the stored credentials.
+     * Handles the login action and authentication.
      *
      * @param event The action event from the login button click.
      */
@@ -140,7 +140,7 @@ public class LoginController {
     }
 
     /**
-     * Displays an error alert for unrecognized credentials.
+     * Displays an error alert for unrecognised credentials.
      */
     private void showErrorAlert() {
         Alert alert = new Alert(AlertType.ERROR);
@@ -151,11 +151,11 @@ public class LoginController {
     }
 
     /**
-     * Shows an alert of the specified type.
+     * Displays an alert.
      *
      * @param alertType The type of alert to display.
      * @param title     The title of the alert.
-     * @param header    The header text of the alert. Pass null for no header.
+     * @param header    The header text of the alert.
      * @param content   The content text of the alert.
      */
     private void showAlert(Alert.AlertType alertType, String title, String header, String content) {

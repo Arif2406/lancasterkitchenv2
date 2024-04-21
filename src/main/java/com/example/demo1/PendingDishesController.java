@@ -22,7 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Controls the GUI for managing pending dishes in the system.
+ * Controller class for the pending dishes page.
  */
 public class PendingDishesController {
 
@@ -63,8 +63,7 @@ public class PendingDishesController {
     private TableView<Recipe> recipeTable;
 
     /**
-     * Initializes the controller class. This method is automatically called
-     * after the FXML file has been loaded. It sets up the table views and loads initial data.
+     * Initialises the controller class, populating table with pending dishes from database.
      */
     public void initialize() {
 
@@ -122,7 +121,7 @@ public class PendingDishesController {
 
     /**
      * Opens and displays detailed information for the selected dish.
-     * @param selectedDish the dish to display information for.
+     * @param selectedDish  the dish to display information for.
      * @throws SQLException if a database access error occurs.
      * @throws ClassNotFoundException if the database driver is not found.
      */
@@ -248,11 +247,11 @@ public class PendingDishesController {
 
 
     /**
-     * Navigates to a specified FXML page, applying a fade-in transition to the scene.
+     * Navigates to the relevant FXML page when the button is clicked.
      *
-     * @param fxmlFile The FXML file to load for the new scene.
-     * @param title    The title to set for the new stage.
-     * @param event    The event that triggered the navigation, used to close the current stage.
+     * @param fxmlFile The name of FXML file to navigate to
+     * @param title    The title of the page
+     * @param event    The action event
      */
     private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
         try {
@@ -284,11 +283,12 @@ public class PendingDishesController {
     }
 
     /**
-     * Shows an alert of a specified type with a title, message, and optionally detailed text.
-     * @param alertType the type of alert.
-     * @param title the title of the alert.
-     * @param message the main text message of the alert.
-     * @param details the detailed text to display in the alert (can be null).
+     * Displays an alert.
+     *
+     * @param alertType The type of alert
+     * @param title     The title of the alert
+     * @param message   The message of the alert
+     * @param details   The details of the alert
      */
     private void showAlert(Alert.AlertType alertType, String title, String message, String details) {
         Alert alert = new Alert(alertType);

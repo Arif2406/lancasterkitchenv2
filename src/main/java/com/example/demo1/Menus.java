@@ -21,9 +21,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Controller class for managing the menu view in a restaurant application.
- * It provides functionalities to load and display the current menu from the database,
- * and navigate between different UI views like chefs, waste management, etc.
+ * Controller class for the menus page.
  */
 public class Menus {
 
@@ -43,9 +41,7 @@ public class Menus {
     private TableColumn<Object[], String> statusColumn;
 
     /**
-     * Initializes the controller class. This method is automatically called
-     * after the fxml file has been loaded. It sets up the table columns and
-     * loads menu data from the database.
+     * Initialises the controller class, creating a table and loading menu data.
      */
     public void initialize() {
         dishIdColumn.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[0].toString()));
@@ -57,8 +53,7 @@ public class Menus {
     }
 
     /**
-     * Loads the menu data from the database and adds it to the current menu table.
-     * It fetches dishes that are currently marked as 'In use'.
+     * Loads the menu data from the database and adds "In Use" dishes to the current menu table.
      */
     private void loadMenuData() {
         try {
@@ -86,12 +81,12 @@ public class Menus {
     }
 
     /**
-     * Shows an alert dialog on the screen.
+     * Displays an alert.
      *
-     * @param alertType The type of the alert dialog.
-     * @param title     The title of the alert dialog.
-     * @param message   The message to be displayed in the alert dialog.
-     * @param details   Additional details to be displayed in the alert dialog.
+     * @param alertType The type of alert
+     * @param title     The title of the alert
+     * @param message   The message of the alert
+     * @param details   The details of the alert
      */
     private void showAlert(AlertType alertType, String title, String message, String details) {
         Alert alert = new Alert(alertType);
@@ -193,7 +188,7 @@ public class Menus {
     private void handleNewMenuButtonClick(ActionEvent event) {navigateToPage("AddNewMenu.fxml", "Home", event);}
 
     /**
-     * Navigates to the relevant FXML page.
+     * Navigates to the relevant FXML page when the button is clicked.
      *
      * @param fxmlFile The name of FXML file to navigate to
      * @param title    The title of the page

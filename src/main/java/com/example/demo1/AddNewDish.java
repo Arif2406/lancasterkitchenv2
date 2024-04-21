@@ -70,7 +70,7 @@ public class AddNewDish {
     private List<TextField> stepTextFields = new ArrayList<>();
 
     /**
-     * Initialises the controller.
+     * Initialises the controller, adding the course dropdown, and recipe and step fields.
      */
     @FXML
     private void initialize() {
@@ -340,11 +340,11 @@ public class AddNewDish {
     private void handleHomeButtonClick(ActionEvent event) {navigateToPage("MainPage.fxml", "Home", event);}
 
     /**
-     * Navigates to the relevant FXML page.
+     * Navigates to the relevant FXML page when the button is clicked.
      *
-     * @param fxmlFile  The name of FXML file to navigate to
-     * @param title     The title of the page
-     * @param event     The action event
+     * @param fxmlFile The name of FXML file to navigate to
+     * @param title    The title of the page
+     * @param event    The action event
      */
     private void navigateToPage(String fxmlFile, String title, ActionEvent event) {
         try {
