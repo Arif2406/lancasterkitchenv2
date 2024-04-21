@@ -24,17 +24,39 @@ import java.sql.SQLException;
  */
 public class Waste {
 
+    /**
+     * TableView for displaying waste logs.
+     */
     @FXML
     private TableView<ObservableList<String>> wasteTable;
 
+    /**
+     * TableColumn for displaying ingredients wasted.
+     */
     @FXML
     private TableColumn<ObservableList<String>, String> ingredientNameColumn;
+
+    /**
+     * TableColumn for displaying quantities wasted.
+     */
     @FXML
     private TableColumn<ObservableList<String>, String> quantityWastedColumn;
+
+    /**
+     * TableColumn for displaying units.
+     */
     @FXML
     private TableColumn<ObservableList<String>, String> unitColumn;
+
+    /**
+     * TableColumn for displaying date of waste.
+     */
     @FXML
     private TableColumn<ObservableList<String>, String> dateOfWasteColumn;
+
+    /**
+     * TableColumn for displaying reason of waste.
+     */
     @FXML
     private TableColumn<ObservableList<String>, String> reasonColumn;
 

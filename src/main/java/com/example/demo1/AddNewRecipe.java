@@ -30,13 +30,13 @@ import java.util.List;
 public class AddNewRecipe {
 
     /**
-     * Text field for the name of the recipe.
+     * Text field for entering the name of the recipe.
      */
     @FXML
     private TextField nameField;
 
     /**
-     * Text field for the name of the recipe.
+     * Text field for entering the name of the recipe.
      */
     @FXML
     private TextField descriptionField;

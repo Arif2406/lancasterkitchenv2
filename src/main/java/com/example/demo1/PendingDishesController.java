@@ -26,39 +26,75 @@ import java.sql.SQLException;
  */
 public class PendingDishesController {
 
+    /**
+     * TableColumn for displaying the name of the recipe.
+     */
     @FXML
     private TableColumn<Recipe, String> nameColumn;
 
+    /**
+     * ListView for displaying the list of dishes.
+     */
     @FXML
     private ListView<String> dishList;
 
+    /**
+     * Label for displaying the name of the dish.
+     */
     @FXML
     private Label nameLabel;
 
+    /**
+     * Label for displaying the course of the dish.
+     */
     @FXML
     private Label courseLabel;
 
+    /**
+     * Label for displaying the status of the dish.
+     */
     @FXML
     private Label statusLabel;
 
+    /**
+     * Label for displaying the id of the creator of the dish.
+     */
     @FXML
     private Label chefLabel;
 
+    /**
+     * TextArea for displaying the description of the dish.
+     */
     @FXML
     private TextArea descriptionArea;
 
+    /**
+     * TextArea for displaying the steps of the dish.
+     */
     @FXML
     private TextArea stepsTextArea;
 
+    /**
+     * Label for displaying the name of the recipe.
+     */
     @FXML
     private Label rnameLabel;
 
+    /**
+     * Label for displaying the description of the recipe.
+     */
     @FXML
     private TextArea rdescriptionArea;
 
-
+    /**
+     * Label for displaying the steps of the recipe.
+     */
     @FXML
     private TextArea rstepsTextArea;
+
+    /**
+     * TableView for displaying recipes.
+     */
     @FXML
     private TableView<Recipe> recipeTable;
 

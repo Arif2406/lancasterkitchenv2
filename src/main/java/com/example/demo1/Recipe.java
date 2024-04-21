@@ -9,15 +9,23 @@ import javafx.beans.property.IntegerProperty;
  * Class for representing a recipe with an ID, name, and description.
  */
 public class Recipe {
-    // Property to hold the unique ID of the recipe
+    /**
+     * Property to hold the ID of the recipe
+     */
     private final SimpleIntegerProperty recipeID;
-    // Property to hold the name of the recipe
+
+    /**
+     * Property to hold the name of the recipe
+     */
     private final SimpleStringProperty name;
-    // Property to hold the description of the recipe
+
+    /**
+     * Property to hold the description of the recipe
+     */
     private final SimpleStringProperty description;
 
     /**
-     * Constructor to initialize a Recipe object with specified ID, name, and description.
+     * Constructor to initialise a Recipe object with specified ID, name, and description.
      * @param recipeID The ID of the recipe.
      * @param name The name of the recipe.
      * @param description The description of the recipe.

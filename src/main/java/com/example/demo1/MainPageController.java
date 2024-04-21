@@ -31,9 +31,20 @@ import java.util.Map;
  */
 public class MainPageController {
 
+    /**
+     * Grid pane for displaying the orders.
+     */
     @FXML
     private GridPane ordersGrid;
+
+    /**
+     * List containing order objects.
+     */
     private List<Order> orders = new ArrayList<>();
+
+    /**
+     * VBoxes for the table columns.
+     */
     @FXML
     private VBox pendingColumn, inProgressColumn, finishedColumn;
 
@@ -176,7 +187,15 @@ public class MainPageController {
      * Represents an order with associated dishes categorised by course.
      */
     private static class Order {
+
+        /**
+         * Integer containing the order ID.
+         */
         private int id;
+
+        /**
+         * A map of the dishes by course.
+         */
         private Map<String, List<Dish>> dishesByCourse = new HashMap<>();
 
         /**
@@ -221,10 +240,30 @@ public class MainPageController {
      * Represents a dish in an order, including its name, quantity, and status.
      */
     private static class Dish {
+
+        /**
+         * Integer containing the dish ID.
+         */
         int dishId;
+
+        /**
+         * String containing the dish name.
+         */
         String name;
+
+        /**
+         * Integer containing the dish quantity.
+         */
         int quantity;
+
+        /**
+         * Integer containing the dish status.
+         */
         int status;
+
+        /**
+         * Integer containing the order ID.
+         */
         int orderId;
 
         /**
@@ -388,9 +427,15 @@ public class MainPageController {
 
     }
 
+    /**
+     * Label for displaying the username of the currently logged in user.
+     */
         @FXML
         private Label usernameLabel;
 
+    /**
+     * String containing the username of the currently logged in user.
+     */
         private String currentUser;
 
     /**

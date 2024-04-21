@@ -22,14 +22,33 @@ import java.time.format.DateTimeFormatter;
  */
 public class AddWasteController {
 
+    /**
+     * ComboBox for ingredients
+     */
     @FXML
     private ComboBox<String> ingredientComboBox;
+
+    /**
+     * Text field for entering the quantity.
+     */
     @FXML
     private TextField quantityField;
+
+    /**
+     * Text field for entering the unit.
+     */
     @FXML
     private TextField unitField;
+
+    /**
+     * Date picker for selecting the date.
+     */
     @FXML
     private DatePicker dateField;
+
+    /**
+     * Text field for entering the reason.
+     */
     @FXML
     private TextField reasonField;
 

@@ -26,16 +26,33 @@ import java.sql.SQLException;
  */
 public class SupplierStock {
 
+    /**
+     * TableView for displaying supplier stock data.
+     */
     @FXML
     private TableView<ObservableList<String>> stockTable;
 
-
+    /**
+     * TableColumn for displaying ingredients.
+     */
     @FXML
     private TableColumn<ObservableList<String>, String> ingredientNameColumn;
+
+    /**
+     * TableColumn for displaying quantities.
+     */
     @FXML
     private TableColumn<ObservableList<String>, String> quantityColumn;
+
+    /**
+     * TableColumn for displaying units.
+     */
     @FXML
     private TableColumn<ObservableList<String>, String> unitColumn;
+
+    /**
+     * TableColumn for displaying delivery dates.
+     */
     @FXML
     private TableColumn<ObservableList<String>, String> deliveryDateColumn;
 

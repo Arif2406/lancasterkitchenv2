@@ -32,9 +32,19 @@ import java.util.Map;
  */
 public class LoginController {
 
+    /**
+     * TextField for entering username.
+     */
     @FXML private TextField usernameField;
+
+    /**
+     * TextField for entering username.
+     */
     @FXML private PasswordField passwordField;
 
+    /**
+     * HashMap for a list of valid logins.
+     */
     private Map<String, String> validUsers = new HashMap<>();
 
     /**
@@ -72,7 +82,9 @@ public class LoginController {
         }
     }
 
-
+    /**
+     * TextLabel for displaying the time and date.
+     */
     @FXML
     private Label timeLabel;
 

@@ -25,18 +25,33 @@ import java.sql.SQLException;
  */
 public class Menus {
 
+    /**
+     * Table view for displaying current menu items.
+     */
     @FXML
     private TableView<Object[]> currentMenuTable;
 
+    /**
+     * Table column for displaying dish IDs.
+     */
     @FXML
     private TableColumn<Object[], String> dishIdColumn;
 
+    /**
+     * Table column for displaying dish names.
+     */
     @FXML
     private TableColumn<Object[], String> nameColumn;
 
+    /**
+     * Table column for displaying dish courses.
+     */
     @FXML
     private TableColumn<Object[], String> CourseColumn;
 
+    /**
+     * Table column for displaying dish statuses.
+     */
     @FXML
     private TableColumn<Object[], String> statusColumn;
 
